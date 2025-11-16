@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Play and Pay</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <div class="logo-icon">💰</div>
+        <div class="logo-text">
+          <h1>Play and Pay</h1>
+          <p>Micro-payments</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wallet Status -->
+    <div class="wallet-status" id="walletStatus">
+      <div class="status-indicator" id="statusIndicator"></div>
+      <div class="status-text">
+        <span class="status-label" id="statusLabel">Not Connected</span>
+        <span class="status-address" id="statusAddress"></span>
+      </div>
+    </div>
+
+    <!-- Balance -->
+    <div class="balance-card" id="balanceCard" style="display: none;">
+      <div class="balance-label">Balance</div>
+      <div class="balance-amount" id="balanceAmount">0 PLY</div>
+      <div class="balance-euro" id="balanceEuro">≈ €0.00</div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button class="btn btn-primary" id="connectBtn">Connect Wallet</button>
+      <button class="btn btn-secondary" id="openAppBtn">Open App</button>
+      <button class="btn btn-tertiary" id="refreshBtn" style="display: none;">Refresh</button>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="stats" id="stats" style="display: none;">
+      <div class="stat-item">
+        <div class="stat-value" id="totalSpent">€0.00</div>
+        <div class="stat-label">Total Spent</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="sessionsCount">0</div>
+        <div class="stat-label">Sessions</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="platformsCount">0</div>
+        <div class="stat-label">Platforms</div>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="recent-activity" id="recentActivity" style="display: none;">
+      <div class="activity-header">Recent Activity</div>
+      <div class="activity-list" id="activityList"></div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
+

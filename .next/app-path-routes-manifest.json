@@ -1,0 +1,14 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/analytics/page": "/analytics",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/",
+  "/partner/analytics/page": "/partner/analytics",
+  "/partner/page": "/partner",
+  "/player/page": "/player",
+  "/settings/page": "/settings",
+  "/summary/page": "/summary",
+  "/test/page": "/test",
+  "/wallet/page": "/wallet"
+}
