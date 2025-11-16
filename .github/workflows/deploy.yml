@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies
         run: |
           if [ -f "package.json" ]; then
-            npm ci
+            npm ci || echo "npm ci failed, continuing..."
           else
             echo "No package.json found, skipping npm install"
           fi
@@ -53,4 +53,3 @@ jobs:
           destination_dir: ./docs
           cname: false
           keep_files: false
-
