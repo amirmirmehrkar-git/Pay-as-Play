@@ -50,6 +50,8 @@ logs/
 # Build
 dist/
 build/
+.next/
+out/
 *.zip
 
 # Temporary files
