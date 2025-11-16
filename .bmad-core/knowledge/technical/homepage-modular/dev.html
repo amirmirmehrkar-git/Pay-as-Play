@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Play and Pay | For Developers & Businesses</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <strong>Play and Pay</strong>
+  <div class="lang-switch">
+    <a href="#" data-lang-switch="fa" class="active">FA</a>
+    <a href="#" data-lang-switch="en">EN</a>
+    <a href="#" data-lang-switch="de">DE</a>
+  </div>
+</header>
+
+<section class="section" data-lang>
+  <div class="container row row-2">
+    <div class="reveal">
+      <div class="lang is-active" data-i18n="fa">
+        <h2>برای توسعه‌دهندگان و کسب‌وکارها</h2>
+        <p>با افزونه‌ها و APIهای آماده، مدل پرداخت بر اساس مصرف را به هر سایت یا سرویس اضافه کن — بدون نیاز به دانش بلاکچین.</p>
+        <ul>
+          <li>پلاگین‌های WordPress و Joomla</li>
+          <li>API سبک برای هر CMS</li>
+          <li>تسویه آنی و شفاف</li>
+        </ul>
+        <div class="cta">
+          <a class="btn" href="#">مستندات Dev</a>
+          <a class="btn ghost" href="#">دانلود افزونه</a>
+        </div>
+      </div>
+      <div class="lang" data-i18n="en">
+        <h2>For developers & businesses</h2>
+        <p>Use ready plugins and a lightweight API to add pay-as-you-use billing to any site — no blockchain expertise needed.</p>
+        <ul>
+          <li>WordPress & Joomla plugins</li>
+          <li>Lightweight REST API</li>
+          <li>Instant, transparent settlement</li>
+        </ul>
+        <div class="cta">
+          <a class="btn" href="#">Dev Docs</a>
+          <a class="btn ghost" href="#">Download Plugin</a>
+        </div>
+      </div>
+      <div class="lang" data-i18n="de">
+        <h2>Für Entwickler & Unternehmen</h2>
+        <p>Mit fertigen Plugins & leichtem API „Bezahlen nach Nutzung" überall integrieren – ohne Blockchain-Know-how.</p>
+        <ul>
+          <li>WordPress- & Joomla-Plugins</li>
+          <li>Leichtes REST-API</li>
+          <li>Sofortige, transparente Abrechnung</li>
+        </ul>
+        <div class="cta">
+          <a class="btn" href="#">Dev-Dokumentation</a>
+          <a class="btn ghost" href="#">Plugin herunterladen</a>
+        </div>
+      </div>
+    </div>
+    <div class="card reveal">
+      <h3>Sample API Call</h3>
+      <pre>POST /usage {
+  seconds: 60,
+  asset: "video_123"
+}
+
+→ charge: €0.02
+→ provider_settlement: instant
+→ txid: 0xa1… verified</pre>
+    </div>
+  </div>
+</section>
+
+<script src="main.js"></script>
+</body>
+</html>
+

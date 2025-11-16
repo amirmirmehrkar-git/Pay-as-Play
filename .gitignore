@@ -1,61 +1,58 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Environment variables
+.env
+.env.local
+.env.*.local
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+# Account details (security)
+testnet-accounts.json
+*.key
+*.sk
+*.mnemonic
 
-# testing
-/coverage
+# TEAL files (generated)
+*.teal
 
-# next.js
-/.next/
-/out/
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
 
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
+# Node
+node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+package-lock.json
+yarn.lock
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
+.DS_Store
 
 # OS
 Thumbs.db
-
-# BMAD temporary files
-.web-bundles-cache/
-.ai/
+desktop.ini
 
 # Logs
 *.log
+logs/
+
+# Build
+dist/
+build/
+*.zip
+
+# Temporary files
+*.tmp
+*.temp
+.cache/

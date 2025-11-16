@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Play and Pay | Plug & Play Fair Pay</title>
+  <style>
+    /* ===== Play and Pay - Base Styles ===== */
+    :root {
+      --grad: linear-gradient(135deg, #7c8cf8, #2de1c2);
+      --bg: #ffffff;
+      --card: #f8f9fb;
+      --border: #e7e9ef;
+      --text: #1e233a;
+      --muted: #667089;
+      --radius: 14px;
+      --max: 1100px;
+      --shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+    }
+    .container {
+      max-width: var(--max);
+      margin: auto;
+      padding: 48px 20px;
+    }
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid var(--border);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    header strong {
+      font-size: 1.2rem;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .lang-switch {
+      display: flex;
+      gap: 6px;
+    }
+    .lang-switch a {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      cursor: pointer;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .lang-switch a:hover {
+      border-color: #7c8cf8;
+      background: rgba(124, 140, 248, 0.1);
+    }
+    .lang-switch a.active {
+      background: var(--grad);
+      color: #fff;
+      border-color: transparent;
+    }
+    .section {
+      padding: 56px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .section:last-child {
+      border-bottom: none;
+    }
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      font-weight: 600;
+    }
+    h1 { font-size: clamp(28px, 4vw, 40px); color: var(--text); }
+    h2 { font-size: clamp(22px, 3vw, 30px); color: #3e4386; }
+    h3 { font-size: clamp(18px, 2.5vw, 24px); color: var(--text); }
+    p {
+      color: var(--muted);
+      margin: 0 0 12px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border-radius: 12px;
+      background: var(--grad);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 15px;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(124, 140, 248, 0.3);
+    }
+    .btn.ghost {
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn.ghost:hover {
+      background: var(--card);
+      border-color: #7c8cf8;
+    }
+    .cta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    @media (max-width: 768px) {
+      .cta { justify-content: center; }
+      .container { padding: 32px 16px; }
+      .section { padding: 40px 0; }
+      header { padding: 12px 16px; }
+    }
+    .lang { display: none; }
+    .lang.is-active { display: block; }
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.is-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      padding: 30px 20px;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+    
+    /* Additional styles for landing page */
+    .hero-section {
+      background: linear-gradient(135deg, rgba(124, 140, 248, 0.1), rgba(45, 225, 194, 0.1));
+      padding: 80px 0;
+      border-bottom: none;
+    }
+    .hero-content {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero-tagline {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 700;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #7c8cf8, #2de1c2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-subtitle {
+      font-size: clamp(18px, 2.5vw, 24px);
+      color: var(--muted);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 48px;
+    }
+    @media (min-width: 768px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+    }
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    .cta-section {
+      background: linear-gradient(135deg, #7c8cf8, #2de1c2);
+      color: #fff;
+      padding: 60px 0;
+      text-align: center;
+      border-bottom: none;
+    }
+    .cta-section h2,
+    .cta-section p {
+      color: #fff;
+    }
+    .cta-section .btn {
+      background: #fff;
+      color: #7c8cf8;
+      margin-top: 24px;
+    }
+    .cta-section .btn:hover {
+      background: rgba(255, 255, 255, 0.95);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <strong>Play and Pay</strong>
+  <div class="lang-switch">
+    <a href="#" data-lang-switch="en" class="active">EN</a>
+    <a href="#" data-lang-switch="fa">FA</a>
+    <a href="#" data-lang-switch="de">DE</a>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="section hero-section" data-lang>
+  <div class="container">
+    <div class="hero-content reveal">
+      <div class="lang is-active" data-i18n="en">
+        <div class="hero-tagline">Plug & Play Fair Pay</div>
+        <p class="hero-subtitle">Fair payments made simple.</p>
+        <p style="font-size: 18px; color: var(--muted); margin-bottom: 32px;">
+          Your users don't want subscriptions — they want fairness.<br>
+          Give them freedom and earn more with trust.
+        </p>
+        <div class="cta">
+          <a class="btn" href="#">Get Started</a>
+          <a class="btn ghost" href="#">Request Demo</a>
+        </div>
+      </div>
+      <div class="lang" data-i18n="fa">
+        <div class="hero-tagline">Plug & Play Fair Pay</div>
+        <p class="hero-subtitle">پرداخت منصفانه، به‌سادگی یک اتصال.</p>
+        <p style="font-size: 18px; color: var(--muted); margin-bottom: 32px;">
+          کاربران اشتراک نمی‌خوان — آزادی می‌خوان.<br>
+          بهشون انصاف بده و با اعتمادشون بیشتر درآمد بساز.
+        </p>
+        <div class="cta">
+          <a class="btn" href="#">شروع کنید</a>
+          <a class="btn ghost" href="#">درخواست دمو</a>
+        </div>
+      </div>
+      <div class="lang" data-i18n="de">
+        <div class="hero-tagline">Plug & Play Fair Pay</div>
+        <p class="hero-subtitle">Einfache, faire Zahlungen – ganz automatisch.</p>
+        <p style="font-size: 18px; color: var(--muted); margin-bottom: 32px;">
+          Nutzer wollen keine Abos – sie wollen Fairness.<br>
+          Schenke ihnen Freiheit und gewinne ihr Vertrauen.
+        </p>
+        <div class="cta">
+          <a class="btn" href="#">Jetzt starten</a>
+          <a class="btn ghost" href="#">Demo anfordern</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Product Intro Section -->
+<section class="section" data-lang>
+  <div class="container">
+    <div class="card reveal">
+      <div class="lang is-active" data-i18n="en">
+        <h2 style="text-align: center; margin-bottom: 24px;">Simple Integration, Fair Payments</h2>
+        <p style="text-align: center; font-size: 18px;">
+          Add real-time, fair, pay-as-you-use payments to any website or platform with a simple plugin or API — no blockchain experience needed.
+        </p>
+      </div>
+      <div class="lang" data-i18n="fa">
+        <h2 style="text-align: center; margin-bottom: 24px;">یکپارچه‌سازی ساده، پرداخت منصفانه</h2>
+        <p style="text-align: center; font-size: 18px;">
+          با یک پلاگین یا API ساده، پرداخت لحظه‌ای بر اساس مصرف را به هر وب‌سایت یا پلتفرمی اضافه کن — بدون نیاز به دانش بلاکچین.
+        </p>
+      </div>
+      <div class="lang" data-i18n="de">
+        <h2 style="text-align: center; margin-bottom: 24px;">Einfache Integration, faire Zahlungen</h2>
+        <p style="text-align: center; font-size: 18px;">
+          Füge minutengenaue, faire Zahlungen mit einem einfachen Plugin oder API zu deiner Website oder Plattform hinzu – ganz ohne Blockchain-Kenntnisse.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Benefits for Businesses & Developers -->
+<section class="section" data-lang>
+  <div class="container">
+    <div class="lang is-active" data-i18n="en">
+      <h2 style="text-align: center; margin-bottom: 40px;">For Developers & Businesses</h2>
+    </div>
+    <div class="lang" data-i18n="fa">
+      <h2 style="text-align: center; margin-bottom: 40px;">برای توسعه‌دهندگان و کسب‌وکارها</h2>
+    </div>
+    <div class="lang" data-i18n="de">
+      <h2 style="text-align: center; margin-bottom: 40px;">Für Entwickler & Unternehmen</h2>
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">🔌</div>
+        <div class="lang is-active" data-i18n="en">
+          <h3>Simple Integration</h3>
+          <p>Simple integration with WordPress, Joomla & CMS APIs</p>
+        </div>
+        <div class="lang" data-i18n="fa">
+          <h3>اتصال آسان</h3>
+          <p>اتصال آسان به وردپرس، جوملا و هر CMS دیگر</p>
+        </div>
+        <div class="lang" data-i18n="de">
+          <h3>Einfache Integration</h3>
+          <p>Einfache Integration mit WordPress, Joomla & CMS-APIs</p>
+        </div>
+      </div>
+      
+      <div class="feature-card reveal">
+        <div class="feature-icon">⚡</div>
+        <div class="lang is-active" data-i18n="en">
+          <h3>Transparent Settlement</h3>
+          <p>Transparent settlement for providers</p>
+        </div>
+        <div class="lang" data-i18n="fa">
+          <h3>تسویه شفاف</h3>
+          <p>تسویه شفاف و فوری برای ارائه‌دهنده</p>
+        </div>
+        <div class="lang" data-i18n="de">
+          <h3>Transparente Abrechnung</h3>
+          <p>Transparente und sofortige Abrechnung</p>
+        </div>
+      </div>
+      
+      <div class="feature-card reveal">
+        <div class="feature-icon">📈</div>
+        <div class="lang is-active" data-i18n="en">
+          <h3>Scalable Revenue</h3>
+          <p>Fair and scalable revenue model</p>
+        </div>
+        <div class="lang" data-i18n="fa">
+          <h3>درآمد مقیاس‌پذیر</h3>
+          <p>مدل درآمدی منصفانه و مقیاس‌پذیر</p>
+        </div>
+        <div class="lang" data-i18n="de">
+          <h3>Skalierbares Erlösmodell</h3>
+          <p>Faires, skalierbares Erlösmodell</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Benefits for End Users -->
+<section class="section" data-lang>
+  <div class="container">
+    <div class="card reveal">
+      <div class="lang is-active" data-i18n="en">
+        <h2 style="text-align: center; margin-bottom: 24px;">Why Users Love It</h2>
+        <p style="text-align: center; font-size: 18px;">
+          Users pay only for what they watch or listen — no subscriptions, no ads, full transparency.
+        </p>
+      </div>
+      <div class="lang" data-i18n="fa">
+        <h2 style="text-align: center; margin-bottom: 24px;">چرا کاربران دوستش دارن؟</h2>
+        <p style="text-align: center; font-size: 18px;">
+          کاربران فقط برای تماشا یا گوش‌دادن واقعی پرداخت می‌کنن — بدون اشتراک، بدون تبلیغ، با شفافیت کامل.
+        </p>
+      </div>
+      <div class="lang" data-i18n="de">
+        <h2 style="text-align: center; margin-bottom: 24px;">Warum Nutzer es lieben</h2>
+        <p style="text-align: center; font-size: 18px;">
+          Nutzer zahlen nur für das, was sie wirklich sehen oder hören – keine Abos, keine Werbung, volle Transparenz.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA Section -->
+<section class="section cta-section" data-lang>
+  <div class="container">
+    <div class="reveal">
+      <div class="lang is-active" data-i18n="en">
+        <h2 style="font-size: clamp(28px, 4vw, 36px); margin-bottom: 16px;">Let's make digital payments fair again.</h2>
+        <p style="font-size: 20px; margin-bottom: 32px;">Plug. Play. Fair Pay.</p>
+        <a class="btn" href="#" style="font-size: 18px; padding: 14px 28px;">Get Started Free</a>
+      </div>
+      <div class="lang" data-i18n="fa">
+        <h2 style="font-size: clamp(28px, 4vw, 36px); margin-bottom: 16px;">بیایید با هم پرداخت دیجیتال را دوباره منصفانه کنیم.</h2>
+        <p style="font-size: 20px; margin-bottom: 32px;">Plug. Play. Fair Pay.</p>
+        <a class="btn" href="#" style="font-size: 18px; padding: 14px 28px;">رایگان شروع کنید</a>
+      </div>
+      <div class="lang" data-i18n="de">
+        <h2 style="font-size: clamp(28px, 4vw, 36px); margin-bottom: 16px;">Lass uns digitale Zahlungen wieder fair machen.</h2>
+        <p style="font-size: 20px; margin-bottom: 32px;">Plug. Play. Fair Pay.</p>
+        <a class="btn" href="#" style="font-size: 18px; padding: 14px 28px;">Kostenlos starten</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © <span id="year"></span> Play and Pay — Fair for Users, Simple for You.
+</footer>
+
+<script>
+  // ===== Play and Pay - Main JavaScript =====
+  (function() {
+    'use strict';
+
+    // Global language state - Default: English
+    window.__pp_lang = 'en';
+
+    // Set language function
+    function setLang(lang) {
+      __pp_lang = lang;
+      
+      // Update HTML attributes
+      document.documentElement.lang = lang;
+      document.documentElement.dir = (lang === 'fa' ? 'rtl' : 'ltr');
+      
+      // Update all language blocks
+      document.querySelectorAll('[data-lang]').forEach(block => {
+        block.querySelectorAll('.lang').forEach(langEl => {
+          langEl.classList.remove('is-active');
+        });
+        
+        const target = block.querySelector('.lang[data-i18n="' + lang + '"]');
+        if (target) {
+          target.classList.add('is-active');
+        }
+      });
+      
+      // Update language switcher buttons
+      document.querySelectorAll('[data-lang-switch]').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.langSwitch === lang);
+      });
+      
+      // Save to localStorage
+      try {
+        localStorage.setItem('__pp_lang', lang);
+      } catch (e) {
+        // Ignore localStorage errors
+      }
+    }
+
+    // Expose setLang globally
+    window.__pp_setLang = setLang;
+
+    // Language switcher click handler
+    document.addEventListener('click', function(e) {
+      const btn = e.target.closest('[data-lang-switch]');
+      if (!btn) return;
+      
+      e.preventDefault();
+      const lang = btn.dataset.langSwitch;
+      if (lang) {
+        setLang(lang);
+      }
+    });
+
+    // Intersection Observer for reveal animations
+    const revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Initialize on DOM ready
+    function init() {
+      // Set initial language from localStorage or default
+      try {
+        const savedLang = localStorage.getItem('__pp_lang');
+        if (savedLang && ['fa', 'en', 'de'].includes(savedLang)) {
+          __pp_lang = savedLang;
+        }
+      } catch (e) {
+        // Ignore localStorage errors
+      }
+      
+      // Apply initial language
+      setLang(__pp_lang);
+      
+      // Observe all reveal elements
+      document.querySelectorAll('.reveal').forEach(function(el) {
+        revealObserver.observe(el);
+      });
+      
+      // Update year in footer
+      const yearEl = document.getElementById('year');
+      if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+      }
+    }
+
+    // Run on DOM ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
+</body>
+</html>
+

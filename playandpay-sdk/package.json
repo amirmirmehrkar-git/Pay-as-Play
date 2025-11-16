@@ -1,0 +1,43 @@
+{
+  "name": "@playandpay/sdk",
+  "version": "1.0.0",
+  "description": "Play and Pay SDK - Pay-as-you-use micro-payments for digital content",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node tests/run-all-tests.js",
+    "test:wallet": "node tests/test-wallet.js",
+    "test:billing": "node tests/test-billing.js",
+    "test:analytics": "node tests/test-analytics.js",
+    "test:integration": "node tests/test-integration.js",
+    "test:walletconnect": "node tests/test-walletconnect.js",
+    "build": "echo 'No build step required for ES modules'",
+    "lint": "eslint src/"
+  },
+  "keywords": [
+    "algorand",
+    "micro-payments",
+    "pay-as-you-use",
+    "blockchain",
+    "ott",
+    "vod"
+  ],
+  "author": "Play and Pay",
+  "license": "MIT",
+  "dependencies": {
+    "algosdk": "^3.0.0",
+    "@perawallet/connect": "^1.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "eslint": "^8.50.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/playandpay/sdk.git"
+  }
+}
+

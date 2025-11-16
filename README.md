@@ -1,149 +1,172 @@
-# 🎮 Pay as Play
+# 🚀 Play and Pay
+## Blockchain-Based SaaS for Real-Time Micro-Payments
 
-**پلتفرم پرداخت مبتنی بر مصرف واقعی**
-
-Pay as Play یک سیستم پرداخت نوآورانه است که به کاربران اجازه می‌دهد فقط برای محتوایی که واقعاً استفاده می‌کنند پرداخت کنند — بدون اشتراک ثابت، بدون تبلیغ، بدون هزینه اضافی.
-
----
-
-## 🎯 ایده پروژه
-
-### Vision:
-> «ما در Play and Pay باور داریم که آینده‌ی پرداخت در سادگی و انصاف خلاصه می‌شه. کاربران نباید برای اشتراک‌هایی که استفاده نمی‌کنن پول بدن.»
-
-### Core Value:
-- **کاربران آزاد** — بدون قید و شرط اشتراک
-- **پرداخت منصفانه** — فقط برای مصرف واقعی
-- **درآمد شفاف** — برای همه (کاربر و کسب‌وکار)
+**Pay-as-you-use micro-payments for digital content using Algorand**
 
 ---
 
-## ✨ ویژگی‌ها
+## 📋 Project Overview
 
-### برای کاربران:
-- ✅ پرداخت دقیقه‌ای یا ثانیه‌ای
-- ✅ بدون اشتراک ثابت
-- ✅ بدون تبلیغ مزاحم
-- ✅ کنترل کامل روی هزینه‌ها
-- ✅ شفافیت کامل در پرداخت
+Play and Pay is a blockchain-based SaaS platform that enables real-time, consumption-based micro-payments for digital content using Algorand blockchain.
 
-### برای توسعه‌دهندگان:
-- ✅ افزونه‌های آماده (WordPress, Joomla, ...)
-- ✅ APIهای ساده و سبک
-- ✅ بدون نیاز به دانش بلاکچین
-- ✅ پیاده‌سازی سریع
-- ✅ مستندات کامل
+### Core Features
+
+- ✅ **Real-Time Micro-Payments Engine** - Per-minute/second billing
+- ✅ **Wallet & Transparent Settlement** - ASA-based wallets with transparent on-chain/off-chain reconciliation
+- ✅ **Smart Contracts** - Algorand Smart Contracts (ASC1) for automated billing
+- ✅ **Core SDK** - JavaScript SDK for easy integration
+- ✅ **WalletConnect Integration** - Pera Wallet for user-side transaction signing
+- ✅ **Multi-Platform Support** - WordPress, React, Vue, Node.js plugins
 
 ---
 
-## 🛠️ Tech Stack
+## 🏗️ Project Structure
 
-- **Framework:** Next.js 16.0.1
-- **Language:** TypeScript 5
-- **Styling:** Tailwind CSS v4
-- **AI Agents:** BMAD Method v4.44.3
-- **Package Manager:** npm
+```
+pay-as-play-project/
+├── .bmad-core/                    # BMAD agents knowledge base
+│   └── knowledge/
+│       ├── project-context/       # Project management docs
+│       └── technical/             # Technical documentation
+│           ├── smart-contracts/   # Smart contract code & scripts
+│           └── testnet-tools/     # TestNet utilities
+├── playandpay-sdk/                # Core SDK
+│   ├── src/                       # SDK source code
+│   │   ├── wallet.js             # Wallet Manager
+│   │   ├── billing.js            # Billing Engine
+│   │   ├── analytics.js          # Analytics Client
+│   │   └── wallet-connect.js     # WalletConnect integration
+│   └── tests/                     # Test suites
+└── README.md
+```
 
 ---
 
-## 🚀 شروع سریع
+## 🚀 Quick Start
 
-### پیش‌نیازها:
-- Node.js 18+
-- npm یا yarn
+### Prerequisites
 
-### نصب:
+- Node.js >= 16.0.0
+- Python 3.8+
+- Algorand TestNet account
+
+### Installation
 
 ```bash
 # Clone repository
-git clone https://github.com/amirmirmehrkar-git/Pay-as-Play.git
-cd Pay-as-Play
+git clone https://github.com/yourusername/play-and-pay.git
+cd play-and-pay
 
-# Install dependencies
+# Install SDK dependencies
+cd playandpay-sdk
 npm install
 
-# Run development server
-npm run dev
-```
-
-### باز کردن در مرورگر:
-```
-http://localhost:3000
+# Install Smart Contract dependencies
+cd ../.bmad-core/knowledge/technical/smart-contracts
+pip install pyteal
 ```
 
 ---
 
-## 📚 مستندات
+## 📚 Documentation
 
-### Knowledge Base:
-تمام دانش پروژه در `.bmad-core/knowledge/` قرار دارد:
+### Smart Contracts
+- **Contract Code:** [`usage-contract.py`](.bmad-core/knowledge/technical/smart-contracts/usage-contract.py)
+- **Deployment Guide:** [Deployment Guide](.bmad-core/knowledge/technical/smart-contracts/DEPLOYMENT_GUIDE.md)
+- **Test Plan:** [Test Plan](.bmad-core/knowledge/technical/smart-contracts/TEST_PLAN.md)
 
-- **Project Overview:** [knowledge/project-context/project-overview.md](.bmad-core/knowledge/project-context/project-overview.md)
-- **Business Model:** [knowledge/project-context/business-model.md](.bmad-core/knowledge/project-context/business-model.md)
-- **Brand Messaging:** [knowledge/references/brand-messaging.md](.bmad-core/knowledge/references/brand-messaging.md)
+### Core SDK
+- **SDK README:** [SDK Documentation](playandpay-sdk/README.md)
+- **Testing Guide:** [Testing Guide](playandpay-sdk/TESTING.md)
 
-### برای افزودن دانش:
-مراجعه کنید به [ADD_KNOWLEDGE_GUIDE.md](ADD_KNOWLEDGE_GUIDE.md)
-
----
-
-## 🤖 استفاده از AI Agents (BMAD)
-
-این پروژه از BMAD Method برای مدیریت و توسعه استفاده می‌کند.
-
-### Agents موجود:
-- `@bmad-master` - Universal task executor
-- `@dev` - Full-stack developer
-- `@architect` - Solution architect
-- `@pm` - Product manager
-- و سایر agents...
-
-### نحوه استفاده:
-در Cursor (Ctrl+L یا Cmd+L):
-```
-@dev create a payment API route
-```
+### Project Management
+- **Sprint 1:** [Sprint 1 Documentation](.bmad-core/knowledge/project-context/SPRINT1_START.md)
+- **Sprint 2:** [Sprint 2 Complete](.bmad-core/knowledge/project-context/SPRINT2_COMPLETE.md)
+- **Sprint 3:** [Sprint 3 Complete](.bmad-core/knowledge/project-context/SPRINT3_COMPLETE.md)
 
 ---
 
-## 📁 ساختار پروژه
+## 🧪 Testing
 
+### Smart Contract Tests
+
+```bash
+cd .bmad-core/knowledge/technical/smart-contracts
+node test-contract.js
 ```
-Pay-as-Play/
-├── app/                    # Next.js App Router
-├── components/             # React Components
-├── .bmad-core/             # BMAD Knowledge Base
-│   └── knowledge/          # دانش مشترک پروژه
-├── .cursor/                # Cursor Rules
-└── public/                 # Static Files
+
+### SDK Tests
+
+```bash
+cd playandpay-sdk
+npm test
 ```
 
 ---
 
-## 🤝 مشارکت
+## 🔧 Development
 
-در حال حاضر این پروژه در مرحله توسعه اولیه است.
+### Smart Contract Development
 
----
+```bash
+# Compile contract
+python usage-contract.py
 
-## 📄 لایسنس
+# Deploy to TestNet
+node complete-deployment.js
+```
 
-[در حال تصمیم‌گیری]
+### SDK Development
 
----
-
-## 🔗 لینک‌های مفید
-
-- [GitHub Repository](https://github.com/amirmirmehrkar-git/Pay-as-Play)
-- [Next.js Documentation](https://nextjs.org/docs)
-- [BMAD Method](https://github.com/bmad-method)
-
----
-
-## 📧 تماس
-
-برای سوالات یا پیشنهادات، لطفاً یک Issue ایجاد کنید.
+```bash
+cd playandpay-sdk
+npm run test:wallet
+npm run test:billing
+npm run test:analytics
+npm run test:integration
+```
 
 ---
 
-**Made with ❤️ for fair and transparent payments**
+## 📊 Project Status
+
+### Phase 1: Proof of Concept
+
+| Sprint | Status | Progress |
+|--------|--------|----------|
+| Sprint 1: Smart Contract | 🟡 Ready | 77% (after funding) |
+| Sprint 2: Core SDK | ✅ Complete | 100% |
+| Sprint 3: WalletConnect | ✅ Complete | 100% |
+
+**Overall Progress:** 93% (39/42 story points)
+
+---
+
+## 🔒 Security
+
+- ✅ No server-side mnemonics
+- ✅ User-side transaction signing via WalletConnect
+- ✅ Private keys never leave user's wallet
+- ✅ Secure by design
+
+---
+
+## 📝 License
+
+MIT License
+
+---
+
+## 🤝 Contributing
+
+Contributions welcome! Please read our contributing guidelines.
+
+---
+
+## 📧 Contact
+
+For questions or support, please open an issue on GitHub.
+
+---
+
+**Built with ❤️ using Algorand**
