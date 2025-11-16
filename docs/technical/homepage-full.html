@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Play and Pay | Plug & Play Fair Pay</title>
+<style>
+:root{
+  --grad:linear-gradient(135deg,#7c8cf8,#2de1c2);
+  --bg:#ffffff;
+  --card:#f8f9fb;
+  --border:#e4e6ed;
+  --text:#20253a;
+  --muted:#6b7086;
+  --radius:12px;
+  --max:1100px;
+}
+body{background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,sans-serif;margin:0;line-height:1.7;}
+header{background:var(--bg);border-bottom:1px solid var(--border);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;}
+.lang-switch button{background:none;border:1px solid var(--border);border-radius:6px;padding:5px 10px;margin:0 4px;cursor:pointer;color:var(--text);}
+.lang-switch button.active{background:var(--grad);color:#fff;font-weight:700;}
+.container{max-width:var(--max);margin:auto;padding:40px 20px;}
+h1{font-size:2.1rem;margin:0;color:#20253a;}
+h2{color:#3c4080;}
+p{color:var(--muted);}
+.section{padding:60px 0;border-bottom:1px solid var(--border);}
+.cta a{background:var(--grad);color:#fff;text-decoration:none;padding:10px 18px;border-radius:var(--radius);font-weight:600;margin:0 6px;display:inline-block;}
+.hidden{display:none;}
+footer{text-align:center;font-size:13px;color:var(--muted);padding:20px;border-top:1px solid var(--border);}
+.hero{display:grid;gap:20px;}
+@media(min-width:900px){.hero{grid-template-columns:1.1fr .9fr;align-items:center;}}
+.card{background:var(--card);padding:25px;border-radius:var(--radius);border:1px solid var(--border);}
+ul{padding-left:20px;}
+</style>
+</head>
+<body>
+
+<header>
+  <strong>Play and Pay</strong>
+  <div class="lang-switch">
+    <button data-lang="fa" class="active">FA</button>
+    <button data-lang="en">EN</button>
+    <button data-lang="de">DE</button>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- 🇮🇷 فارسی -->
+<section id="lang-fa" class="lang-block">
+  <div class="section hero">
+    <div>
+      <h1>Plug & Play Fair Pay</h1>
+      <p>پرداخت منصفانه، به‌سادگی یک اتصال.</p>
+      <p>پِلی‌اَند‌پِی با همکاری توسعه‌دهنده‌ها و کسب‌وکارها به مردم کمک می‌کنه تا برای تماشای و شنیدن محتوا، فقط به‌اندازه‌ی مصرف واقعی خودشون پرداخت کنن — نه بیشتر.</p>
+      <div class="cta"><a href="#">شروع رایگان</a><a href="#">درخواست دمو</a></div>
+    </div>
+    <div class="card">
+      <h2>چرا مهمه؟</h2>
+      <p>کاربران از اشتراک‌های بلااستفاده خسته شدن. با پلی‌اند‌پی، فقط برای مصرف واقعی‌شون پرداخت می‌کنن و برندها هم اعتماد بیشتری به‌دست میارن.</p>
+      <ul>
+        <li>شفافیت کامل در پرداخت و مصرف</li>
+        <li>بدون تبلیغ، بدون هزینه اضافی</li>
+        <li>مدل درآمدی پایدار برای کسب‌وکار</li>
+      </ul>
+    </div>
+  </div>
+  <div class="section">
+    <h2>برای توسعه‌دهندگان و کسب‌وکارها</h2>
+    <p>با افزونه‌ها و APIهای آماده، پرداخت بر اساس مصرف را به هر سایت یا سرویس اضافه کن. حتی با دانش فنی کم، می‌تونی مدل Pay-as-you-use را فعال کنی.</p>
+    <ul>
+      <li>پلاگین‌های آماده برای WordPress و Joomla</li>
+      <li>API سبک و مستند برای هر CMS</li>
+      <li>تسویه آنی و شفاف</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h2>چرا کاربران دوستش دارن؟</h2>
+    <ul>
+      <li>پرداخت فقط برای زمان واقعی مصرف</li>
+      <li>بدون اشتراک یا لغو</li>
+      <li>تجربه‌ای آزاد، منصفانه و بدون تبلیغ</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h2>به جنبش پرداخت منصفانه بپیوند!</h2>
+    <p>بیایید با هم پرداخت دیجیتال را دوباره منصفانه کنیم.</p>
+    <div class="cta"><a href="#">Plug. Play. Fair Pay.</a></div>
+  </div>
+</section>
+
+<!-- 🇬🇧 English -->
+<section id="lang-en" class="lang-block hidden" dir="ltr">
+  <div class="section hero">
+    <div>
+      <h1>Plug & Play Fair Pay</h1>
+      <p>Fair payments made simple.</p>
+      <p>Play and Pay helps users watch and listen freely, paying only for what they actually use — nothing more.</p>
+      <div class="cta"><a href="#">Get Started</a><a href="#">Request Demo</a></div>
+    </div>
+    <div class="card">
+      <h2>Why It Matters</h2>
+      <p>People are tired of unused subscriptions. With Play and Pay, they pay only for real usage, and brands gain trust and loyalty.</p>
+      <ul>
+        <li>Transparent usage & payment tracking</li>
+        <li>No ads, no hidden fees</li>
+        <li>Sustainable revenue for creators</li>
+      </ul>
+    </div>
+  </div>
+  <div class="section">
+    <h2>For Developers & Businesses</h2>
+    <p>Integrate real-time, pay-as-you-use billing into any site or service with ready plugins and APIs — no deep tech skills required.</p>
+    <ul>
+      <li>Ready plugins for WordPress & Joomla</li>
+      <li>Lightweight API for any CMS</li>
+      <li>Instant, transparent settlements</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h2>Why Users Love It</h2>
+    <ul>
+      <li>Pay only for what they use</li>
+      <li>No subscriptions or cancellations</li>
+      <li>Fair, ad-free experience</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h2>Join the Fair Pay Movement</h2>
+    <p>Let's make digital payments fair again.</p>
+    <div class="cta"><a href="#">Plug. Play. Fair Pay.</a></div>
+  </div>
+</section>
+
+<!-- 🇩🇪 Deutsch -->
+<section id="lang-de" class="lang-block hidden" dir="ltr">
+  <div class="section hero">
+    <div>
+      <h1>Plug & Play Fair Pay</h1>
+      <p>Einfache, faire Zahlungen – ganz automatisch.</p>
+      <p>Play and Pay hilft Menschen, Inhalte frei zu genießen und nur für die tatsächliche Nutzung zu zahlen – nicht mehr.</p>
+      <div class="cta"><a href="#">Kostenlos starten</a><a href="#">Demo anfordern</a></div>
+    </div>
+    <div class="card">
+      <h2>Warum es wichtig ist</h2>
+      <p>Nutzer sind müde von ungenutzten Abos. Mit Play and Pay zahlen sie nur für echte Nutzung, und Marken gewinnen Vertrauen.</p>
+      <ul>
+        <li>Volle Transparenz bei Nutzung & Zahlungen</li>
+        <li>Keine Werbung, keine versteckten Kosten</li>
+        <li>Nachhaltiges Umsatzmodell für Anbieter</li>
+      </ul>
+    </div>
+  </div>
+  <div class="section">
+    <h2>Für Entwickler & Unternehmen</h2>
+    <p>Mit fertigen Plugins und APIs lässt sich „Bezahlen nach Nutzung" in jede Website oder Plattform integrieren – ganz ohne komplizierte Technik.</p>
+    <ul>
+      <li>Fertige Plugins für WordPress & Joomla</li>
+      <li>Leichtes API für jedes CMS</li>
+      <li>Sofortige, transparente Abrechnung</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h2>Warum Nutzer es lieben</h2>
+    <ul>
+      <li>Zahlen nur für echte Nutzung</li>
+      <li>Keine Abos, keine Kündigungen</li>
+      <li>Faires, werbefreies Erlebnis</li>
+    </ul>
+  </div>
+  <div class="section">
+    <h2>Mach mit beim Fair Pay Movement</h2>
+    <p>Lass uns digitale Zahlungen wieder fair machen.</p>
+    <div class="cta"><a href="#">Plug. Play. Fair Pay.</a></div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  © <span id="year"></span> Play and Pay — Fair for Users, Simple for You.
+</footer>
+
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+const buttons=document.querySelectorAll(".lang-switch button"),blocks=document.querySelectorAll(".lang-block");
+buttons.forEach(btn=>{
+ btn.addEventListener("click",()=>{
+  buttons.forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  const lang=btn.dataset.lang;
+  blocks.forEach(block=>block.classList.add("hidden"));
+  document.getElementById("lang-"+lang).classList.remove("hidden");
+  if(lang==="fa"){document.documentElement.lang="fa";document.documentElement.dir="rtl";}
+  else{document.documentElement.lang=lang;document.documentElement.dir="ltr";}
+ });
+});
+</script>
+</body>
+</html>
+

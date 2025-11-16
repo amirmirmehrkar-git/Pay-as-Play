@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Play and Pay - Fair Streaming Platform</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IRANSansX:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS Variables (Design Tokens) -->
+  <style>
+    :root {
+      --color-primary-start: #7C8CF8;
+      --color-primary-end: #2DE1C2;
+      --color-bg-light: #FFFFFF;
+      --color-bg-dark: #0F172A;
+      --color-surface-light: #F9FAFB;
+      --color-surface-dark: #1E293B;
+      --color-text-light: #1A1F3A;
+      --color-text-dark: #F1F5F9;
+    }
+
+    [data-theme="light"] {
+      background-color: var(--color-bg-light);
+      color: var(--color-text-light);
+    }
+
+    [data-theme="dark"] {
+      background-color: var(--color-bg-dark);
+      color: var(--color-text-dark);
+    }
+
+    [dir="rtl"] {
+      font-family: 'IRANSansX', 'IRANSans', sans-serif;
+    }
+
+    [dir="ltr"] {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .text-gradient-primary {
+      background: linear-gradient(135deg, var(--color-primary-start) 0%, var(--color-primary-end) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .bg-gradient-primary {
+      background: linear-gradient(135deg, var(--color-primary-start) 0%, var(--color-primary-end) 100%);
+    }
+
+    [data-theme="dark"] .bg-gradient-primary {
+      background: linear-gradient(135deg, var(--color-primary-end) 0%, var(--color-primary-start) 100%);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--color-primary-start) 0%, var(--color-primary-end) 100%);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 500;
+      font-size: 14px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      transition: all 200ms ease-in-out;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .card {
+      background: var(--color-surface-light);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      transition: all 200ms ease-in-out;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      transform: translateY(-2px);
+    }
+
+    [data-theme="dark"] .card {
+      background: var(--color-surface-dark);
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    [data-theme="dark"] .card:hover {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Smooth Transitions */
+    * {
+      transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 200ms;
+    }
+
+    /* Focus Styles */
+    button:focus,
+    a:focus {
+      outline: 2px solid var(--color-primary-start);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+
+<body class="font-sans transition-colors duration-300 min-h-screen">
+  <!-- Header -->
+  <header class="flex justify-between items-center px-4 md:px-6 py-4 shadow-md bg-[var(--color-surface-light)] dark:bg-[var(--color-surface-dark)]">
+    <h1 class="text-2xl md:text-3xl font-bold text-gradient-primary">
+      Play and Pay
+    </h1>
+    <div class="flex items-center gap-2 md:gap-3">
+      <button id="langBtn" class="px-3 py-1.5 border border-[var(--color-primary-start)] dark:border-[var(--color-primary-end)] rounded-md text-sm font-medium hover:bg-[var(--color-primary-start)]/10 transition-colors">
+        EN
+      </button>
+      <button id="themeBtn" class="px-3 py-1.5 border border-[var(--color-primary-start)] dark:border-[var(--color-primary-end)] rounded-md text-sm font-medium hover:bg-[var(--color-primary-start)]/10 transition-colors">
+        تیره
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="text-center py-12 md:py-16 lg:py-20 px-4 md:px-6">
+    <h2 id="heroTitle" class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 text-gradient-primary max-w-4xl mx-auto">
+      هر ثانیه مهم است — منصفانه بپرداز، آزاد پخش کن.
+    </h2>
+    <p id="heroDesc" class="max-w-2xl mx-auto text-base md:text-lg text-gray-600 dark:text-gray-300 mb-6 md:mb-8">
+      تجربه‌ای منصفانه و شفاف از تماشا، بر پایه بلاک‌چین الگوراند و توکن پلی‌کوین (PLY).
+    </p>
+    <button id="ctaBtn" class="btn-primary mt-6 md:mt-8 text-base md:text-lg font-semibold">
+      شروع کنید
+    </button>
+  </section>
+
+  <!-- Features -->
+  <section class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 px-4 md:px-6 py-8 md:py-12 max-w-6xl mx-auto">
+    <div class="card">
+      <h3 id="f1Title" class="text-xl md:text-2xl font-semibold mb-3 text-[var(--color-primary-start)] dark:text-[var(--color-primary-end)]">
+        منصفانه و شفاف
+      </h3>
+      <p id="f1Desc" class="text-base text-gray-600 dark:text-gray-300">
+        پرداخت به ازای دقیقه، نه اشتراک ماهانه.
+      </p>
+    </div>
+    <div class="card">
+      <h3 id="f2Title" class="text-xl md:text-2xl font-semibold mb-3 text-[var(--color-primary-start)] dark:text-[var(--color-primary-end)]">
+        بدون تبلیغ، با کنترل کامل
+      </h3>
+      <p id="f2Desc" class="text-base text-gray-600 dark:text-gray-300">
+        از محتوای دلخواه، بدون مزاحمت تبلیغاتی لذت ببرید.
+      </p>
+    </div>
+    <div class="card">
+      <h3 id="f3Title" class="text-xl md:text-2xl font-semibold mb-3 text-[var(--color-primary-start)] dark:text-[var(--color-primary-end)]">
+        تسویه لحظه‌ای
+      </h3>
+      <p id="f3Desc" class="text-base text-gray-600 dark:text-gray-300">
+        توسط قراردادهای هوشمند الگوراند انجام می‌شود.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="text-center py-12 md:py-16 lg:py-20 px-4 md:px-6 bg-gradient-primary text-white">
+    <h3 id="ctaTitle" class="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6">
+      به انقلاب تماشای منصفانه بپیوندید
+    </h3>
+    <p id="ctaDesc" class="mb-6 md:mb-8 text-base md:text-lg max-w-2xl mx-auto opacity-90">
+      همین حالا ثبت‌نام کنید و ۱۰ یورو پلی‌کوین هدیه بگیرید!
+    </p>
+    <button class="bg-white text-[var(--color-primary-start)] dark:text-[var(--color-primary-end)] px-8 md:px-10 py-3 md:py-4 rounded-md font-semibold text-base md:text-lg shadow-lg hover:shadow-xl transition-all hover:scale-105">
+      ثبت‌نام رایگان
+    </button>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 md:py-8 text-sm md:text-base text-gray-500 dark:text-gray-400">
+    © <span id="year">2025</span> Play and Pay — <span id="footerText">کلیه حقوق محفوظ است.</span>
+  </footer>
+
+  <!-- JS for Language + Theme -->
+  <script>
+    const langBtn = document.getElementById("langBtn");
+    const themeBtn = document.getElementById("themeBtn");
+    const html = document.documentElement;
+
+    const texts = {
+      fa: {
+        heroTitle: "هر ثانیه مهم است — منصفانه بپرداز، آزاد پخش کن.",
+        heroDesc: "تجربه‌ای منصفانه و شفاف از تماشا، بر پایه بلاک‌چین الگوراند و توکن پلی‌کوین (PLY).",
+        ctaBtn: "شروع کنید",
+        f1Title: "منصفانه و شفاف",
+        f1Desc: "پرداخت به ازای دقیقه، نه اشتراک ماهانه.",
+        f2Title: "بدون تبلیغ، با کنترل کامل",
+        f2Desc: "از محتوای دلخواه، بدون مزاحمت تبلیغاتی لذت ببرید.",
+        f3Title: "تسویه لحظه‌ای",
+        f3Desc: "توسط قراردادهای هوشمند الگوراند انجام می‌شود.",
+        ctaTitle: "به انقلاب تماشای منصفانه بپیوندید",
+        ctaDesc: "همین حالا ثبت‌نام کنید و ۱۰ یورو پلی‌کوین هدیه بگیرید!",
+        footer: "کلیه حقوق محفوظ است.",
+        langBtn: "EN",
+        themeBtn: "تیره",
+      },
+      en: {
+        heroTitle: "Every second counts — pay fair, play free.",
+        heroDesc: "Experience fair, transparent streaming powered by Algorand and PlayCoin (PLY).",
+        ctaBtn: "Get Started",
+        f1Title: "Fair & Transparent",
+        f1Desc: "Pay per minute, not per month.",
+        f2Title: "No Ads, Full Control",
+        f2Desc: "Enjoy pure content with your own pace.",
+        f3Title: "Instant Settlement",
+        f3Desc: "Powered by Algorand Smart Contracts.",
+        ctaTitle: "Join the Fair Streaming Revolution",
+        ctaDesc: "Sign up today and get €10 worth of PlayCoins!",
+        footer: "All rights reserved.",
+        langBtn: "فا",
+        themeBtn: "Dark",
+      }
+    };
+
+    let lang = "fa";
+    let dark = false;
+
+    // Update year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Language Toggle
+    langBtn.addEventListener("click", () => {
+      lang = lang === "fa" ? "en" : "fa";
+      html.lang = lang;
+      html.dir = lang === "fa" ? "rtl" : "ltr";
+      
+      const t = texts[lang];
+      document.getElementById("heroTitle").textContent = t.heroTitle;
+      document.getElementById("heroDesc").textContent = t.heroDesc;
+      document.getElementById("ctaBtn").textContent = t.ctaBtn;
+      document.getElementById("f1Title").textContent = t.f1Title;
+      document.getElementById("f1Desc").textContent = t.f1Desc;
+      document.getElementById("f2Title").textContent = t.f2Title;
+      document.getElementById("f2Desc").textContent = t.f2Desc;
+      document.getElementById("f3Title").textContent = t.f3Title;
+      document.getElementById("f3Desc").textContent = t.f3Desc;
+      document.getElementById("ctaTitle").textContent = t.ctaTitle;
+      document.getElementById("ctaDesc").textContent = t.ctaDesc;
+      document.getElementById("footerText").textContent = t.footer;
+      langBtn.textContent = t.langBtn;
+      themeBtn.textContent = t.themeBtn;
+    });
+
+    // Theme Toggle
+    themeBtn.addEventListener("click", () => {
+      dark = !dark;
+      html.dataset.theme = dark ? "dark" : "light";
+      themeBtn.textContent = dark 
+        ? (lang === "fa" ? "روشن" : "Light")
+        : (lang === "fa" ? "تیره" : "Dark");
+    });
+  </script>
+</body>
+</html>
+
