@@ -7,26 +7,42 @@ on:
       - master
   workflow_dispatch:
 
+# Allow workflow to write to repository
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for git
         
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
+        if: hashFiles('package.json') != ''
           
       - name: Install dependencies
-        run: npm ci
+        run: |
+          if [ -f "package.json" ]; then
+            npm ci
+          else
+            echo "No package.json found, skipping npm install"
+          fi
+        continue-on-error: true
         
       - name: Build documentation
         run: |
           echo "Documentation build step (if needed)"
           # Add build commands here if needed
+        continue-on-error: true
           
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
@@ -35,4 +51,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./.bmad-core/knowledge
           destination_dir: ./docs
+          cname: false
+          keep_files: false
 
