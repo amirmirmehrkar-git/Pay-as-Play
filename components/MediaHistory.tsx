@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 
@@ -14,6 +14,64 @@ interface MediaItem {
   watchCount: number;
 }
 
+const sampleMediaHistory: MediaItem[] = [
+  {
+    id: 'mh-1',
+    platform: 'Netflix',
+    platformIcon: 'ðŸŽ¬',
+    title: 'Foundation S02E05',
+    category: 'video',
+    duration: 3200,
+    cost: 2.8,
+    watchedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    watchCount: 1,
+  },
+  {
+    id: 'mh-2',
+    platform: 'Spotify',
+    platformIcon: 'ðŸŽµ',
+    title: 'AI Disruption Podcast',
+    category: 'audio',
+    duration: 1800,
+    cost: 0.9,
+    watchedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    watchCount: 2,
+  },
+  {
+    id: 'mh-3',
+    platform: 'Coursera',
+    platformIcon: 'ðŸ“š',
+    title: 'Product Analytics Crash Course',
+    category: 'learn',
+    duration: 5400,
+    cost: 3.5,
+    watchedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    watchCount: 1,
+  },
+  {
+    id: 'mh-4',
+    platform: 'Steam',
+    platformIcon: 'ðŸŽ®',
+    title: 'Baldur's Gate III',
+    category: 'entertainment',
+    duration: 7200,
+    cost: 4.2,
+    watchedAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString(),
+    watchCount: 3,
+  },
+  {
+    id: 'mh-5',
+    platform: 'MasterClass',
+    platformIcon: 'ðŸŽ­',
+    title: 'Chris Voss Teaches Negotiation',
+    category: 'learn',
+    duration: 3600,
+    cost: 2.1,
+    watchedAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+    watchCount: 1,
+  },
+];
+
 export default function MediaHistory() {
   const [mediaHistory, setMediaHistory] = useState<MediaItem[]>([]);
   const [filter, setFilter] = useState<'all' | 'video' | 'audio' | 'learn' | 'entertainment'>('all');
@@ -28,6 +86,11 @@ export default function MediaHistory() {
     try {
       const stored = localStorage.getItem('media_history');
       let history: MediaItem[] = stored ? JSON.parse(stored) : [];
+
+      if (!stored || history.length === 0) {
+        history = sampleMediaHistory;
+        localStorage.setItem('media_history', JSON.stringify(history));
+      }
 
       // Apply filters
       if (filter !== 'all') {
@@ -115,7 +178,7 @@ export default function MediaHistory() {
         <div className="rounded-xl border border-zinc-200 bg-gradient-to-br from-green-50 to-emerald-50 p-4 dark:border-zinc-800 dark:from-green-900/20 dark:to-emerald-900/20">
           <div className="text-sm font-medium text-zinc-600 dark:text-zinc-400">Total Spent</div>
           <div className="mt-1 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-            €{totalCost.toFixed(2)}
+            â‚¬{totalCost.toFixed(2)}
           </div>
         </div>
         <div className="rounded-xl border border-zinc-200 bg-gradient-to-br from-purple-50 to-pink-50 p-4 dark:border-zinc-800 dark:from-purple-900/20 dark:to-pink-900/20">
@@ -194,13 +257,13 @@ export default function MediaHistory() {
                     </span>
                   </div>
                   <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">
-                    {item.platform} • Watched {item.watchCount} {item.watchCount === 1 ? 'time' : 'times'}
+                    {item.platform} â€¢ Watched {item.watchCount} {item.watchCount === 1 ? 'time' : 'times'}
                   </p>
                   <div className="flex flex-wrap items-center gap-4 text-xs text-zinc-500 dark:text-zinc-500">
-                    <span>⏱️ {formatDuration(item.duration)}</span>
-                    <span>💰 €{item.cost.toFixed(2)}</span>
-                    <span>📅 {new Date(item.watchedAt).toLocaleDateString()}</span>
-                    <span>🕐 {new Date(item.watchedAt).toLocaleTimeString()}</span>
+                    <span>â±ï¸ {formatDuration(item.duration)}</span>
+                    <span>ðŸ’° â‚¬{item.cost.toFixed(2)}</span>
+                    <span>ðŸ“… {new Date(item.watchedAt).toLocaleDateString()}</span>
+                    <span>ðŸ• {new Date(item.watchedAt).toLocaleTimeString()}</span>
                   </div>
                 </div>
               </div>

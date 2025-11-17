@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import { getAnalytics, getWalletConnect } from '@/lib/sdk';
@@ -25,14 +25,87 @@ interface Coupon {
   used: boolean;
 }
 
+const demoUserStats = {
+  totalTimeWatched: 3 * 3600,
+  totalSpent: 9.6,
+  contentCount: 14,
+};
+
+const demoMediaHistory: MediaItem[] = [
+  {
+    id: 'da-1',
+    platform: 'Netflix',
+    title: 'Mindhunter Documentary',
+    category: 'video',
+    timeWatched: 2700,
+    cost: 1.4,
+    date: '2025-11-18',
+  },
+  {
+    id: 'da-2',
+    platform: 'Spotify',
+    title: 'Design Matters Podcast',
+    category: 'audio',
+    timeWatched: 1800,
+    cost: 0.7,
+    date: '2025-11-17',
+  },
+  {
+    id: 'da-3',
+    platform: 'Coursera',
+    title: 'Advanced Analytics',
+    category: 'learn',
+    timeWatched: 3600,
+    cost: 2.9,
+    date: '2025-11-15',
+  },
+];
+
+const demoCoupons: Coupon[] = [
+  {
+    id: 'dc-1',
+    code: 'WELCOME10',
+    type: 'discount',
+    value: 10,
+    validUntil: '2025-12-31',
+    used: false,
+  },
+  {
+    id: 'dc-2',
+    code: 'FREEMONTH',
+    type: 'free',
+    value: 30,
+    validUntil: '2025-11-30',
+    used: true,
+  },
+  {
+    id: 'dc-3',
+    code: 'BONUS50',
+    type: 'bonus',
+    value: 50,
+    validUntil: '2025-12-15',
+    used: false,
+  },
+];
+
 export default function AnalyticsPage() {
   const [timeWatched, setTimeWatched] = useState('0h 0m');
-  const [totalSpent, setTotalSpent] = useState('€0.00');
+  const [totalSpent, setTotalSpent] = useState('â‚¬0.00');
   const [contentCount, setContentCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [dateRange, setDateRange] = useState('month');
   const [mediaHistory, setMediaHistory] = useState<MediaItem[]>([]);
   const [coupons, setCoupons] = useState<Coupon[]>([]);
+
+  const applyDemoData = () => {
+    const hours = Math.floor(demoUserStats.totalTimeWatched / 3600);
+    const minutes = Math.floor((demoUserStats.totalTimeWatched % 3600) / 60);
+    setTimeWatched(`${hours}h ${minutes}m`);
+    setTotalSpent(`â‚¬${demoUserStats.totalSpent.toFixed(2)}`);
+    setContentCount(demoUserStats.contentCount);
+    setMediaHistory(demoMediaHistory);
+    setCoupons(demoCoupons);
+  };
 
   useEffect(() => {
     loadAnalytics();
@@ -45,6 +118,7 @@ export default function AnalyticsPage() {
       const address = wc.getConnectedAddress();
       
       if (!address) {
+        applyDemoData();
         setLoading(false);
         return;
       }
@@ -61,71 +135,19 @@ export default function AnalyticsPage() {
       setTimeWatched(`${hours}h ${minutes}m`);
 
       // Format total spent
-      setTotalSpent(`€${(userStats.totalSpent || 0).toFixed(2)}`);
+      setTotalSpent(`â‚¬${(userStats.totalSpent || 0).toFixed(2)}`);
 
       // Set content count
       setContentCount(userStats.contentCount || 0);
 
       // Load media history (mock data for now)
-      setMediaHistory([
-        {
-          id: '1',
-          platform: 'Netflix',
-          title: 'Sample Movie',
-          category: 'video',
-          timeWatched: 3600,
-          cost: 1.2,
-          date: '2025-11-16',
-        },
-        {
-          id: '2',
-          platform: 'Spotify',
-          title: 'Sample Podcast',
-          category: 'audio',
-          timeWatched: 1800,
-          cost: 0.6,
-          date: '2025-11-15',
-        },
-        {
-          id: '3',
-          platform: 'Coursera',
-          title: 'Sample Course',
-          category: 'learn',
-          timeWatched: 5400,
-          cost: 2.7,
-          date: '2025-11-14',
-        },
-      ]);
+      setMediaHistory(demoMediaHistory);
 
       // Load coupons (mock data for now)
-      setCoupons([
-        {
-          id: '1',
-          code: 'WELCOME10',
-          type: 'discount',
-          value: 10,
-          validUntil: '2025-12-31',
-          used: false,
-        },
-        {
-          id: '2',
-          code: 'FREEMONTH',
-          type: 'free',
-          value: 30,
-          validUntil: '2025-11-30',
-          used: true,
-        },
-        {
-          id: '3',
-          code: 'BONUS50',
-          type: 'bonus',
-          value: 50,
-          validUntil: '2025-12-15',
-          used: false,
-        },
-      ]);
+      setCoupons(demoCoupons);
     } catch (err) {
       console.error('Error loading analytics:', err);
+      applyDemoData();
     } finally {
       setLoading(false);
     }
@@ -165,7 +187,7 @@ export default function AnalyticsPage() {
           <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
             <div className="mb-2 flex items-center justify-between">
               <span className="text-sm text-zinc-600 dark:text-zinc-400">Time Watched</span>
-              <span className="text-2xl">⏱️</span>
+              <span className="text-2xl">â±ï¸</span>
             </div>
             {loading ? (
               <div className="h-8 w-24 animate-pulse rounded bg-zinc-200 dark:bg-zinc-700" />
@@ -179,7 +201,7 @@ export default function AnalyticsPage() {
           <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
             <div className="mb-2 flex items-center justify-between">
               <span className="text-sm text-zinc-600 dark:text-zinc-400">Total Spent</span>
-              <span className="text-2xl">💰</span>
+              <span className="text-2xl">ðŸ’°</span>
             </div>
             {loading ? (
               <div className="h-8 w-24 animate-pulse rounded bg-zinc-200 dark:bg-zinc-700" />
@@ -193,7 +215,7 @@ export default function AnalyticsPage() {
           <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
             <div className="mb-2 flex items-center justify-between">
               <span className="text-sm text-zinc-600 dark:text-zinc-400">Content Count</span>
-              <span className="text-2xl">📺</span>
+              <span className="text-2xl">ðŸ“º</span>
             </div>
             {loading ? (
               <div className="h-8 w-24 animate-pulse rounded bg-zinc-200 dark:bg-zinc-700" />

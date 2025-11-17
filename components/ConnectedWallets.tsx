@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect } from 'react';
 import { getWalletConnect } from '@/lib/sdk';
@@ -12,6 +12,13 @@ interface ConnectedWallet {
   apiKey?: string;
 }
 
+const sampleConnectedPlatforms: Record<string, { connected: boolean; apiKey?: string; connectedAt: string }> = {
+  netflix: { connected: true, apiKey: 'NET-4X8Y-2211', connectedAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString() },
+  spotify: { connected: true, apiKey: 'SPF-8891-ABCD', connectedAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString() },
+  coursera: { connected: true, apiKey: 'CRS-5521-ZKQ', connectedAt: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000).toISOString() },
+  steam: { connected: true, apiKey: 'STM-44FF-PLAY', connectedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() },
+};
+
 export default function ConnectedWallets() {
   const [connectedWallets, setConnectedWallets] = useState<ConnectedWallet[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,48 +31,53 @@ export default function ConnectedWallets() {
     try {
       const stored = localStorage.getItem('connected_platforms');
       if (!stored) {
+        localStorage.setItem('connected_platforms', JSON.stringify(sampleConnectedPlatforms));
+      }
+
+      const data = localStorage.getItem('connected_platforms');
+      if (!data) {
         setConnectedWallets([]);
         setIsLoading(false);
         return;
       }
 
-      const platforms = JSON.parse(stored);
+      const platforms = JSON.parse(data);
       const allPlatforms = [
         // Video
-        { id: 'netflix', name: 'Netflix', icon: '🎬', category: 'video' },
-        { id: 'youtube', name: 'YouTube', icon: '📺', category: 'video' },
-        { id: 'disney', name: 'Disney+', icon: '🏰', category: 'video' },
-        { id: 'amazon-prime', name: 'Amazon Prime Video', icon: '📦', category: 'video' },
-        { id: 'hulu', name: 'Hulu', icon: '📺', category: 'video' },
+        { id: 'netflix', name: 'Netflix', icon: 'ðŸŽ¬', category: 'video' },
+        { id: 'youtube', name: 'YouTube', icon: 'ðŸ“º', category: 'video' },
+        { id: 'disney', name: 'Disney+', icon: 'ðŸ°', category: 'video' },
+        { id: 'amazon-prime', name: 'Amazon Prime Video', icon: 'ðŸ“¦', category: 'video' },
+        { id: 'hulu', name: 'Hulu', icon: 'ðŸ“º', category: 'video' },
         // Audio
-        { id: 'spotify', name: 'Spotify', icon: '🎵', category: 'audio' },
-        { id: 'audible', name: 'Audible', icon: '🎧', category: 'audio' },
-        { id: 'apple-music', name: 'Apple Music', icon: '🍎', category: 'audio' },
-        { id: 'soundcloud', name: 'SoundCloud', icon: '☁️', category: 'audio' },
-        { id: 'pandora', name: 'Pandora', icon: '📻', category: 'audio' },
-        { id: 'podcast-addict', name: 'Podcast Addict', icon: '🎙️', category: 'audio' },
-        { id: 'stitcher', name: 'Stitcher', icon: '🎧', category: 'audio' },
-        { id: 'tidal', name: 'Tidal', icon: '🌊', category: 'audio' },
-        { id: 'deezer', name: 'Deezer', icon: '🎵', category: 'audio' },
-        { id: 'youtube-music', name: 'YouTube Music', icon: '🎶', category: 'audio' },
+        { id: 'spotify', name: 'Spotify', icon: 'ðŸŽµ', category: 'audio' },
+        { id: 'audible', name: 'Audible', icon: 'ðŸŽ§', category: 'audio' },
+        { id: 'apple-music', name: 'Apple Music', icon: 'ðŸŽ', category: 'audio' },
+        { id: 'soundcloud', name: 'SoundCloud', icon: 'â˜ï¸', category: 'audio' },
+        { id: 'pandora', name: 'Pandora', icon: 'ðŸ“»', category: 'audio' },
+        { id: 'podcast-addict', name: 'Podcast Addict', icon: 'ðŸŽ™ï¸', category: 'audio' },
+        { id: 'stitcher', name: 'Stitcher', icon: 'ðŸŽ§', category: 'audio' },
+        { id: 'tidal', name: 'Tidal', icon: 'ðŸŒŠ', category: 'audio' },
+        { id: 'deezer', name: 'Deezer', icon: 'ðŸŽµ', category: 'audio' },
+        { id: 'youtube-music', name: 'YouTube Music', icon: 'ðŸŽ¶', category: 'audio' },
         // Learning
-        { id: 'coursera', name: 'Coursera', icon: '📚', category: 'learn' },
-        { id: 'udemy', name: 'Udemy', icon: '🎓', category: 'learn' },
-        { id: 'khan-academy', name: 'Khan Academy', icon: '🎯', category: 'learn' },
-        { id: 'edx', name: 'edX', icon: '📖', category: 'learn' },
-        { id: 'skillshare', name: 'Skillshare', icon: '✏️', category: 'learn' },
-        { id: 'pluralsight', name: 'Pluralsight', icon: '💻', category: 'learn' },
-        { id: 'linkedin-learning', name: 'LinkedIn Learning', icon: '💼', category: 'learn' },
-        { id: 'masterclass', name: 'MasterClass', icon: '🎭', category: 'learn' },
-        { id: 'codecademy', name: 'Codecademy', icon: '💻', category: 'learn' },
-        { id: 'duolingo', name: 'Duolingo', icon: '🦉', category: 'learn' },
+        { id: 'coursera', name: 'Coursera', icon: 'ðŸ“š', category: 'learn' },
+        { id: 'udemy', name: 'Udemy', icon: 'ðŸŽ“', category: 'learn' },
+        { id: 'khan-academy', name: 'Khan Academy', icon: 'ðŸŽ¯', category: 'learn' },
+        { id: 'edx', name: 'edX', icon: 'ðŸ“–', category: 'learn' },
+        { id: 'skillshare', name: 'Skillshare', icon: 'âœï¸', category: 'learn' },
+        { id: 'pluralsight', name: 'Pluralsight', icon: 'ðŸ’»', category: 'learn' },
+        { id: 'linkedin-learning', name: 'LinkedIn Learning', icon: 'ðŸ’¼', category: 'learn' },
+        { id: 'masterclass', name: 'MasterClass', icon: 'ðŸŽ­', category: 'learn' },
+        { id: 'codecademy', name: 'Codecademy', icon: 'ðŸ’»', category: 'learn' },
+        { id: 'duolingo', name: 'Duolingo', icon: 'ðŸ¦‰', category: 'learn' },
         // Entertainment
-        { id: 'steam', name: 'Steam', icon: '🎮', category: 'entertainment' },
-        { id: 'epic-games', name: 'Epic Games', icon: '🎯', category: 'entertainment' },
-        { id: 'twitch', name: 'Twitch', icon: '📺', category: 'entertainment' },
-        { id: 'roblox', name: 'Roblox', icon: '🧱', category: 'entertainment' },
-        { id: 'minecraft', name: 'Minecraft', icon: '⛏️', category: 'entertainment' },
-        { id: 'discord', name: 'Discord', icon: '💬', category: 'entertainment' },
+        { id: 'steam', name: 'Steam', icon: 'ðŸŽ®', category: 'entertainment' },
+        { id: 'epic-games', name: 'Epic Games', icon: 'ðŸŽ¯', category: 'entertainment' },
+        { id: 'twitch', name: 'Twitch', icon: 'ðŸ“º', category: 'entertainment' },
+        { id: 'roblox', name: 'Roblox', icon: 'ðŸ§±', category: 'entertainment' },
+        { id: 'minecraft', name: 'Minecraft', icon: 'â›ï¸', category: 'entertainment' },
+        { id: 'discord', name: 'Discord', icon: 'ðŸ’¬', category: 'entertainment' },
       ];
 
       const connected: ConnectedWallet[] = [];
@@ -159,7 +171,7 @@ export default function ConnectedWallets() {
               </p>
             </div>
             <div className="flex h-5 w-5 items-center justify-center rounded-full bg-green-500">
-              <span className="text-xs text-white">✓</span>
+              <span className="text-xs text-white">âœ“</span>
             </div>
           </div>
         ))}

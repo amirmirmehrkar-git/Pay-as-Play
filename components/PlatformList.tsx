@@ -1,6 +1,6 @@
-'use client';
+﻿'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getWalletConnect } from '@/lib/sdk';
 
 interface Platform {
@@ -19,7 +19,7 @@ const samplePlatforms: Platform[] = [
     id: 'netflix',
     name: 'Netflix',
     category: 'video',
-    icon: '🎬',
+    icon: 'ðŸŽ¬',
     description: 'Stream movies and TV shows',
     connected: false,
   },
@@ -27,7 +27,7 @@ const samplePlatforms: Platform[] = [
     id: 'youtube',
     name: 'YouTube',
     category: 'video',
-    icon: '📺',
+    icon: 'ðŸ“º',
     description: 'Watch videos and tutorials',
     connected: false,
   },
@@ -35,7 +35,7 @@ const samplePlatforms: Platform[] = [
     id: 'disney',
     name: 'Disney+',
     category: 'video',
-    icon: '🏰',
+    icon: 'ðŸ°',
     description: 'Disney, Pixar, Marvel, and Star Wars content',
     connected: false,
   },
@@ -43,7 +43,7 @@ const samplePlatforms: Platform[] = [
     id: 'amazon-prime',
     name: 'Amazon Prime Video',
     category: 'video',
-    icon: '📦',
+    icon: 'ðŸ“¦',
     description: 'Movies, TV shows, and original content',
     connected: false,
   },
@@ -51,7 +51,7 @@ const samplePlatforms: Platform[] = [
     id: 'hulu',
     name: 'Hulu',
     category: 'video',
-    icon: '📺',
+    icon: 'ðŸ“º',
     description: 'TV shows, movies, and live TV',
     connected: false,
   },
@@ -60,7 +60,7 @@ const samplePlatforms: Platform[] = [
     id: 'spotify',
     name: 'Spotify',
     category: 'audio',
-    icon: '🎵',
+    icon: 'ðŸŽµ',
     description: 'Listen to music and podcasts',
     connected: false,
   },
@@ -68,7 +68,7 @@ const samplePlatforms: Platform[] = [
     id: 'audible',
     name: 'Audible',
     category: 'audio',
-    icon: '🎧',
+    icon: 'ðŸŽ§',
     description: 'Audiobooks and audio content',
     connected: false,
   },
@@ -76,7 +76,7 @@ const samplePlatforms: Platform[] = [
     id: 'apple-music',
     name: 'Apple Music',
     category: 'audio',
-    icon: '🍎',
+    icon: 'ðŸŽ',
     description: 'Stream millions of songs',
     connected: false,
   },
@@ -84,7 +84,7 @@ const samplePlatforms: Platform[] = [
     id: 'soundcloud',
     name: 'SoundCloud',
     category: 'audio',
-    icon: '☁️',
+    icon: 'â˜ï¸',
     description: 'Discover and stream music',
     connected: false,
   },
@@ -92,7 +92,7 @@ const samplePlatforms: Platform[] = [
     id: 'pandora',
     name: 'Pandora',
     category: 'audio',
-    icon: '📻',
+    icon: 'ðŸ“»',
     description: 'Personalized radio stations',
     connected: false,
   },
@@ -100,7 +100,7 @@ const samplePlatforms: Platform[] = [
     id: 'podcast-addict',
     name: 'Podcast Addict',
     category: 'audio',
-    icon: '🎙️',
+    icon: 'ðŸŽ™ï¸',
     description: 'Podcast player and manager',
     connected: false,
   },
@@ -108,7 +108,7 @@ const samplePlatforms: Platform[] = [
     id: 'stitcher',
     name: 'Stitcher',
     category: 'audio',
-    icon: '🎧',
+    icon: 'ðŸŽ§',
     description: 'Podcasts and radio shows',
     connected: false,
   },
@@ -116,7 +116,7 @@ const samplePlatforms: Platform[] = [
     id: 'tidal',
     name: 'Tidal',
     category: 'audio',
-    icon: '🌊',
+    icon: 'ðŸŒŠ',
     description: 'High-fidelity music streaming',
     connected: false,
   },
@@ -124,7 +124,7 @@ const samplePlatforms: Platform[] = [
     id: 'deezer',
     name: 'Deezer',
     category: 'audio',
-    icon: '🎵',
+    icon: 'ðŸŽµ',
     description: 'Music streaming service',
     connected: false,
   },
@@ -132,7 +132,7 @@ const samplePlatforms: Platform[] = [
     id: 'youtube-music',
     name: 'YouTube Music',
     category: 'audio',
-    icon: '🎶',
+    icon: 'ðŸŽ¶',
     description: 'Music videos and audio',
     connected: false,
   },
@@ -141,7 +141,7 @@ const samplePlatforms: Platform[] = [
     id: 'coursera',
     name: 'Coursera',
     category: 'learn',
-    icon: '📚',
+    icon: 'ðŸ“š',
     description: 'Online courses and learning',
     connected: false,
   },
@@ -149,7 +149,7 @@ const samplePlatforms: Platform[] = [
     id: 'udemy',
     name: 'Udemy',
     category: 'learn',
-    icon: '🎓',
+    icon: 'ðŸŽ“',
     description: 'Online courses and training',
     connected: false,
   },
@@ -157,7 +157,7 @@ const samplePlatforms: Platform[] = [
     id: 'khan-academy',
     name: 'Khan Academy',
     category: 'learn',
-    icon: '🎯',
+    icon: 'ðŸŽ¯',
     description: 'Free online courses and lessons',
     connected: false,
   },
@@ -165,7 +165,7 @@ const samplePlatforms: Platform[] = [
     id: 'edx',
     name: 'edX',
     category: 'learn',
-    icon: '📖',
+    icon: 'ðŸ“–',
     description: 'University-level courses',
     connected: false,
   },
@@ -173,7 +173,7 @@ const samplePlatforms: Platform[] = [
     id: 'skillshare',
     name: 'Skillshare',
     category: 'learn',
-    icon: '✏️',
+    icon: 'âœï¸',
     description: 'Creative and professional skills',
     connected: false,
   },
@@ -181,7 +181,7 @@ const samplePlatforms: Platform[] = [
     id: 'pluralsight',
     name: 'Pluralsight',
     category: 'learn',
-    icon: '💻',
+    icon: 'ðŸ’»',
     description: 'Technology and IT courses',
     connected: false,
   },
@@ -189,7 +189,7 @@ const samplePlatforms: Platform[] = [
     id: 'linkedin-learning',
     name: 'LinkedIn Learning',
     category: 'learn',
-    icon: '💼',
+    icon: 'ðŸ’¼',
     description: 'Professional development courses',
     connected: false,
   },
@@ -197,7 +197,7 @@ const samplePlatforms: Platform[] = [
     id: 'masterclass',
     name: 'MasterClass',
     category: 'learn',
-    icon: '🎭',
+    icon: 'ðŸŽ­',
     description: 'Learn from world-class experts',
     connected: false,
   },
@@ -205,7 +205,7 @@ const samplePlatforms: Platform[] = [
     id: 'codecademy',
     name: 'Codecademy',
     category: 'learn',
-    icon: '💻',
+    icon: 'ðŸ’»',
     description: 'Interactive coding lessons',
     connected: false,
   },
@@ -213,7 +213,7 @@ const samplePlatforms: Platform[] = [
     id: 'duolingo',
     name: 'Duolingo',
     category: 'learn',
-    icon: '🦉',
+    icon: 'ðŸ¦‰',
     description: 'Language learning platform',
     connected: false,
   },
@@ -222,7 +222,7 @@ const samplePlatforms: Platform[] = [
     id: 'steam',
     name: 'Steam',
     category: 'entertainment',
-    icon: '🎮',
+    icon: 'ðŸŽ®',
     description: 'PC gaming platform',
     connected: false,
   },
@@ -230,7 +230,7 @@ const samplePlatforms: Platform[] = [
     id: 'epic-games',
     name: 'Epic Games',
     category: 'entertainment',
-    icon: '🎯',
+    icon: 'ðŸŽ¯',
     description: 'Game store and launcher',
     connected: false,
   },
@@ -238,7 +238,7 @@ const samplePlatforms: Platform[] = [
     id: 'twitch',
     name: 'Twitch',
     category: 'entertainment',
-    icon: '📺',
+    icon: 'ðŸ“º',
     description: 'Live streaming and gaming',
     connected: false,
   },
@@ -246,7 +246,7 @@ const samplePlatforms: Platform[] = [
     id: 'roblox',
     name: 'Roblox',
     category: 'entertainment',
-    icon: '🧱',
+    icon: 'ðŸ§±',
     description: 'User-generated gaming platform',
     connected: false,
   },
@@ -254,7 +254,7 @@ const samplePlatforms: Platform[] = [
     id: 'minecraft',
     name: 'Minecraft',
     category: 'entertainment',
-    icon: '⛏️',
+    icon: 'â›ï¸',
     description: 'Creative building game',
     connected: false,
   },
@@ -262,11 +262,18 @@ const samplePlatforms: Platform[] = [
     id: 'discord',
     name: 'Discord',
     category: 'entertainment',
-    icon: '💬',
+    icon: 'ðŸ’¬',
     description: 'Gaming communication platform',
     connected: false,
   },
 ];
+
+const demoConnectedPlatforms: Record<string, { connected: boolean; apiKey?: string; connectedAt: string }> = {
+  netflix: { connected: true, apiKey: 'NET-4X8Y-2211', connectedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() },
+  spotify: { connected: true, apiKey: 'SPF-8891-ABCD', connectedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString() },
+  coursera: { connected: true, apiKey: 'CRS-5521-ZKQ', connectedAt: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000).toISOString() },
+  steam: { connected: true, apiKey: 'STM-44FF-PLAY', connectedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() },
+};
 
 interface PlatformListProps {
   category: 'video' | 'audio' | 'learn' | 'entertainment';
@@ -274,26 +281,39 @@ interface PlatformListProps {
 
 export default function PlatformList({ category }: PlatformListProps) {
   // Load connected platforms from localStorage
-  const loadConnectedPlatforms = (): Record<string, { connected: boolean; apiKey?: string }> => {
+  const loadConnectedPlatforms = (): Record<string, { connected: boolean; apiKey?: string; connectedAt?: string }> => {
     try {
       const stored = localStorage.getItem('connected_platforms');
-      return stored ? JSON.parse(stored) : {};
+      if (!stored) {
+        localStorage.setItem('connected_platforms', JSON.stringify(demoConnectedPlatforms));
+        return demoConnectedPlatforms;
+      }
+
+      const parsed = JSON.parse(stored);
+      if (Object.keys(parsed).length === 0) {
+        localStorage.setItem('connected_platforms', JSON.stringify(demoConnectedPlatforms));
+        return demoConnectedPlatforms;
+      }
+
+      return parsed;
     } catch {
-      return {};
+      return demoConnectedPlatforms;
     }
   };
 
-  const connectedPlatforms = loadConnectedPlatforms();
-  
-  const initialPlatforms = samplePlatforms
-    .filter((p) => p.category === category)
-    .map((p) => ({
-      ...p,
-      connected: connectedPlatforms[p.id]?.connected || false,
-      apiKey: connectedPlatforms[p.id]?.apiKey,
-    }));
+  const [platforms, setPlatforms] = useState<Platform[]>([]);
 
-  const [platforms, setPlatforms] = useState<Platform[]>(initialPlatforms);
+  useEffect(() => {
+    const connectedPlatforms = loadConnectedPlatforms();
+    const categoryPlatforms = samplePlatforms
+      .filter((p) => p.category === category)
+      .map((p) => ({
+        ...p,
+        connected: connectedPlatforms[p.id]?.connected || false,
+        apiKey: connectedPlatforms[p.id]?.apiKey,
+      }));
+    setPlatforms(categoryPlatforms);
+  }, [category]);
   const [showConnectModal, setShowConnectModal] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(null);
   const [showRequestModal, setShowRequestModal] = useState(false);
@@ -405,7 +425,7 @@ export default function PlatformList({ category }: PlatformListProps) {
                 <div className="rounded-xl border-2 border-green-200 bg-gradient-to-br from-green-50 to-emerald-50 p-3 shadow-sm dark:border-green-800 dark:from-green-900/20 dark:to-emerald-900/20">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="flex h-5 w-5 items-center justify-center rounded-full bg-green-500">
-                      <span className="text-xs text-white">✓</span>
+                      <span className="text-xs text-white">âœ“</span>
                     </div>
                     <span className="text-sm font-semibold text-green-800 dark:text-green-200">
                       Wallet Connected
@@ -423,7 +443,7 @@ export default function PlatformList({ category }: PlatformListProps) {
                 <div className="rounded-xl border border-zinc-200 bg-gradient-to-br from-zinc-50 to-zinc-100/50 p-3 dark:border-zinc-700 dark:from-zinc-800 dark:to-zinc-800/50">
                   <div className="flex items-center gap-2">
                     <div className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-zinc-300 dark:border-zinc-600">
-                      <span className="text-xs text-zinc-400">○</span>
+                      <span className="text-xs text-zinc-400">â—‹</span>
                     </div>
                     <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Not Connected</span>
                   </div>
@@ -530,7 +550,7 @@ function ConnectPlatformModal({
             onClick={onClose}
             className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
           >
-            ✕
+            âœ•
           </button>
         </div>
 
@@ -613,7 +633,7 @@ function RequestPlatformModal({
             onClick={onClose}
             className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
           >
-            ✕
+            âœ•
           </button>
         </div>
 
