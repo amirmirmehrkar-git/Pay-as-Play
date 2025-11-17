@@ -1,16 +1,17 @@
-// Node.js script to generate PNG icons from SVG
+/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-var-requires */
+// Node.js script to generate SVG + PNG icons in all required sizes.
 // Run: node generate-icons.js
 
 const fs = require('fs');
 const path = require('path');
+const sharp = require('sharp');
 
-// Create icons directory if it doesn't exist
 const iconsDir = path.join(__dirname, 'icons');
 if (!fs.existsSync(iconsDir)) {
   fs.mkdirSync(iconsDir, { recursive: true });
 }
 
-// SVG template for icons
 const svgTemplate = (size) => `
 <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -24,18 +25,29 @@ const svgTemplate = (size) => `
 </svg>
 `.trim();
 
-// Generate SVG files
 const sizes = [16, 48, 128];
-sizes.forEach(size => {
-  const svg = svgTemplate(size);
-  const filePath = path.join(iconsDir, `icon${size}.svg`);
-  fs.writeFileSync(filePath, svg);
-  console.log(`✓ Generated icon${size}.svg`);
+
+async function generateIcons() {
+  for (const size of sizes) {
+    const svgMarkup = svgTemplate(size);
+    const svgPath = path.join(iconsDir, `icon${size}.svg`);
+    const pngPath = path.join(iconsDir, `icon${size}.png`);
+
+    fs.writeFileSync(svgPath, svgMarkup);
+    console.log(`✓ Generated icon${size}.svg`);
+
+    await sharp(Buffer.from(svgMarkup))
+      .resize(size, size, { fit: 'contain' })
+      .png()
+      .toFile(pngPath);
+    console.log(`✓ Generated icon${size}.png`);
+  }
+
+  console.log('\n✅ SVG & PNG icons generated successfully!');
+  console.log('Files saved to chrome-extension/icons/');
+}
+
+generateIcons().catch((error) => {
+  console.error('❌ Failed to generate icons:', error);
+  process.exit(1);
 });
-
-console.log('\n✅ SVG icons generated!');
-console.log('📝 Note: To convert SVG to PNG, use an online converter or ImageMagick:');
-console.log('   convert icon16.svg icon16.png');
-console.log('   convert icon48.svg icon48.png');
-console.log('   convert icon128.svg icon128.png');
-
