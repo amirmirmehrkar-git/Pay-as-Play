@@ -1,34 +1,28 @@
-'use client';
+﻿'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Suspense } from 'react';
 
 const tabs = [
-  { id: 'watch', label: 'Watch', icon: '📺', href: '/?tab=watch' },
-  { id: 'listen', label: 'Listen', icon: '🎵', href: '/?tab=listen' },
-  { id: 'learn', label: 'Learn', icon: '📚', href: '/?tab=learn' },
-  { id: 'entertainment', label: 'Games', icon: '🎮', href: '/?tab=entertainment' },
-  { id: 'wallet', label: 'Wallet', icon: '💰', href: '/wallet' },
+  { id: 'watch', label: 'Watch', icon: 'ðŸ“º', href: '/?tab=watch' },
+  { id: 'listen', label: 'Listen', icon: 'ðŸŽµ', href: '/?tab=listen' },
+  { id: 'learn', label: 'Learn', icon: 'ðŸ“š', href: '/?tab=learn' },
+  { id: 'entertainment', label: 'Games', icon: 'ðŸŽ®', href: '/?tab=entertainment' },
+  { id: 'wallet', label: 'Wallet', icon: 'ðŸ’°', href: '/wallet' },
 ];
 
 function NavigationTabsContent() {
   const pathname = usePathname();
-  
-  // Get active tab from URL on client side
-  const getActiveTab = () => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      return params.get('tab') || 'watch';
-    }
-    return 'watch';
-  };
+  const searchParams = useSearchParams();
+
+  const activeTabFromQuery = searchParams?.get('tab') || 'watch';
 
   const isActive = (tabId: string) => {
     if (tabId === 'wallet') {
       return pathname.startsWith('/wallet');
     }
-    return getActiveTab() === tabId;
+    return activeTabFromQuery === tabId;
   };
 
   return (
