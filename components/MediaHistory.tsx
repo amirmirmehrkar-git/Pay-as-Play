@@ -52,7 +52,7 @@ const sampleMediaHistory: MediaItem[] = [
     id: 'mh-4',
     platform: 'Steam',
     platformIcon: 'ðŸŽ®',
-    title: 'Baldur's Gate III',
+    title: "Baldur's Gate III",
     category: 'entertainment',
     duration: 7200,
     cost: 4.2,
