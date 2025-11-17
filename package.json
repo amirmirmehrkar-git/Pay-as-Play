@@ -11,10 +11,14 @@
   "dependencies": {
     "@perawallet/connect": "^1.4.2",
     "@playandpay/sdk": "file:playandpay-sdk",
+    "@types/react-syntax-highlighter": "^15.5.13",
     "algosdk": "^3.5.2",
     "next": "16.0.1",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "react-syntax-highlighter": "^16.1.0",
+    "recharts": "^3.4.1",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

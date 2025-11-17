@@ -282,7 +282,7 @@ const __TURBOPACK__default__export__ = {
     "transfer",
     ()=>transfer
 ]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$playandpay$2d$sdk$2f$node_modules$2f$algosdk$2f$dist$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/playandpay-sdk/node_modules/algosdk/dist/esm/index.js [app-ssr] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$algosdk$2f$dist$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/algosdk/dist/esm/index.js [app-ssr] (ecmascript) <locals>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$playandpay$2d$sdk$2f$src$2f$config$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/playandpay-sdk/src/config.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$playandpay$2d$sdk$2f$src$2f$utils$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/playandpay-sdk/src/utils.js [app-ssr] (ecmascript)");
 ;
@@ -297,8 +297,8 @@ let indexerClient = null;
         return;
     }
     const algodConfig = (0, __TURBOPACK__imported__module__$5b$project$5d2f$playandpay$2d$sdk$2f$src$2f$config$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getAlgorandConfig"])();
-    algodClient = new __TURBOPACK__imported__module__$5b$project$5d2f$playandpay$2d$sdk$2f$node_modules$2f$algosdk$2f$dist$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"].Algodv2(algodConfig.algodToken, algodConfig.algodUrl, algodConfig.algodPort);
-    indexerClient = new __TURBOPACK__imported__module__$5b$project$5d2f$playandpay$2d$sdk$2f$node_modules$2f$algosdk$2f$dist$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"].Indexer(algodConfig.indexerToken, algodConfig.indexerUrl, algodConfig.indexerPort);
+    algodClient = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$algosdk$2f$dist$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"].Algodv2(algodConfig.algodToken, algodConfig.algodUrl, algodConfig.algodPort);
+    indexerClient = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$algosdk$2f$dist$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"].Indexer(algodConfig.indexerToken, algodConfig.indexerUrl, algodConfig.indexerPort);
     __TURBOPACK__imported__module__$5b$project$5d2f$playandpay$2d$sdk$2f$src$2f$utils$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["logger"].debug('Algorand clients initialized');
 }
 async function getBalance(address) {
@@ -364,7 +364,7 @@ async function transfer(fromAddress, toAddress, amountMinor, signer) {
         // Get transaction parameters
         const params = await algodClient.getTransactionParams().do();
         // Create asset transfer transaction
-        const txn = __TURBOPACK__imported__module__$5b$project$5d2f$playandpay$2d$sdk$2f$node_modules$2f$algosdk$2f$dist$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"].makeAssetTransferTxnWithSuggestedParamsFromObject({
+        const txn = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$algosdk$2f$dist$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"].makeAssetTransferTxnWithSuggestedParamsFromObject({
             from: fromAddress,
             to: toAddress,
             amount: amountMinor,
@@ -375,7 +375,7 @@ async function transfer(fromAddress, toAddress, amountMinor, signer) {
         let signedTxn;
         if (typeof signer === 'string') {
             // Mnemonic
-            const account = __TURBOPACK__imported__module__$5b$project$5d2f$playandpay$2d$sdk$2f$node_modules$2f$algosdk$2f$dist$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"].mnemonicToSecretKey(signer);
+            const account = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$algosdk$2f$dist$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"].mnemonicToSecretKey(signer);
             signedTxn = txn.signTxn(account.sk);
         } else if (signer && typeof signer.signTransaction === 'function') {
             // Wallet connector (e.g., Pera Wallet)
@@ -389,7 +389,7 @@ async function transfer(fromAddress, toAddress, amountMinor, signer) {
         const { txId } = await algodClient.sendRawTransaction(signedTxn).do();
         __TURBOPACK__imported__module__$5b$project$5d2f$playandpay$2d$sdk$2f$src$2f$utils$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["logger"].debug(`Transaction submitted: ${txId}`);
         // Wait for confirmation
-        const confirmation = await __TURBOPACK__imported__module__$5b$project$5d2f$playandpay$2d$sdk$2f$node_modules$2f$algosdk$2f$dist$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"].waitForConfirmation(algodClient, txId, 4);
+        const confirmation = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$algosdk$2f$dist$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["default"].waitForConfirmation(algodClient, txId, 4);
         __TURBOPACK__imported__module__$5b$project$5d2f$playandpay$2d$sdk$2f$src$2f$utils$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["logger"].debug(`Transaction confirmed in round ${confirmation['confirmed-round']}`);
         return {
             txId,

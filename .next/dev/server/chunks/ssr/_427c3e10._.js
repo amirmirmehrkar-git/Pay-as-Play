@@ -19,47 +19,43 @@ const tabs = [
     {
         id: 'watch',
         label: 'Watch',
-        icon: '📺',
+        icon: 'ðŸ“º',
         href: '/?tab=watch'
     },
     {
         id: 'listen',
         label: 'Listen',
-        icon: '🎵',
+        icon: 'ðŸŽµ',
         href: '/?tab=listen'
     },
     {
         id: 'learn',
         label: 'Learn',
-        icon: '📚',
+        icon: 'ðŸ“š',
         href: '/?tab=learn'
     },
     {
         id: 'entertainment',
         label: 'Games',
-        icon: '🎮',
+        icon: 'ðŸŽ®',
         href: '/?tab=entertainment'
     },
     {
         id: 'wallet',
         label: 'Wallet',
-        icon: '💰',
+        icon: 'ðŸ’°',
         href: '/wallet'
     }
 ];
 function NavigationTabsContent() {
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["usePathname"])();
-    // Get active tab from URL on client side
-    const getActiveTab = ()=>{
-        if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
-        ;
-        return 'watch';
-    };
+    const searchParams = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useSearchParams"])();
+    const activeTabFromQuery = searchParams?.get('tab') || 'watch';
     const isActive = (tabId)=>{
         if (tabId === 'wallet') {
             return pathname.startsWith('/wallet');
         }
-        return getActiveTab() === tabId;
+        return activeTabFromQuery === tabId;
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "flex items-center gap-1 sm:gap-2 border-b-2 border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm rounded-t-xl px-2 sm:px-4 overflow-x-auto",
@@ -74,7 +70,7 @@ function NavigationTabsContent() {
                         children: tab.icon
                     }, void 0, false, {
                         fileName: "[project]/components/NavigationTabs.tsx",
-                        lineNumber: 48,
+                        lineNumber: 42,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -82,19 +78,19 @@ function NavigationTabsContent() {
                         children: tab.label
                     }, void 0, false, {
                         fileName: "[project]/components/NavigationTabs.tsx",
-                        lineNumber: 49,
+                        lineNumber: 43,
                         columnNumber: 13
                     }, this)
                 ]
             }, tab.id, true, {
                 fileName: "[project]/components/NavigationTabs.tsx",
-                lineNumber: 39,
+                lineNumber: 33,
                 columnNumber: 11
             }, this);
         })
     }, void 0, false, {
         fileName: "[project]/components/NavigationTabs.tsx",
-        lineNumber: 35,
+        lineNumber: 29,
         columnNumber: 5
     }, this);
 }
@@ -111,22 +107,22 @@ function NavigationTabs() {
                     ]
                 }, tab.id, true, {
                     fileName: "[project]/components/NavigationTabs.tsx",
-                    lineNumber: 62,
+                    lineNumber: 56,
                     columnNumber: 11
                 }, void 0))
         }, void 0, false, {
             fileName: "[project]/components/NavigationTabs.tsx",
-            lineNumber: 60,
+            lineNumber: 54,
             columnNumber: 7
         }, void 0),
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(NavigationTabsContent, {}, void 0, false, {
             fileName: "[project]/components/NavigationTabs.tsx",
-            lineNumber: 68,
+            lineNumber: 62,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/NavigationTabs.tsx",
-        lineNumber: 59,
+        lineNumber: 53,
         columnNumber: 5
     }, this);
 }
@@ -381,7 +377,7 @@ const samplePlatforms = [
         id: 'netflix',
         name: 'Netflix',
         category: 'video',
-        icon: '🎬',
+        icon: 'ðŸŽ¬',
         description: 'Stream movies and TV shows',
         connected: false
     },
@@ -389,7 +385,7 @@ const samplePlatforms = [
         id: 'youtube',
         name: 'YouTube',
         category: 'video',
-        icon: '📺',
+        icon: 'ðŸ“º',
         description: 'Watch videos and tutorials',
         connected: false
     },
@@ -397,7 +393,7 @@ const samplePlatforms = [
         id: 'disney',
         name: 'Disney+',
         category: 'video',
-        icon: '🏰',
+        icon: 'ðŸ°',
         description: 'Disney, Pixar, Marvel, and Star Wars content',
         connected: false
     },
@@ -405,7 +401,7 @@ const samplePlatforms = [
         id: 'amazon-prime',
         name: 'Amazon Prime Video',
         category: 'video',
-        icon: '📦',
+        icon: 'ðŸ“¦',
         description: 'Movies, TV shows, and original content',
         connected: false
     },
@@ -413,7 +409,7 @@ const samplePlatforms = [
         id: 'hulu',
         name: 'Hulu',
         category: 'video',
-        icon: '📺',
+        icon: 'ðŸ“º',
         description: 'TV shows, movies, and live TV',
         connected: false
     },
@@ -422,7 +418,7 @@ const samplePlatforms = [
         id: 'spotify',
         name: 'Spotify',
         category: 'audio',
-        icon: '🎵',
+        icon: 'ðŸŽµ',
         description: 'Listen to music and podcasts',
         connected: false
     },
@@ -430,7 +426,7 @@ const samplePlatforms = [
         id: 'audible',
         name: 'Audible',
         category: 'audio',
-        icon: '🎧',
+        icon: 'ðŸŽ§',
         description: 'Audiobooks and audio content',
         connected: false
     },
@@ -438,7 +434,7 @@ const samplePlatforms = [
         id: 'apple-music',
         name: 'Apple Music',
         category: 'audio',
-        icon: '🍎',
+        icon: 'ðŸŽ',
         description: 'Stream millions of songs',
         connected: false
     },
@@ -446,7 +442,7 @@ const samplePlatforms = [
         id: 'soundcloud',
         name: 'SoundCloud',
         category: 'audio',
-        icon: '☁️',
+        icon: 'â˜ï¸',
         description: 'Discover and stream music',
         connected: false
     },
@@ -454,7 +450,7 @@ const samplePlatforms = [
         id: 'pandora',
         name: 'Pandora',
         category: 'audio',
-        icon: '📻',
+        icon: 'ðŸ“»',
         description: 'Personalized radio stations',
         connected: false
     },
@@ -462,7 +458,7 @@ const samplePlatforms = [
         id: 'podcast-addict',
         name: 'Podcast Addict',
         category: 'audio',
-        icon: '🎙️',
+        icon: 'ðŸŽ™ï¸',
         description: 'Podcast player and manager',
         connected: false
     },
@@ -470,7 +466,7 @@ const samplePlatforms = [
         id: 'stitcher',
         name: 'Stitcher',
         category: 'audio',
-        icon: '🎧',
+        icon: 'ðŸŽ§',
         description: 'Podcasts and radio shows',
         connected: false
     },
@@ -478,7 +474,7 @@ const samplePlatforms = [
         id: 'tidal',
         name: 'Tidal',
         category: 'audio',
-        icon: '🌊',
+        icon: 'ðŸŒŠ',
         description: 'High-fidelity music streaming',
         connected: false
     },
@@ -486,7 +482,7 @@ const samplePlatforms = [
         id: 'deezer',
         name: 'Deezer',
         category: 'audio',
-        icon: '🎵',
+        icon: 'ðŸŽµ',
         description: 'Music streaming service',
         connected: false
     },
@@ -494,7 +490,7 @@ const samplePlatforms = [
         id: 'youtube-music',
         name: 'YouTube Music',
         category: 'audio',
-        icon: '🎶',
+        icon: 'ðŸŽ¶',
         description: 'Music videos and audio',
         connected: false
     },
@@ -503,7 +499,7 @@ const samplePlatforms = [
         id: 'coursera',
         name: 'Coursera',
         category: 'learn',
-        icon: '📚',
+        icon: 'ðŸ“š',
         description: 'Online courses and learning',
         connected: false
     },
@@ -511,7 +507,7 @@ const samplePlatforms = [
         id: 'udemy',
         name: 'Udemy',
         category: 'learn',
-        icon: '🎓',
+        icon: 'ðŸŽ“',
         description: 'Online courses and training',
         connected: false
     },
@@ -519,7 +515,7 @@ const samplePlatforms = [
         id: 'khan-academy',
         name: 'Khan Academy',
         category: 'learn',
-        icon: '🎯',
+        icon: 'ðŸŽ¯',
         description: 'Free online courses and lessons',
         connected: false
     },
@@ -527,7 +523,7 @@ const samplePlatforms = [
         id: 'edx',
         name: 'edX',
         category: 'learn',
-        icon: '📖',
+        icon: 'ðŸ“–',
         description: 'University-level courses',
         connected: false
     },
@@ -535,7 +531,7 @@ const samplePlatforms = [
         id: 'skillshare',
         name: 'Skillshare',
         category: 'learn',
-        icon: '✏️',
+        icon: 'âœï¸',
         description: 'Creative and professional skills',
         connected: false
     },
@@ -543,7 +539,7 @@ const samplePlatforms = [
         id: 'pluralsight',
         name: 'Pluralsight',
         category: 'learn',
-        icon: '💻',
+        icon: 'ðŸ’»',
         description: 'Technology and IT courses',
         connected: false
     },
@@ -551,7 +547,7 @@ const samplePlatforms = [
         id: 'linkedin-learning',
         name: 'LinkedIn Learning',
         category: 'learn',
-        icon: '💼',
+        icon: 'ðŸ’¼',
         description: 'Professional development courses',
         connected: false
     },
@@ -559,7 +555,7 @@ const samplePlatforms = [
         id: 'masterclass',
         name: 'MasterClass',
         category: 'learn',
-        icon: '🎭',
+        icon: 'ðŸŽ­',
         description: 'Learn from world-class experts',
         connected: false
     },
@@ -567,7 +563,7 @@ const samplePlatforms = [
         id: 'codecademy',
         name: 'Codecademy',
         category: 'learn',
-        icon: '💻',
+        icon: 'ðŸ’»',
         description: 'Interactive coding lessons',
         connected: false
     },
@@ -575,7 +571,7 @@ const samplePlatforms = [
         id: 'duolingo',
         name: 'Duolingo',
         category: 'learn',
-        icon: '🦉',
+        icon: 'ðŸ¦‰',
         description: 'Language learning platform',
         connected: false
     },
@@ -584,7 +580,7 @@ const samplePlatforms = [
         id: 'steam',
         name: 'Steam',
         category: 'entertainment',
-        icon: '🎮',
+        icon: 'ðŸŽ®',
         description: 'PC gaming platform',
         connected: false
     },
@@ -592,7 +588,7 @@ const samplePlatforms = [
         id: 'epic-games',
         name: 'Epic Games',
         category: 'entertainment',
-        icon: '🎯',
+        icon: 'ðŸŽ¯',
         description: 'Game store and launcher',
         connected: false
     },
@@ -600,7 +596,7 @@ const samplePlatforms = [
         id: 'twitch',
         name: 'Twitch',
         category: 'entertainment',
-        icon: '📺',
+        icon: 'ðŸ“º',
         description: 'Live streaming and gaming',
         connected: false
     },
@@ -608,7 +604,7 @@ const samplePlatforms = [
         id: 'roblox',
         name: 'Roblox',
         category: 'entertainment',
-        icon: '🧱',
+        icon: 'ðŸ§±',
         description: 'User-generated gaming platform',
         connected: false
     },
@@ -616,7 +612,7 @@ const samplePlatforms = [
         id: 'minecraft',
         name: 'Minecraft',
         category: 'entertainment',
-        icon: '⛏️',
+        icon: 'â›ï¸',
         description: 'Creative building game',
         connected: false
     },
@@ -624,28 +620,64 @@ const samplePlatforms = [
         id: 'discord',
         name: 'Discord',
         category: 'entertainment',
-        icon: '💬',
+        icon: 'ðŸ’¬',
         description: 'Gaming communication platform',
         connected: false
     }
 ];
+const demoConnectedPlatforms = {
+    netflix: {
+        connected: true,
+        apiKey: 'NET-4X8Y-2211',
+        connectedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()
+    },
+    spotify: {
+        connected: true,
+        apiKey: 'SPF-8891-ABCD',
+        connectedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+    },
+    coursera: {
+        connected: true,
+        apiKey: 'CRS-5521-ZKQ',
+        connectedAt: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000).toISOString()
+    },
+    steam: {
+        connected: true,
+        apiKey: 'STM-44FF-PLAY',
+        connectedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+    }
+};
 function PlatformList({ category }) {
     // Load connected platforms from localStorage
     const loadConnectedPlatforms = ()=>{
         try {
             const stored = localStorage.getItem('connected_platforms');
-            return stored ? JSON.parse(stored) : {};
+            if (!stored) {
+                localStorage.setItem('connected_platforms', JSON.stringify(demoConnectedPlatforms));
+                return demoConnectedPlatforms;
+            }
+            const parsed = JSON.parse(stored);
+            if (Object.keys(parsed).length === 0) {
+                localStorage.setItem('connected_platforms', JSON.stringify(demoConnectedPlatforms));
+                return demoConnectedPlatforms;
+            }
+            return parsed;
         } catch  {
-            return {};
+            return demoConnectedPlatforms;
         }
     };
-    const connectedPlatforms = loadConnectedPlatforms();
-    const initialPlatforms = samplePlatforms.filter((p)=>p.category === category).map((p)=>({
-            ...p,
-            connected: connectedPlatforms[p.id]?.connected || false,
-            apiKey: connectedPlatforms[p.id]?.apiKey
-        }));
-    const [platforms, setPlatforms] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(initialPlatforms);
+    const [platforms, setPlatforms] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        const connectedPlatforms = loadConnectedPlatforms();
+        const categoryPlatforms = samplePlatforms.filter((p)=>p.category === category).map((p)=>({
+                ...p,
+                connected: connectedPlatforms[p.id]?.connected || false,
+                apiKey: connectedPlatforms[p.id]?.apiKey
+            }));
+        setPlatforms(categoryPlatforms);
+    }, [
+        category
+    ]);
     const [showConnectModal, setShowConnectModal] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [selectedPlatform, setSelectedPlatform] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [showRequestModal, setShowRequestModal] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
@@ -700,7 +732,7 @@ function PlatformList({ category }) {
                                 children: category === 'video' ? 'Video Platforms' : category === 'audio' ? 'Audio Platforms' : category === 'learn' ? 'Learning Platforms' : 'Entertainment & Games'
                             }, void 0, false, {
                                 fileName: "[project]/components/PlatformList.tsx",
-                                lineNumber: 344,
+                                lineNumber: 364,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -713,13 +745,13 @@ function PlatformList({ category }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/PlatformList.tsx",
-                                lineNumber: 353,
+                                lineNumber: 373,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/PlatformList.tsx",
-                        lineNumber: 343,
+                        lineNumber: 363,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -728,13 +760,13 @@ function PlatformList({ category }) {
                         children: "+ Request New Platform"
                     }, void 0, false, {
                         fileName: "[project]/components/PlatformList.tsx",
-                        lineNumber: 357,
+                        lineNumber: 377,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/PlatformList.tsx",
-                lineNumber: 342,
+                lineNumber: 362,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -747,7 +779,7 @@ function PlatformList({ category }) {
                             children: "No platforms available in this category yet."
                         }, void 0, false, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 369,
+                            lineNumber: 389,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -756,13 +788,13 @@ function PlatformList({ category }) {
                             children: "Request Platform"
                         }, void 0, false, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 372,
+                            lineNumber: 392,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/PlatformList.tsx",
-                    lineNumber: 368,
+                    lineNumber: 388,
                     columnNumber: 11
                 }, this) : platforms.map((platform)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: `group relative overflow-hidden rounded-2xl border p-6 shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${platform.connected ? 'border-green-200 bg-gradient-to-br from-green-50/80 to-white dark:border-green-800 dark:from-green-900/10 dark:to-zinc-900' : 'border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900'}`,
@@ -775,7 +807,7 @@ function PlatformList({ category }) {
                                         children: platform.icon
                                     }, void 0, false, {
                                         fileName: "[project]/components/PlatformList.tsx",
-                                        lineNumber: 390,
+                                        lineNumber: 410,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -786,7 +818,7 @@ function PlatformList({ category }) {
                                                 children: platform.name
                                             }, void 0, false, {
                                                 fileName: "[project]/components/PlatformList.tsx",
-                                                lineNumber: 394,
+                                                lineNumber: 414,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -794,19 +826,19 @@ function PlatformList({ category }) {
                                                 children: platform.description
                                             }, void 0, false, {
                                                 fileName: "[project]/components/PlatformList.tsx",
-                                                lineNumber: 397,
+                                                lineNumber: 417,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/PlatformList.tsx",
-                                        lineNumber: 393,
+                                        lineNumber: 413,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/PlatformList.tsx",
-                                lineNumber: 389,
+                                lineNumber: 409,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -821,15 +853,15 @@ function PlatformList({ category }) {
                                                     className: "flex h-5 w-5 items-center justify-center rounded-full bg-green-500",
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         className: "text-xs text-white",
-                                                        children: "✓"
+                                                        children: "âœ“"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/PlatformList.tsx",
-                                                        lineNumber: 408,
+                                                        lineNumber: 428,
                                                         columnNumber: 23
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/PlatformList.tsx",
-                                                    lineNumber: 407,
+                                                    lineNumber: 427,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -837,13 +869,13 @@ function PlatformList({ category }) {
                                                     children: "Wallet Connected"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/PlatformList.tsx",
-                                                    lineNumber: 410,
+                                                    lineNumber: 430,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/PlatformList.tsx",
-                                            lineNumber: 406,
+                                            lineNumber: 426,
                                             columnNumber: 19
                                         }, this),
                                         platform.apiKey && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -857,18 +889,18 @@ function PlatformList({ category }) {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/PlatformList.tsx",
-                                                lineNumber: 416,
+                                                lineNumber: 436,
                                                 columnNumber: 23
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/PlatformList.tsx",
-                                            lineNumber: 415,
+                                            lineNumber: 435,
                                             columnNumber: 21
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 405,
+                                    lineNumber: 425,
                                     columnNumber: 17
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "rounded-xl border border-zinc-200 bg-gradient-to-br from-zinc-50 to-zinc-100/50 p-3 dark:border-zinc-700 dark:from-zinc-800 dark:to-zinc-800/50",
@@ -880,15 +912,15 @@ function PlatformList({ category }) {
                                                     className: "flex h-5 w-5 items-center justify-center rounded-full border-2 border-zinc-300 dark:border-zinc-600",
                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         className: "text-xs text-zinc-400",
-                                                        children: "○"
+                                                        children: "â—‹"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/PlatformList.tsx",
-                                                        lineNumber: 426,
+                                                        lineNumber: 446,
                                                         columnNumber: 23
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/PlatformList.tsx",
-                                                    lineNumber: 425,
+                                                    lineNumber: 445,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -896,13 +928,13 @@ function PlatformList({ category }) {
                                                     children: "Not Connected"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/PlatformList.tsx",
-                                                    lineNumber: 428,
+                                                    lineNumber: 448,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/PlatformList.tsx",
-                                            lineNumber: 424,
+                                            lineNumber: 444,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -910,18 +942,18 @@ function PlatformList({ category }) {
                                             children: "Connect your wallet to start using this platform"
                                         }, void 0, false, {
                                             fileName: "[project]/components/PlatformList.tsx",
-                                            lineNumber: 430,
+                                            lineNumber: 450,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 423,
+                                    lineNumber: 443,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/PlatformList.tsx",
-                                lineNumber: 403,
+                                lineNumber: 423,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -932,7 +964,7 @@ function PlatformList({ category }) {
                                     children: "Disconnect"
                                 }, void 0, false, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 439,
+                                    lineNumber: 459,
                                     columnNumber: 17
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: ()=>handleConnect(platform),
@@ -940,23 +972,23 @@ function PlatformList({ category }) {
                                     children: "Connect Wallet"
                                 }, void 0, false, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 446,
+                                    lineNumber: 466,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/PlatformList.tsx",
-                                lineNumber: 437,
+                                lineNumber: 457,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, platform.id, true, {
                         fileName: "[project]/components/PlatformList.tsx",
-                        lineNumber: 381,
+                        lineNumber: 401,
                         columnNumber: 13
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/components/PlatformList.tsx",
-                lineNumber: 366,
+                lineNumber: 386,
                 columnNumber: 7
             }, this),
             showConnectModal && selectedPlatform && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ConnectPlatformModal, {
@@ -977,7 +1009,7 @@ function PlatformList({ category }) {
                 }
             }, void 0, false, {
                 fileName: "[project]/components/PlatformList.tsx",
-                lineNumber: 461,
+                lineNumber: 481,
                 columnNumber: 9
             }, this),
             showRequestModal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(RequestPlatformModal, {
@@ -988,13 +1020,13 @@ function PlatformList({ category }) {
                 }
             }, void 0, false, {
                 fileName: "[project]/components/PlatformList.tsx",
-                lineNumber: 482,
+                lineNumber: 502,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/PlatformList.tsx",
-        lineNumber: 340,
+        lineNumber: 360,
         columnNumber: 5
     }, this);
 }
@@ -1032,22 +1064,22 @@ function ConnectPlatformModal({ platform, onClose, onSuccess }) {
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 526,
+                            lineNumber: 546,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: onClose,
                             className: "text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300",
-                            children: "✕"
+                            children: "âœ•"
                         }, void 0, false, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 529,
+                            lineNumber: 549,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/PlatformList.tsx",
-                    lineNumber: 525,
+                    lineNumber: 545,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1058,7 +1090,7 @@ function ConnectPlatformModal({ platform, onClose, onSuccess }) {
                             children: "API Key (Optional)"
                         }, void 0, false, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 538,
+                            lineNumber: 558,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1069,7 +1101,7 @@ function ConnectPlatformModal({ platform, onClose, onSuccess }) {
                             className: "w-full rounded-lg border border-zinc-300 bg-white px-4 py-2 text-zinc-900 placeholder-zinc-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                         }, void 0, false, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 541,
+                            lineNumber: 561,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1077,13 +1109,13 @@ function ConnectPlatformModal({ platform, onClose, onSuccess }) {
                             children: "If you have an API key, enter it. Otherwise, we'll generate one for you."
                         }, void 0, false, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 548,
+                            lineNumber: 568,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/PlatformList.tsx",
-                    lineNumber: 537,
+                    lineNumber: 557,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1095,7 +1127,7 @@ function ConnectPlatformModal({ platform, onClose, onSuccess }) {
                             children: "Cancel"
                         }, void 0, false, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 554,
+                            lineNumber: 574,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1105,24 +1137,24 @@ function ConnectPlatformModal({ platform, onClose, onSuccess }) {
                             children: loading ? 'Connecting...' : 'Connect'
                         }, void 0, false, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 560,
+                            lineNumber: 580,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/PlatformList.tsx",
-                    lineNumber: 553,
+                    lineNumber: 573,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/PlatformList.tsx",
-            lineNumber: 524,
+            lineNumber: 544,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/PlatformList.tsx",
-        lineNumber: 523,
+        lineNumber: 543,
         columnNumber: 5
     }, this);
 }
@@ -1163,22 +1195,22 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                             children: "Request Platform Access"
                         }, void 0, false, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 609,
+                            lineNumber: 629,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: onClose,
                             className: "text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300",
-                            children: "✕"
+                            children: "âœ•"
                         }, void 0, false, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 612,
+                            lineNumber: 632,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/PlatformList.tsx",
-                    lineNumber: 608,
+                    lineNumber: 628,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -1192,7 +1224,7 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                     children: "Request Type"
                                 }, void 0, false, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 622,
+                                    lineNumber: 642,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -1208,7 +1240,7 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                             children: "Introduce Our Service to Platform"
                                         }, void 0, false, {
                                             fileName: "[project]/components/PlatformList.tsx",
-                                            lineNumber: 632,
+                                            lineNumber: 652,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1216,7 +1248,7 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                             children: "Request API Access"
                                         }, void 0, false, {
                                             fileName: "[project]/components/PlatformList.tsx",
-                                            lineNumber: 633,
+                                            lineNumber: 653,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1224,19 +1256,19 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                             children: "Request Developer Account"
                                         }, void 0, false, {
                                             fileName: "[project]/components/PlatformList.tsx",
-                                            lineNumber: 634,
+                                            lineNumber: 654,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 625,
+                                    lineNumber: 645,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 621,
+                            lineNumber: 641,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1246,7 +1278,7 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                     children: "Platform Name"
                                 }, void 0, false, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 639,
+                                    lineNumber: 659,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1261,13 +1293,13 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                     className: "w-full rounded-lg border border-zinc-300 bg-white px-4 py-2 text-zinc-900 placeholder-zinc-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                                 }, void 0, false, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 642,
+                                    lineNumber: 662,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 638,
+                            lineNumber: 658,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1277,7 +1309,7 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                     children: "Platform URL"
                                 }, void 0, false, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 653,
+                                    lineNumber: 673,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1292,13 +1324,13 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                     className: "w-full rounded-lg border border-zinc-300 bg-white px-4 py-2 text-zinc-900 placeholder-zinc-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                                 }, void 0, false, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 656,
+                                    lineNumber: 676,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 652,
+                            lineNumber: 672,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1308,7 +1340,7 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                     children: "Category"
                                 }, void 0, false, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 667,
+                                    lineNumber: 687,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -1324,7 +1356,7 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                             children: "Video"
                                         }, void 0, false, {
                                             fileName: "[project]/components/PlatformList.tsx",
-                                            lineNumber: 675,
+                                            lineNumber: 695,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1332,7 +1364,7 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                             children: "Audio"
                                         }, void 0, false, {
                                             fileName: "[project]/components/PlatformList.tsx",
-                                            lineNumber: 676,
+                                            lineNumber: 696,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1340,19 +1372,19 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                             children: "Learning"
                                         }, void 0, false, {
                                             fileName: "[project]/components/PlatformList.tsx",
-                                            lineNumber: 677,
+                                            lineNumber: 697,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 670,
+                                    lineNumber: 690,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 666,
+                            lineNumber: 686,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1362,7 +1394,7 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                     children: "Description"
                                 }, void 0, false, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 682,
+                                    lineNumber: 702,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -1377,13 +1409,13 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                     className: "w-full rounded-lg border border-zinc-300 bg-white px-4 py-2 text-zinc-900 placeholder-zinc-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                                 }, void 0, false, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 685,
+                                    lineNumber: 705,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 681,
+                            lineNumber: 701,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1393,7 +1425,7 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                     children: "Your Email"
                                 }, void 0, false, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 696,
+                                    lineNumber: 716,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1408,13 +1440,13 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                     className: "w-full rounded-lg border border-zinc-300 bg-white px-4 py-2 text-zinc-900 placeholder-zinc-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
                                 }, void 0, false, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 699,
+                                    lineNumber: 719,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 695,
+                            lineNumber: 715,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1427,7 +1459,7 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 710,
+                                    lineNumber: 730,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1437,30 +1469,30 @@ function RequestPlatformModal({ onClose, onSuccess }) {
                                     children: loading ? 'Submitting...' : 'Submit Request'
                                 }, void 0, false, {
                                     fileName: "[project]/components/PlatformList.tsx",
-                                    lineNumber: 717,
+                                    lineNumber: 737,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/PlatformList.tsx",
-                            lineNumber: 709,
+                            lineNumber: 729,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/PlatformList.tsx",
-                    lineNumber: 620,
+                    lineNumber: 640,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/PlatformList.tsx",
-            lineNumber: 607,
+            lineNumber: 627,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/PlatformList.tsx",
-        lineNumber: 606,
+        lineNumber: 626,
         columnNumber: 5
     }, this);
 }
@@ -1477,6 +1509,28 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 'use client';
 ;
 ;
+const sampleConnectedPlatforms = {
+    netflix: {
+        connected: true,
+        apiKey: 'NET-4X8Y-2211',
+        connectedAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString()
+    },
+    spotify: {
+        connected: true,
+        apiKey: 'SPF-8891-ABCD',
+        connectedAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString()
+    },
+    coursera: {
+        connected: true,
+        apiKey: 'CRS-5521-ZKQ',
+        connectedAt: new Date(Date.now() - 9 * 24 * 60 * 60 * 1000).toISOString()
+    },
+    steam: {
+        connected: true,
+        apiKey: 'STM-44FF-PLAY',
+        connectedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+    }
+};
 function ConnectedWallets() {
     const [connectedWallets, setConnectedWallets] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
@@ -1487,200 +1541,204 @@ function ConnectedWallets() {
         try {
             const stored = localStorage.getItem('connected_platforms');
             if (!stored) {
+                localStorage.setItem('connected_platforms', JSON.stringify(sampleConnectedPlatforms));
+            }
+            const data = localStorage.getItem('connected_platforms');
+            if (!data) {
                 setConnectedWallets([]);
                 setIsLoading(false);
                 return;
             }
-            const platforms = JSON.parse(stored);
+            const platforms = JSON.parse(data);
             const allPlatforms = [
                 // Video
                 {
                     id: 'netflix',
                     name: 'Netflix',
-                    icon: '🎬',
+                    icon: 'ðŸŽ¬',
                     category: 'video'
                 },
                 {
                     id: 'youtube',
                     name: 'YouTube',
-                    icon: '📺',
+                    icon: 'ðŸ“º',
                     category: 'video'
                 },
                 {
                     id: 'disney',
                     name: 'Disney+',
-                    icon: '🏰',
+                    icon: 'ðŸ°',
                     category: 'video'
                 },
                 {
                     id: 'amazon-prime',
                     name: 'Amazon Prime Video',
-                    icon: '📦',
+                    icon: 'ðŸ“¦',
                     category: 'video'
                 },
                 {
                     id: 'hulu',
                     name: 'Hulu',
-                    icon: '📺',
+                    icon: 'ðŸ“º',
                     category: 'video'
                 },
                 // Audio
                 {
                     id: 'spotify',
                     name: 'Spotify',
-                    icon: '🎵',
+                    icon: 'ðŸŽµ',
                     category: 'audio'
                 },
                 {
                     id: 'audible',
                     name: 'Audible',
-                    icon: '🎧',
+                    icon: 'ðŸŽ§',
                     category: 'audio'
                 },
                 {
                     id: 'apple-music',
                     name: 'Apple Music',
-                    icon: '🍎',
+                    icon: 'ðŸŽ',
                     category: 'audio'
                 },
                 {
                     id: 'soundcloud',
                     name: 'SoundCloud',
-                    icon: '☁️',
+                    icon: 'â˜ï¸',
                     category: 'audio'
                 },
                 {
                     id: 'pandora',
                     name: 'Pandora',
-                    icon: '📻',
+                    icon: 'ðŸ“»',
                     category: 'audio'
                 },
                 {
                     id: 'podcast-addict',
                     name: 'Podcast Addict',
-                    icon: '🎙️',
+                    icon: 'ðŸŽ™ï¸',
                     category: 'audio'
                 },
                 {
                     id: 'stitcher',
                     name: 'Stitcher',
-                    icon: '🎧',
+                    icon: 'ðŸŽ§',
                     category: 'audio'
                 },
                 {
                     id: 'tidal',
                     name: 'Tidal',
-                    icon: '🌊',
+                    icon: 'ðŸŒŠ',
                     category: 'audio'
                 },
                 {
                     id: 'deezer',
                     name: 'Deezer',
-                    icon: '🎵',
+                    icon: 'ðŸŽµ',
                     category: 'audio'
                 },
                 {
                     id: 'youtube-music',
                     name: 'YouTube Music',
-                    icon: '🎶',
+                    icon: 'ðŸŽ¶',
                     category: 'audio'
                 },
                 // Learning
                 {
                     id: 'coursera',
                     name: 'Coursera',
-                    icon: '📚',
+                    icon: 'ðŸ“š',
                     category: 'learn'
                 },
                 {
                     id: 'udemy',
                     name: 'Udemy',
-                    icon: '🎓',
+                    icon: 'ðŸŽ“',
                     category: 'learn'
                 },
                 {
                     id: 'khan-academy',
                     name: 'Khan Academy',
-                    icon: '🎯',
+                    icon: 'ðŸŽ¯',
                     category: 'learn'
                 },
                 {
                     id: 'edx',
                     name: 'edX',
-                    icon: '📖',
+                    icon: 'ðŸ“–',
                     category: 'learn'
                 },
                 {
                     id: 'skillshare',
                     name: 'Skillshare',
-                    icon: '✏️',
+                    icon: 'âœï¸',
                     category: 'learn'
                 },
                 {
                     id: 'pluralsight',
                     name: 'Pluralsight',
-                    icon: '💻',
+                    icon: 'ðŸ’»',
                     category: 'learn'
                 },
                 {
                     id: 'linkedin-learning',
                     name: 'LinkedIn Learning',
-                    icon: '💼',
+                    icon: 'ðŸ’¼',
                     category: 'learn'
                 },
                 {
                     id: 'masterclass',
                     name: 'MasterClass',
-                    icon: '🎭',
+                    icon: 'ðŸŽ­',
                     category: 'learn'
                 },
                 {
                     id: 'codecademy',
                     name: 'Codecademy',
-                    icon: '💻',
+                    icon: 'ðŸ’»',
                     category: 'learn'
                 },
                 {
                     id: 'duolingo',
                     name: 'Duolingo',
-                    icon: '🦉',
+                    icon: 'ðŸ¦‰',
                     category: 'learn'
                 },
                 // Entertainment
                 {
                     id: 'steam',
                     name: 'Steam',
-                    icon: '🎮',
+                    icon: 'ðŸŽ®',
                     category: 'entertainment'
                 },
                 {
                     id: 'epic-games',
                     name: 'Epic Games',
-                    icon: '🎯',
+                    icon: 'ðŸŽ¯',
                     category: 'entertainment'
                 },
                 {
                     id: 'twitch',
                     name: 'Twitch',
-                    icon: '📺',
+                    icon: 'ðŸ“º',
                     category: 'entertainment'
                 },
                 {
                     id: 'roblox',
                     name: 'Roblox',
-                    icon: '🧱',
+                    icon: 'ðŸ§±',
                     category: 'entertainment'
                 },
                 {
                     id: 'minecraft',
                     name: 'Minecraft',
-                    icon: '⛏️',
+                    icon: 'â›ï¸',
                     category: 'entertainment'
                 },
                 {
                     id: 'discord',
                     name: 'Discord',
-                    icon: '💬',
+                    icon: 'ðŸ’¬',
                     category: 'entertainment'
                 }
             ];
@@ -1722,12 +1780,12 @@ function ConnectedWallets() {
                 children: "Loading..."
             }, void 0, false, {
                 fileName: "[project]/components/ConnectedWallets.tsx",
-                lineNumber: 107,
+                lineNumber: 119,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/ConnectedWallets.tsx",
-            lineNumber: 106,
+            lineNumber: 118,
             columnNumber: 7
         }, this);
     }
@@ -1740,7 +1798,7 @@ function ConnectedWallets() {
                     children: "Connected Wallets"
                 }, void 0, false, {
                     fileName: "[project]/components/ConnectedWallets.tsx",
-                    lineNumber: 115,
+                    lineNumber: 127,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1748,13 +1806,13 @@ function ConnectedWallets() {
                     children: "No platforms connected yet. Connect your wallet to platforms to get started."
                 }, void 0, false, {
                     fileName: "[project]/components/ConnectedWallets.tsx",
-                    lineNumber: 118,
+                    lineNumber: 130,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/ConnectedWallets.tsx",
-            lineNumber: 114,
+            lineNumber: 126,
             columnNumber: 7
         }, this);
     }
@@ -1773,7 +1831,7 @@ function ConnectedWallets() {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/ConnectedWallets.tsx",
-                        lineNumber: 128,
+                        lineNumber: 140,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1782,13 +1840,13 @@ function ConnectedWallets() {
                         children: "Refresh"
                     }, void 0, false, {
                         fileName: "[project]/components/ConnectedWallets.tsx",
-                        lineNumber: 131,
+                        lineNumber: 143,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/ConnectedWallets.tsx",
-                lineNumber: 127,
+                lineNumber: 139,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1801,7 +1859,7 @@ function ConnectedWallets() {
                                 children: wallet.platformIcon
                             }, void 0, false, {
                                 fileName: "[project]/components/ConnectedWallets.tsx",
-                                lineNumber: 145,
+                                lineNumber: 157,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1815,7 +1873,7 @@ function ConnectedWallets() {
                                                 children: wallet.platformName
                                             }, void 0, false, {
                                                 fileName: "[project]/components/ConnectedWallets.tsx",
-                                                lineNumber: 150,
+                                                lineNumber: 162,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1823,13 +1881,13 @@ function ConnectedWallets() {
                                                 children: categoryLabels[wallet.category]
                                             }, void 0, false, {
                                                 fileName: "[project]/components/ConnectedWallets.tsx",
-                                                lineNumber: 153,
+                                                lineNumber: 165,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/ConnectedWallets.tsx",
-                                        lineNumber: 149,
+                                        lineNumber: 161,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1840,45 +1898,45 @@ function ConnectedWallets() {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/ConnectedWallets.tsx",
-                                        lineNumber: 157,
+                                        lineNumber: 169,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/ConnectedWallets.tsx",
-                                lineNumber: 148,
+                                lineNumber: 160,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "flex h-5 w-5 items-center justify-center rounded-full bg-green-500",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                     className: "text-xs text-white",
-                                    children: "✓"
+                                    children: "âœ“"
                                 }, void 0, false, {
                                     fileName: "[project]/components/ConnectedWallets.tsx",
-                                    lineNumber: 162,
+                                    lineNumber: 174,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/ConnectedWallets.tsx",
-                                lineNumber: 161,
+                                lineNumber: 173,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, wallet.platformId, true, {
                         fileName: "[project]/components/ConnectedWallets.tsx",
-                        lineNumber: 141,
+                        lineNumber: 153,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/components/ConnectedWallets.tsx",
-                lineNumber: 139,
+                lineNumber: 151,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/ConnectedWallets.tsx",
-        lineNumber: 126,
+        lineNumber: 138,
         columnNumber: 5
     }, this);
 }
@@ -1895,6 +1953,63 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 'use client';
 ;
 ;
+const sampleMediaHistory = [
+    {
+        id: 'mh-1',
+        platform: 'Netflix',
+        platformIcon: 'ðŸŽ¬',
+        title: 'Foundation S02E05',
+        category: 'video',
+        duration: 3200,
+        cost: 2.8,
+        watchedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+        watchCount: 1
+    },
+    {
+        id: 'mh-2',
+        platform: 'Spotify',
+        platformIcon: 'ðŸŽµ',
+        title: 'AI Disruption Podcast',
+        category: 'audio',
+        duration: 1800,
+        cost: 0.9,
+        watchedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+        watchCount: 2
+    },
+    {
+        id: 'mh-3',
+        platform: 'Coursera',
+        platformIcon: 'ðŸ“š',
+        title: 'Product Analytics Crash Course',
+        category: 'learn',
+        duration: 5400,
+        cost: 3.5,
+        watchedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+        watchCount: 1
+    },
+    {
+        id: 'mh-4',
+        platform: 'Steam',
+        platformIcon: 'ðŸŽ®',
+        title: "Baldur's Gate III",
+        category: 'entertainment',
+        duration: 7200,
+        cost: 4.2,
+        watchedAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString(),
+        watchCount: 3
+    },
+    {
+        id: 'mh-5',
+        platform: 'MasterClass',
+        platformIcon: 'ðŸŽ­',
+        title: 'Chris Voss Teaches Negotiation',
+        category: 'learn',
+        duration: 3600,
+        cost: 2.1,
+        watchedAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+        watchCount: 1
+    }
+];
 function MediaHistory() {
     const [mediaHistory, setMediaHistory] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [filter, setFilter] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('all');
@@ -1910,6 +2025,10 @@ function MediaHistory() {
         try {
             const stored = localStorage.getItem('media_history');
             let history = stored ? JSON.parse(stored) : [];
+            if (!stored || history.length === 0) {
+                history = sampleMediaHistory;
+                localStorage.setItem('media_history', JSON.stringify(history));
+            }
             // Apply filters
             if (filter !== 'all') {
                 history = history.filter((item)=>item.category === filter);
@@ -1989,7 +2108,7 @@ function MediaHistory() {
                                 children: "Total Time"
                             }, void 0, false, {
                                 fileName: "[project]/components/MediaHistory.tsx",
-                                lineNumber: 110,
+                                lineNumber: 173,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1997,13 +2116,13 @@ function MediaHistory() {
                                 children: formatDuration(totalDuration)
                             }, void 0, false, {
                                 fileName: "[project]/components/MediaHistory.tsx",
-                                lineNumber: 111,
+                                lineNumber: 174,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/MediaHistory.tsx",
-                        lineNumber: 109,
+                        lineNumber: 172,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2014,24 +2133,24 @@ function MediaHistory() {
                                 children: "Total Spent"
                             }, void 0, false, {
                                 fileName: "[project]/components/MediaHistory.tsx",
-                                lineNumber: 116,
+                                lineNumber: 179,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "mt-1 text-2xl font-bold text-zinc-900 dark:text-zinc-100",
                                 children: [
-                                    "€",
+                                    "â‚¬",
                                     totalCost.toFixed(2)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/MediaHistory.tsx",
-                                lineNumber: 117,
+                                lineNumber: 180,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/MediaHistory.tsx",
-                        lineNumber: 115,
+                        lineNumber: 178,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2042,7 +2161,7 @@ function MediaHistory() {
                                 children: "Total Watches"
                             }, void 0, false, {
                                 fileName: "[project]/components/MediaHistory.tsx",
-                                lineNumber: 122,
+                                lineNumber: 185,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2050,19 +2169,19 @@ function MediaHistory() {
                                 children: totalWatches
                             }, void 0, false, {
                                 fileName: "[project]/components/MediaHistory.tsx",
-                                lineNumber: 123,
+                                lineNumber: 186,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/MediaHistory.tsx",
-                        lineNumber: 121,
+                        lineNumber: 184,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/MediaHistory.tsx",
-                lineNumber: 108,
+                lineNumber: 171,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2076,7 +2195,7 @@ function MediaHistory() {
                                 children: "Category:"
                             }, void 0, false, {
                                 fileName: "[project]/components/MediaHistory.tsx",
-                                lineNumber: 132,
+                                lineNumber: 195,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -2089,7 +2208,7 @@ function MediaHistory() {
                                         children: "All"
                                     }, void 0, false, {
                                         fileName: "[project]/components/MediaHistory.tsx",
-                                        lineNumber: 138,
+                                        lineNumber: 201,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2097,7 +2216,7 @@ function MediaHistory() {
                                         children: "Video"
                                     }, void 0, false, {
                                         fileName: "[project]/components/MediaHistory.tsx",
-                                        lineNumber: 139,
+                                        lineNumber: 202,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2105,7 +2224,7 @@ function MediaHistory() {
                                         children: "Audio"
                                     }, void 0, false, {
                                         fileName: "[project]/components/MediaHistory.tsx",
-                                        lineNumber: 140,
+                                        lineNumber: 203,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2113,7 +2232,7 @@ function MediaHistory() {
                                         children: "Learning"
                                     }, void 0, false, {
                                         fileName: "[project]/components/MediaHistory.tsx",
-                                        lineNumber: 141,
+                                        lineNumber: 204,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2121,19 +2240,19 @@ function MediaHistory() {
                                         children: "Entertainment"
                                     }, void 0, false, {
                                         fileName: "[project]/components/MediaHistory.tsx",
-                                        lineNumber: 142,
+                                        lineNumber: 205,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/MediaHistory.tsx",
-                                lineNumber: 133,
+                                lineNumber: 196,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/MediaHistory.tsx",
-                        lineNumber: 131,
+                        lineNumber: 194,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2144,7 +2263,7 @@ function MediaHistory() {
                                 children: "Date:"
                             }, void 0, false, {
                                 fileName: "[project]/components/MediaHistory.tsx",
-                                lineNumber: 146,
+                                lineNumber: 209,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -2157,7 +2276,7 @@ function MediaHistory() {
                                         children: "All Time"
                                     }, void 0, false, {
                                         fileName: "[project]/components/MediaHistory.tsx",
-                                        lineNumber: 152,
+                                        lineNumber: 215,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2165,7 +2284,7 @@ function MediaHistory() {
                                         children: "Today"
                                     }, void 0, false, {
                                         fileName: "[project]/components/MediaHistory.tsx",
-                                        lineNumber: 153,
+                                        lineNumber: 216,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2173,7 +2292,7 @@ function MediaHistory() {
                                         children: "This Week"
                                     }, void 0, false, {
                                         fileName: "[project]/components/MediaHistory.tsx",
-                                        lineNumber: 154,
+                                        lineNumber: 217,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2181,19 +2300,19 @@ function MediaHistory() {
                                         children: "This Month"
                                     }, void 0, false, {
                                         fileName: "[project]/components/MediaHistory.tsx",
-                                        lineNumber: 155,
+                                        lineNumber: 218,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/MediaHistory.tsx",
-                                lineNumber: 147,
+                                lineNumber: 210,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/MediaHistory.tsx",
-                        lineNumber: 145,
+                        lineNumber: 208,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2204,7 +2323,7 @@ function MediaHistory() {
                                 children: "Sort:"
                             }, void 0, false, {
                                 fileName: "[project]/components/MediaHistory.tsx",
-                                lineNumber: 159,
+                                lineNumber: 222,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -2217,7 +2336,7 @@ function MediaHistory() {
                                         children: "Date"
                                     }, void 0, false, {
                                         fileName: "[project]/components/MediaHistory.tsx",
-                                        lineNumber: 165,
+                                        lineNumber: 228,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2225,7 +2344,7 @@ function MediaHistory() {
                                         children: "Duration"
                                     }, void 0, false, {
                                         fileName: "[project]/components/MediaHistory.tsx",
-                                        lineNumber: 166,
+                                        lineNumber: 229,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2233,7 +2352,7 @@ function MediaHistory() {
                                         children: "Cost"
                                     }, void 0, false, {
                                         fileName: "[project]/components/MediaHistory.tsx",
-                                        lineNumber: 167,
+                                        lineNumber: 230,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -2241,25 +2360,25 @@ function MediaHistory() {
                                         children: "Platform"
                                     }, void 0, false, {
                                         fileName: "[project]/components/MediaHistory.tsx",
-                                        lineNumber: 168,
+                                        lineNumber: 231,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/MediaHistory.tsx",
-                                lineNumber: 160,
+                                lineNumber: 223,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/MediaHistory.tsx",
-                        lineNumber: 158,
+                        lineNumber: 221,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/MediaHistory.tsx",
-                lineNumber: 130,
+                lineNumber: 193,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2271,12 +2390,12 @@ function MediaHistory() {
                         children: "No media history found"
                     }, void 0, false, {
                         fileName: "[project]/components/MediaHistory.tsx",
-                        lineNumber: 177,
+                        lineNumber: 240,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/MediaHistory.tsx",
-                    lineNumber: 176,
+                    lineNumber: 239,
                     columnNumber: 11
                 }, this) : mediaHistory.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "group rounded-2xl border-2 border-zinc-200 bg-gradient-to-br from-white to-zinc-50/50 p-5 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1 dark:border-zinc-800 dark:from-zinc-900 dark:to-zinc-800/50",
@@ -2288,7 +2407,7 @@ function MediaHistory() {
                                     children: item.platformIcon
                                 }, void 0, false, {
                                     fileName: "[project]/components/MediaHistory.tsx",
-                                    lineNumber: 186,
+                                    lineNumber: 249,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2302,7 +2421,7 @@ function MediaHistory() {
                                                     children: item.title
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/MediaHistory.tsx",
-                                                    lineNumber: 191,
+                                                    lineNumber: 254,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2310,27 +2429,27 @@ function MediaHistory() {
                                                     children: categoryLabels[item.category]
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/MediaHistory.tsx",
-                                                    lineNumber: 192,
+                                                    lineNumber: 255,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/MediaHistory.tsx",
-                                            lineNumber: 190,
+                                            lineNumber: 253,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "text-sm text-zinc-600 dark:text-zinc-400 mb-2",
                                             children: [
                                                 item.platform,
-                                                " • Watched ",
+                                                " â€¢ Watched ",
                                                 item.watchCount,
                                                 " ",
                                                 item.watchCount === 1 ? 'time' : 'times'
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/MediaHistory.tsx",
-                                            lineNumber: 196,
+                                            lineNumber: 259,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2338,76 +2457,76 @@ function MediaHistory() {
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     children: [
-                                                        "⏱️ ",
+                                                        "â±ï¸ ",
                                                         formatDuration(item.duration)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/MediaHistory.tsx",
-                                                    lineNumber: 200,
+                                                    lineNumber: 263,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     children: [
-                                                        "💰 €",
+                                                        "ðŸ’° â‚¬",
                                                         item.cost.toFixed(2)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/MediaHistory.tsx",
-                                                    lineNumber: 201,
+                                                    lineNumber: 264,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     children: [
-                                                        "📅 ",
+                                                        "ðŸ“… ",
                                                         new Date(item.watchedAt).toLocaleDateString()
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/MediaHistory.tsx",
-                                                    lineNumber: 202,
+                                                    lineNumber: 265,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     children: [
-                                                        "🕐 ",
+                                                        "ðŸ• ",
                                                         new Date(item.watchedAt).toLocaleTimeString()
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/MediaHistory.tsx",
-                                                    lineNumber: 203,
+                                                    lineNumber: 266,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/MediaHistory.tsx",
-                                            lineNumber: 199,
+                                            lineNumber: 262,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/MediaHistory.tsx",
-                                    lineNumber: 189,
+                                    lineNumber: 252,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/MediaHistory.tsx",
-                            lineNumber: 185,
+                            lineNumber: 248,
                             columnNumber: 15
                         }, this)
                     }, item.id, false, {
                         fileName: "[project]/components/MediaHistory.tsx",
-                        lineNumber: 181,
+                        lineNumber: 244,
                         columnNumber: 13
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/components/MediaHistory.tsx",
-                lineNumber: 174,
+                lineNumber: 237,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/MediaHistory.tsx",
-        lineNumber: 106,
+        lineNumber: 169,
         columnNumber: 5
     }, this);
 }

@@ -19,7 +19,40 @@
     "afterFiles": [],
     "fallback": []
   },
-  "dynamicRoutes": [],
+  "dynamicRoutes": [
+    {
+      "page": "/api/lms/courses/[courseId]",
+      "regex": "^/api/lms/courses/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcourseId": "nxtPcourseId"
+      },
+      "namedRegex": "^/api/lms/courses/(?<nxtPcourseId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/lms/progress/[courseId]",
+      "regex": "^/api/lms/progress/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcourseId": "nxtPcourseId"
+      },
+      "namedRegex": "^/api/lms/progress/(?<nxtPcourseId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/partner/settlement/[settlementId]",
+      "regex": "^/api/partner/settlement/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPsettlementId": "nxtPsettlementId"
+      },
+      "namedRegex": "^/api/partner/settlement/(?<nxtPsettlementId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/partner/settlement/[settlementId]",
+      "regex": "^/partner/settlement/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPsettlementId": "nxtPsettlementId"
+      },
+      "namedRegex": "^/partner/settlement/(?<nxtPsettlementId>[^/]+?)(?:/)?$"
+    }
+  ],
   "staticRoutes": [
     {
       "page": "/",
@@ -46,6 +79,102 @@
       "namedRegex": "^/analytics(?:/)?$"
     },
     {
+      "page": "/api/lms/connect",
+      "regex": "^/api/lms/connect(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/lms/connect(?:/)?$"
+    },
+    {
+      "page": "/api/lms/connections",
+      "regex": "^/api/lms/connections(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/lms/connections(?:/)?$"
+    },
+    {
+      "page": "/api/lms/courses",
+      "regex": "^/api/lms/courses(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/lms/courses(?:/)?$"
+    },
+    {
+      "page": "/api/lms/disconnect",
+      "regex": "^/api/lms/disconnect(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/lms/disconnect(?:/)?$"
+    },
+    {
+      "page": "/api/lms/progress",
+      "regex": "^/api/lms/progress(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/lms/progress(?:/)?$"
+    },
+    {
+      "page": "/api/lms/progress/refresh",
+      "regex": "^/api/lms/progress/refresh(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/lms/progress/refresh(?:/)?$"
+    },
+    {
+      "page": "/api/lms/sync",
+      "regex": "^/api/lms/sync(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/lms/sync(?:/)?$"
+    },
+    {
+      "page": "/api/lms/sync-courses",
+      "regex": "^/api/lms/sync\\-courses(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/lms/sync\\-courses(?:/)?$"
+    },
+    {
+      "page": "/api/lms/test-connection",
+      "regex": "^/api/lms/test\\-connection(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/lms/test\\-connection(?:/)?$"
+    },
+    {
+      "page": "/api/partner/api-keys",
+      "regex": "^/api/partner/api\\-keys(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/partner/api\\-keys(?:/)?$"
+    },
+    {
+      "page": "/api/partner/integrations",
+      "regex": "^/api/partner/integrations(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/partner/integrations(?:/)?$"
+    },
+    {
+      "page": "/api/partner/platforms",
+      "regex": "^/api/partner/platforms(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/partner/platforms(?:/)?$"
+    },
+    {
+      "page": "/api/partner/settlement/history",
+      "regex": "^/api/partner/settlement/history(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/partner/settlement/history(?:/)?$"
+    },
+    {
+      "page": "/api/partner/settlement/overview",
+      "regex": "^/api/partner/settlement/overview(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/partner/settlement/overview(?:/)?$"
+    },
+    {
+      "page": "/api/partner/settlement/settings",
+      "regex": "^/api/partner/settlement/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/partner/settlement/settings(?:/)?$"
+    },
+    {
+      "page": "/api/partner/test-connection",
+      "regex": "^/api/partner/test\\-connection(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/partner/test\\-connection(?:/)?$"
+    },
+    {
       "page": "/favicon.ico",
       "regex": "^/favicon\\.ico(?:/)?$",
       "routeKeys": {},
@@ -64,6 +193,36 @@
       "namedRegex": "^/partner/analytics(?:/)?$"
     },
     {
+      "page": "/partner/integration/success",
+      "regex": "^/partner/integration/success(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/partner/integration/success(?:/)?$"
+    },
+    {
+      "page": "/partner/integration/wizard",
+      "regex": "^/partner/integration/wizard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/partner/integration/wizard(?:/)?$"
+    },
+    {
+      "page": "/partner/settlement",
+      "regex": "^/partner/settlement(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/partner/settlement(?:/)?$"
+    },
+    {
+      "page": "/partner/settlement/history",
+      "regex": "^/partner/settlement/history(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/partner/settlement/history(?:/)?$"
+    },
+    {
+      "page": "/partner/settlement/settings",
+      "regex": "^/partner/settlement/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/partner/settlement/settings(?:/)?$"
+    },
+    {
       "page": "/player",
       "regex": "^/player(?:/)?$",
       "routeKeys": {},
@@ -74,6 +233,24 @@
       "regex": "^/settings(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/settings(?:/)?$"
+    },
+    {
+      "page": "/settings/lms",
+      "regex": "^/settings/lms(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/settings/lms(?:/)?$"
+    },
+    {
+      "page": "/settings/lms/progress",
+      "regex": "^/settings/lms/progress(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/settings/lms/progress(?:/)?$"
+    },
+    {
+      "page": "/settings/lms/sync",
+      "regex": "^/settings/lms/sync(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/settings/lms/sync(?:/)?$"
     },
     {
       "page": "/summary",
