@@ -13,25 +13,25 @@ export function middleware(request: NextRequest) {
   response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
   response.headers.set('X-Frame-Options', 'SAMEORIGIN');
   response.headers.set('X-Content-Type-Options', 'nosniff');
-  response.headers.set('X-XSS-Protection', '1; mode=block');
+  // X-XSS-Protection is deprecated, removed for better compatibility
   response.headers.set('Referrer-Policy', 'origin-when-cross-origin');
   response.headers.set(
     'Permissions-Policy',
     'camera=(), microphone=(), geolocation=()',
   );
 
-  // Content Security Policy
-  const csp = [
-    "default-src 'self'",
-    "script-src 'self' 'unsafe-eval' 'unsafe-inline'", // Next.js requires unsafe-eval in dev
-    "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: https:",
-    "font-src 'self' data:",
-    "connect-src 'self' https:",
-    "frame-ancestors 'self'",
-  ].join('; ');
-
-  response.headers.set('Content-Security-Policy', csp);
+  // Content Security Policy - removed for development (causes issues with Next.js)
+  // In production, configure CSP properly
+  // const csp = [
+  //   "default-src 'self'",
+  //   "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+  //   "style-src 'self' 'unsafe-inline'",
+  //   "img-src 'self' data: https:",
+  //   "font-src 'self' data:",
+  //   "connect-src 'self' https:",
+  //   "frame-ancestors 'self'",
+  // ].join('; ');
+  // response.headers.set('Content-Security-Policy', csp);
 
   // API Rate Limiting (basic)
   if (request.nextUrl.pathname.startsWith('/api/')) {

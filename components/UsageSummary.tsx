@@ -19,13 +19,23 @@ export default function UsageSummary({
   contentTitle,
 }: UsageSummaryProps) {
   const [balance, setBalance] = useState<string>('0');
+  const [walletBalance, setWalletBalance] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const [sessionDetails, setSessionDetails] = useState<any>(null);
 
   useEffect(() => {
+    console.log('UsageSummary - Received props:', { 
+      sessionId, 
+      totalCharge, 
+      duration, 
+      contentTitle,
+      totalChargeType: typeof totalCharge,
+      durationType: typeof duration
+    });
     loadSessionDetails();
     updateBalance();
-  }, [sessionId]);
+    loadWalletBalance();
+  }, [sessionId, totalCharge, duration]);
 
   async function loadSessionDetails() {
     try {
@@ -51,6 +61,20 @@ export default function UsageSummary({
     }
   }
 
+  async function loadWalletBalance() {
+    try {
+      const response = await fetch('/api/wallet/balance');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          setWalletBalance(data.data.balance);
+        }
+      }
+    } catch (err) {
+      console.error('Error loading wallet balance:', err);
+    }
+  }
+
   function formatTime(seconds: number): string {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -73,6 +97,11 @@ export default function UsageSummary({
           <div className="mt-1 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
             {formatTime(duration)}
           </div>
+          {duration > 0 && (
+            <div className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+              {duration} seconds total
+            </div>
+          )}
         </div>
 
         <div className="rounded-lg bg-green-50 p-4 dark:bg-green-900/20">
@@ -80,12 +109,20 @@ export default function UsageSummary({
           <div className="mt-1 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
             €{totalCharge.toFixed(2)}
           </div>
+          {duration > 0 && totalCharge > 0 && (
+            <div className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+              €{((totalCharge / duration) * 60).toFixed(2)}/min
+            </div>
+          )}
         </div>
 
         <div className="rounded-lg bg-purple-50 p-4 dark:bg-purple-900/20">
           <div className="text-sm text-zinc-600 dark:text-zinc-400">Remaining Balance</div>
           <div className="mt-1 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-            {balance} PLY
+            {walletBalance > 0 ? `€${walletBalance.toFixed(2)}` : `${balance} PLY`}
+          </div>
+          <div className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+            {walletBalance > 0 ? 'Wallet Credit' : 'Crypto Wallet'}
           </div>
         </div>
       </div>

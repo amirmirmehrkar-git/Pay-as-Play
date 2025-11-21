@@ -25,4 +25,78 @@ body {
   font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* CSS Compatibility fixes - order matters */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Backdrop filter support */
+.backdrop-blur-sm {
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.backdrop-blur-md {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.backdrop-blur-lg {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+/* Mask image support */
+.mask-image {
+  -webkit-mask-image: var(--mask-image);
+  mask-image: var(--mask-image);
+}
+
+/* Appearance support - order matters */
+.appearance-none {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Background clip support - order matters */
+.bg-clip-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* User select support - order matters */
+.select-none {
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.select-text {
+  -ms-user-select: text;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.select-all {
+  -ms-user-select: all;
+  -webkit-user-select: all;
+  user-select: all;
+}
+
+/* Animation support */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

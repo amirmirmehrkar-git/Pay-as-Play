@@ -96,7 +96,7 @@ const demoCoupons: Coupon[] = [
 
 export default function AnalyticsPage() {
   const [timeWatched, setTimeWatched] = useState('0h 0m');
-  const [totalSpent, setTotalSpent] = useState('â‚¬0.00');
+  const [totalSpent, setTotalSpent] = useState('€0.00');
   const [contentCount, setContentCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [dateRange, setDateRange] = useState('month');
@@ -112,7 +112,7 @@ export default function AnalyticsPage() {
     const hours = Math.floor(demoUserStats.totalTimeWatched / 3600);
     const minutes = Math.floor((demoUserStats.totalTimeWatched % 3600) / 60);
     setTimeWatched(`${hours}h ${minutes}m`);
-    setTotalSpent(`â‚¬${demoUserStats.totalSpent.toFixed(2)}`);
+    setTotalSpent(`€${demoUserStats.totalSpent.toFixed(2)}`);
     setContentCount(demoUserStats.contentCount);
     setMediaHistory(demoMediaHistory);
     setCoupons(demoCoupons);
@@ -146,7 +146,7 @@ export default function AnalyticsPage() {
       setTimeWatched(`${hours}h ${minutes}m`);
 
       // Format total spent
-      setTotalSpent(`â‚¬${(userStats.totalSpent || 0).toFixed(2)}`);
+      setTotalSpent(`€${(userStats.totalSpent || 0).toFixed(2)}`);
 
       // Set content count
       setContentCount(userStats.contentCount || 0);
@@ -218,7 +218,7 @@ export default function AnalyticsPage() {
           <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
             <div className="mb-2 flex items-center justify-between">
               <span className="text-sm text-zinc-600 dark:text-zinc-400">Total Spent</span>
-              <span className="text-2xl">ðŸ’°</span>
+              <span className="text-2xl" suppressHydrationWarning>💰</span>
             </div>
             {loading ? (
               <div className="h-8 w-24 animate-pulse rounded bg-zinc-200 dark:bg-zinc-700" />
@@ -232,7 +232,7 @@ export default function AnalyticsPage() {
           <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
             <div className="mb-2 flex items-center justify-between">
               <span className="text-sm text-zinc-600 dark:text-zinc-400">Content Count</span>
-              <span className="text-2xl">ðŸ“º</span>
+              <span className="text-2xl" suppressHydrationWarning>📊</span>
             </div>
             {loading ? (
               <div className="h-8 w-24 animate-pulse rounded bg-zinc-200 dark:bg-zinc-700" />

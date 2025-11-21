@@ -1,6 +1,7 @@
 ﻿'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { getWalletConnect } from '@/lib/sdk';
 import {
   FilmIcon,
@@ -372,8 +373,14 @@ interface PlatformListProps {
 }
 
 export default function PlatformList({ category }: PlatformListProps) {
-  // Load connected platforms from localStorage
+  const router = useRouter();
+  
+  // Load connected platforms from localStorage (only on client)
   const loadConnectedPlatforms = (): Record<string, { connected: boolean; apiKey?: string; connectedAt?: string }> => {
+    if (typeof window === 'undefined') {
+      return demoConnectedPlatforms; // Return default on server
+    }
+    
     try {
       const stored = localStorage.getItem('connected_platforms');
       if (!stored) {
@@ -393,17 +400,42 @@ export default function PlatformList({ category }: PlatformListProps) {
     }
   };
 
-  const [platforms, setPlatforms] = useState<Platform[]>([]);
+  // Track if component is mounted to avoid hydration mismatch
+  const [mounted, setMounted] = useState(false);
+  
+  // Initialize with default platforms (no localStorage) to avoid hydration mismatch
+  const [platforms, setPlatforms] = useState<Platform[]>(() => {
+    // Server-side: return filtered platforms without connection status
+    return samplePlatforms
+      .filter((p) => p.category === category)
+      .map((p) => ({
+        ...p,
+        connected: false,
+        apiKey: undefined,
+      }));
+  });
 
   useEffect(() => {
+    // Mark as mounted
+    setMounted(true);
+    
+    // Client-side: update with localStorage data after mount
+    console.log('PlatformList - category:', category);
     const connectedPlatforms = loadConnectedPlatforms();
     const categoryPlatforms = samplePlatforms
-      .filter((p) => p.category === category)
+      .filter((p) => {
+        const matches = p.category === category;
+        if (matches) {
+          console.log(`Platform ${p.id}: category=${p.category}, matches=${matches}`);
+        }
+        return matches;
+      })
       .map((p) => ({
         ...p,
         connected: connectedPlatforms[p.id]?.connected || false,
         apiKey: connectedPlatforms[p.id]?.apiKey,
       }));
+    console.log('PlatformList - filtered platforms for category', category, ':', categoryPlatforms.map(p => `${p.id} (${p.category})`));
     setPlatforms(categoryPlatforms);
   }, [category]);
   const [showConnectModal, setShowConnectModal] = useState(false);
@@ -456,16 +488,20 @@ export default function PlatformList({ category }: PlatformListProps) {
     category === 'entertainment' ? 'Entertainment & Games' :
     'Platforms';
   
+  // Ensure consistent rendering between server and client
+  const connectedCount = platforms.filter((p) => p.connected).length;
+  const platformCount = platforms.length;
+  
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" suppressHydrationWarning>
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">
             {title}
           </h2>
-          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-            {platforms.filter((p) => p.connected).length} of {platforms.length} platforms connected
+          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400" suppressHydrationWarning>
+            {mounted ? `${connectedCount} of ${platformCount} platforms connected` : `${platformCount} platforms available`}
           </p>
         </div>
         <button
@@ -477,7 +513,7 @@ export default function PlatformList({ category }: PlatformListProps) {
       </div>
 
       {/* Platform Grid */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" suppressHydrationWarning>
         {platforms.length === 0 ? (
           <div className="col-span-full rounded-lg border border-zinc-200 bg-zinc-50 p-8 text-center dark:border-zinc-800 dark:bg-zinc-800/50">
             <p className="text-zinc-600 dark:text-zinc-400">
@@ -494,10 +530,12 @@ export default function PlatformList({ category }: PlatformListProps) {
           platforms.map((platform) => (
             <div
               key={platform.id}
-              onClick={() => {
+              onClick={(e) => {
                 if (platform.connected) {
                   // Navigate to player page when platform is connected
-                  window.location.href = `/player?platform=${platform.id}`;
+                  e.preventDefault();
+                  e.stopPropagation();
+                  router.push(`/player?platform=${platform.id}`);
                 }
               }}
               className={`group relative overflow-hidden rounded-2xl border p-6 shadow-sm transition-all duration-300 ${
@@ -560,7 +598,8 @@ export default function PlatformList({ category }: PlatformListProps) {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      window.location.href = `/player?platform=${platform.id}`;
+                      e.preventDefault();
+                      router.push(`/player?platform=${platform.id}`);
                     }}
                     className="flex-1 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition-all hover:from-blue-600 hover:to-cyan-600 hover:shadow-xl hover:scale-105 active:scale-95"
                   >
@@ -569,6 +608,7 @@ export default function PlatformList({ category }: PlatformListProps) {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
+                      e.preventDefault();
                       handleDisconnect(platform.id);
                     }}
                     className="rounded-xl border-2 border-red-200 bg-white px-4 py-2.5 text-sm font-semibold text-red-600 transition-all hover:bg-red-50 hover:border-red-300 hover:shadow-md active:scale-95 dark:border-red-800 dark:bg-zinc-800 dark:text-red-400 dark:hover:bg-red-900/20"
@@ -580,6 +620,7 @@ export default function PlatformList({ category }: PlatformListProps) {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
+                    e.preventDefault();
                     handleConnect(platform);
                   }}
                   className="flex-1 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition-all hover:from-blue-600 hover:to-cyan-600 hover:shadow-xl hover:scale-105 active:scale-95"
