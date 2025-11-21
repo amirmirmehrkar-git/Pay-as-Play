@@ -1,184 +1,99 @@
 # 📊 Story Status Summary & Next Steps
 
-**تاریخ:** 2025-01-XX  
-**وضعیت:** ✅ Ready for Sequential Execution  
-**روش:** BMAD Methodology
+**تاریخ:** 2025-01-26  
+**وضعیت:** ✅ Sprint 3 Complete – آماده برای شروع Sprint 4  
+**روش:** BMAD Methodology (SM → Dev → QA)
 
 ---
 
-## ✅ Review & Approval Complete
+## ✅ Overall Progress
 
-همه استوری‌های Draft بررسی و تایید شدند. جزئیات در `STORY_REVIEW_AND_APPROVAL.md` موجود است.
-
----
-
-## 📊 Current Story Status
-
-### ✅ Done (1 Story)
-- **Story 1.1:** Integration Wizard - Step 1 ✅
-
-### ⚠️ InProgress (1 Story)
-- **Story 1.2:** Integration Wizard - Step 2 ⚠️
-  - **Status Check:**
-    - ✅ `CodeSnippet.tsx` component exists and complete
-    - ✅ `WizardStep2.tsx` component exists and complete
-    - ⚠️ Needs verification: Integration with `IntegrationWizard.tsx`
-    - ⚠️ Needs verification: All Acceptance Criteria met
-    - ⚠️ Needs verification: Testing complete
-
-### 📝 Draft (17 Stories)
-- Epic 1: Stories 1.3, 1.4, 1.5
-- Epic 2: Stories 2.1, 2.2, 2.3, 2.4
-- Epic 3: Stories 3.1, 3.2, 3.3
-- Epic 4: Stories 4.1, 4.2, 4.3, 4.4, 4.5
-- Epic 5: Stories 5.1, 5.2
-
----
-
-## 🚀 Immediate Next Steps
-
-### Step 1: Verify Story 1.2 Completion
-
-**Action Items:**
-1. ✅ Verify `WizardStep2.tsx` is integrated with `IntegrationWizard.tsx`
-2. ✅ Check all Acceptance Criteria are met:
-   - [ ] Step 2 display with progress indicator
-   - [ ] SDK installation instructions with package manager tabs
-   - [ ] Code snippets with copy functionality
-   - [ ] SDK version information
-   - [ ] System requirements display
-   - [ ] Navigation (Back/Next/Cancel)
-   - [ ] Responsive design
-3. ✅ Run tests (unit, integration, E2E)
-4. ✅ Update Story 1.2 status to "Review" if complete
-
-**If Story 1.2 is Complete:**
-- Move to QA Review
-- Update status: InProgress → Review
-- After QA approval: Review → Done
-
-**If Story 1.2 Needs Work:**
-- Continue development
-- Complete remaining tasks
-- Follow Dev Notes in Story 1.2
-
----
-
-### Step 2: Prepare Story 1.3 for Approval
-
-**Story 1.3:** Integration Wizard - Step 3 (API Key Generation)
-
-**Pre-approval Checklist:**
-- [ ] Story 1.2 is Done
-- [ ] Dependencies verified
-- [ ] Story 1.3 reviewed and approved
-- [ ] Ready to change status: Draft → Approved
-
-**When Story 1.2 is Done:**
-1. Review Story 1.3
-2. Update status: Draft → Approved
-3. Start development: Approved → InProgress
-
----
-
-## 🔄 Sequential Execution Workflow
-
-### Current Flow:
-
-```
-Story 1.1 (Done) ✅
-    ↓
-Story 1.2 (InProgress) ⚠️
-    ↓
-Story 1.3 (Draft) 📝 → (Approved) → (InProgress)
-    ↓
-Story 1.4 (Draft) 📝 → (Approved) → (InProgress)
-    ↓
-Story 1.5 (Draft) 📝 → (Approved) → (InProgress)
-```
-
-### BMAD Workflow for Each Story:
-
-1. **SM Agent (Story Creation):**
-   - Review story requirements
-   - Verify dependencies
-   - Update status: Draft → Approved
-
-2. **Dev Agent (Implementation):**
-   - Update status: Approved → InProgress
-   - Follow tasks/subtasks
-   - Mark completion
-   - Update status: InProgress → Review
-
-3. **QA Agent (Review):**
-   - Review code quality
-   - Test functionality
-   - Update status: Review → Done (or back to InProgress if changes needed)
-
----
-
-## 📋 Sprint 1 Status
-
-**Sprint:** Sprint 1 - Partner Integration Foundation  
-**Duration:** 2-3 weeks  
-**Goal:** Complete Integration Wizard
-
-### Progress:
-- ✅ Story 1.1: Done (5 points)
-- ⚠️ Story 1.2: InProgress (3 points)
-- 📝 Story 1.3: Draft (5 points)
-- 📝 Story 1.4: Draft (5 points)
-- 📝 Story 1.5: Draft (2 points)
-
-**Total Progress:** 5/20 points (25%)  
-**Remaining:** 15 points
-
----
-
-## ✅ All Stories Approved
+| Epic | Stories | Status | Notes |
+|------|---------|--------|-------|
+| Epic 1 – Integration Wizard | 5 | Done | Steps 1-5 live in `app/partner/integration/wizard` + Success screen |
+| Epic 2 – Settlement Dashboard | 4 | Done | Overview, History, Details, Settings all delivered |
+| Epic 3 – LMS Integration | 3 | Done | Connection, Course Sync, Progress Tracking complete |
+| Epic 4 – UX Enhancements (Part 1) | 2 | Draft | Next sprint focus (Story 4.1 → Story 4.2) |
+| Epic 5 – UX Enhancements (Part 2) | 3 | Draft | Backlog |
+| Epic 6 – Onboarding & Notifications | 2 | Draft | Backlog |
 
 **Total Stories:** 19  
-**Approved:** 19 ✅  
-**Ready for Development:** 19 ✅
+**Done:** 12  
+**Remaining:** 7 (Epics 4-5-6)
 
-### Alignment Verified:
-- ✅ PRD Phase 2 requirements
-- ✅ Gap Analysis gaps
-- ✅ Persona needs
-- ✅ Technical requirements
-- ✅ Dependencies clear
+---
+
+## 🟢 Completed Stories
+
+- **Integration Wizard (Stories 1.1 – 1.5)**  
+  - Components: `IntegrationWizard.tsx`, `WizardStep2/3/4`, `ApiKeyDisplay`, `CodeSnippet`  
+  - APIs: `/api/partner/platforms`, `/api/partner/api-keys`, `/api/partner/integrations`, `/api/partner/test-connection`
+
+- **Settlement Dashboard (Stories 2.1 – 2.4)**  
+  - Pages: `/partner/settlement`, `/partner/settlement/history`, `/partner/settlement/[id]`, `/partner/settlement/settings`  
+  - Components: `SettlementSummaryCards`, `DateRangeSelector`, `RevenueChart`, `SettlementFilters`, `SettlementList`, `PaymentMethodSettings`  
+  - APIs: `/api/partner/settlement/overview`, `/history`, `/[settlementId]`, `/settings`
+
+- **LMS Integration (Stories 3.1 – 3.3)**  
+  - Pages: `/settings/lms`, `/settings/lms/sync`, `/settings/lms/progress`  
+  - Components: `LMSPlatformList`, `LMSConnectionModal`, `LMSSyncStatus`, `LMSSyncActions`, `LMSCourseList`, `LMSProgressOverview`, `LMSProgressCharts`, `LMSLearningStatistics`  
+  - APIs: `/api/lms/test-connection`, `/connect`, `/disconnect`, `/connections`, `/sync`, `/courses`, `/courses/[id]`, `/progress`, `/progress/[id]`, `/progress/refresh`
+
+All QA reviews are logged inside each story file (see `epic*-story*.md`). Outstanding recommendation: add automated tests + wire up real backend endpoints before production launch.
+
+---
+
+## 📌 Current Focus
+
+- **Sprint 3**: ✅ Completed (Stories 3.1 – 3.3 delivered & QA approved)  
+- **Next Sprint (Sprint 4 – UX Enhancements Part 1)**  
+  1. **Story 4.1** – Low Balance Warning & Notifications (5 pts)  
+  2. **Story 4.2** – Auto Top-up Feature (8 pts)
+
+---
+
+## 🔄 Sequential Execution Plan (Upcoming)
+
+```
+Story 4.1 (Draft → Approved → InProgress → Review → Done)
+    ↓ (enables)
+Story 4.2 (Draft → Approved → InProgress → Review → Done)
+```
+
+BMAD Loop Reminder:
+1. **SM Agent:** Approve story, confirm dependencies  
+2. **Dev Agent:** Implement & document (Dev Record)  
+3. **QA Agent:** Review, log QA results, mark Done
 
 ---
 
 ## 🎯 Recommended Action Plan
 
-### Today:
-1. ✅ Verify Story 1.2 completion status
-2. ✅ Complete Story 1.2 if needed
-3. ✅ Move Story 1.2 to QA Review
+### Today
+1. ✅ Formalize Sprint 3 start/completion docs (`SPRINT_3_START.md`)
+2. ✅ Update status summary (this file)
+3. 📝 Kick off Sprint 4 – change Story 4.1 status Draft → Approved → InProgress
 
-### This Week:
-1. Complete Story 1.2 QA Review
-2. Approve Story 1.3
-3. Start Story 1.3 development
+### This Week
+1. Implement Story 4.1 (low balance alerts + notification settings)  
+2. Move Story 4.1 to QA Review → Done  
+3. Approve and start Story 4.2
 
-### Next Week:
-1. Complete Story 1.3
-2. Start Story 1.4
-3. Continue Sprint 1 execution
-
----
-
-## 📝 Notes
-
-- All stories are well-structured and ready
-- Dependencies are clear
-- Technical details comprehensive
-- Testing standards included
-- Ready for sequential execution
+### Next
+1. Finish Story 4.2 Auto Top-up  
+2. Prepare Sprint 4 review & retrospective  
+3. Plan Sprint 5 (Analytics & Export enhancements)
 
 ---
 
-**تاریخ آخرین به‌روزرسانی:** 2025-01-XX  
-**وضعیت:** ✅ Ready for Sequential Execution
+## 📝 Notes & Outstanding Items
+- ✅ PRD alignment, persona needs, and gap analysis all integrated into delivered stories
+- ⚠️ Automated tests pending across LMS + Settlement features
+- ⚠️ Replace mock API routes with real backend when available
+- 📂 Reference docs: `SPRINT_3_START.md`, individual story Dev/QA records
+
+---
+
+**تاریخ آخرین به‌روزرسانی:** 2025-01-26  
+**وضعیت:** ✅ Ready to start Sprint 4 (Story 4.1 in focus)
 

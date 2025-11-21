@@ -1,0 +1,21 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm ci",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "env": {
+    "DATABASE_URL": "@database_url",
+    "NEXT_PUBLIC_API_BASE_URL": "@api_base_url",
+    "NEXT_PUBLIC_USE_MOCK_API": "@use_mock_api",
+    "NEXT_PUBLIC_API_VERSION": "@api_version"
+  },
+  "build": {
+    "env": {
+      "DATABASE_URL": "@database_url",
+      "NEXT_PUBLIC_API_BASE_URL": "@api_base_url",
+      "NEXT_PUBLIC_USE_MOCK_API": "@use_mock_api"
+    }
+  }
+}
+

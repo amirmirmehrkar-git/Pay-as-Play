@@ -1,0 +1,304 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================
+// Enums
+// ============================================
+
+enum UserRole {
+  USER
+  ADMIN
+  PARTNER
+}
+
+enum TransactionType {
+  payment
+  topup
+  withdrawal
+  refund
+}
+
+enum TransactionStatus {
+  pending
+  completed
+  failed
+  cancelled
+}
+
+enum SessionStatus {
+  active
+  completed
+  cancelled
+}
+
+enum PlatformType {
+  video
+  lms
+  course
+}
+
+enum PlatformStatus {
+  active
+  inactive
+  suspended
+}
+
+enum NotificationType {
+  low_balance
+  auto_topup
+  payment
+  session_end
+  settlement
+  system
+  promotional
+}
+
+enum WithdrawalMethod {
+  bank
+  paypal
+  crypto
+}
+
+enum WithdrawalStatus {
+  pending
+  processing
+  completed
+  failed
+}
+
+enum LmsPlatform {
+  moodle
+  canvas
+  blackboard
+  other
+}
+
+enum LmsConnectionStatus {
+  active
+  inactive
+  error
+}
+
+// ============================================
+// Models
+// ============================================
+
+model User {
+  id                  String   @id @default(uuid())
+  email               String   @unique
+  passwordHash        String   @map("password_hash")
+  name                String?
+  role                UserRole @default(USER)
+  emailVerified       Boolean  @default(false) @map("email_verified")
+  onboardingCompleted Boolean  @default(false) @map("onboarding_completed")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  wallet               Wallet?
+  transactions         Transaction[]
+  sessions             Session[]
+  platforms            Platform[]
+  notifications        Notification[]
+  notificationSettings NotificationSettings?
+  autoTopupSettings    AutoTopupSettings?
+  withdrawals          Withdrawal[]
+  lmsConnections       LmsConnection[]
+
+  @@index([email], name: "idx_users_email")
+  @@index([role], name: "idx_users_role")
+  @@map("users")
+}
+
+model Wallet {
+  id                String   @id @default(uuid())
+  userId            String   @unique @map("user_id")
+  balance           Decimal  @default(0.00) @db.Decimal(10, 2)
+  currency          String   @default("EUR") @db.VarChar(3)
+  averageMinuteCost Decimal? @map("average_minute_cost") @db.Decimal(10, 2)
+  lastUpdated       DateTime @default(now()) @map("last_updated")
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@index([userId], name: "idx_wallets_user_id")
+  @@map("wallets")
+}
+
+model Transaction {
+  id            String            @id @default(uuid())
+  userId        String            @map("user_id")
+  walletId      String            @map("wallet_id")
+  type          TransactionType
+  amount        Decimal           @db.Decimal(10, 2)
+  currency      String            @default("EUR") @db.VarChar(3)
+  status        TransactionStatus @default(pending)
+  paymentMethod String?           @map("payment_method") @db.VarChar(50)
+  description   String?           @db.Text
+  metadata      Json?
+  createdAt     DateTime          @default(now()) @map("created_at")
+  completedAt   DateTime?         @map("completed_at")
+
+  // Relations
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet Wallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
+  @@index([userId], name: "idx_transactions_user_id")
+  @@index([walletId], name: "idx_transactions_wallet_id")
+  @@index([type], name: "idx_transactions_type")
+  @@index([status], name: "idx_transactions_status")
+  @@index([createdAt], name: "idx_transactions_created_at")
+  @@map("transactions")
+}
+
+model Session {
+  id              String        @id @default(uuid())
+  userId          String        @map("user_id")
+  contentId       String        @map("content_id") @db.VarChar(255)
+  contentTitle    String?       @map("content_title") @db.VarChar(255)
+  platform        String?       @db.VarChar(100)
+  pricePerMinute  Decimal       @map("price_per_minute") @db.Decimal(10, 2)
+  startedAt       DateTime      @default(now()) @map("started_at")
+  endedAt         DateTime?     @map("ended_at")
+  durationSeconds Int?          @map("duration_seconds")
+  totalCost       Decimal?      @map("total_cost") @db.Decimal(10, 2)
+  status          SessionStatus @default(active)
+  createdAt       DateTime      @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], name: "idx_sessions_user_id")
+  @@index([contentId], name: "idx_sessions_content_id")
+  @@index([startedAt], name: "idx_sessions_started_at")
+  @@index([status], name: "idx_sessions_status")
+  @@map("sessions")
+}
+
+model Platform {
+  id          String         @id @default(uuid())
+  userId      String         @map("user_id")
+  name        String         @db.VarChar(255)
+  type        PlatformType
+  description String?        @db.Text
+  apiKey      String?        @map("api_key") @db.VarChar(255)
+  apiKeyId    String?        @map("api_key_id") @db.VarChar(255)
+  status      PlatformStatus @default(active)
+  createdAt   DateTime       @default(now()) @map("created_at")
+  updatedAt   DateTime       @updatedAt @map("updated_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], name: "idx_platforms_user_id")
+  @@index([type], name: "idx_platforms_type")
+  @@index([status], name: "idx_platforms_status")
+  @@map("platforms")
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String           @map("user_id")
+  type      NotificationType
+  title     String           @db.VarChar(255)
+  message   String           @db.Text
+  read      Boolean          @default(false)
+  actionUrl String?          @map("action_url") @db.VarChar(500)
+  createdAt DateTime         @default(now()) @map("created_at")
+  readAt    DateTime?        @map("read_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], name: "idx_notifications_user_id")
+  @@index([type], name: "idx_notifications_type")
+  @@index([read], name: "idx_notifications_read")
+  @@index([createdAt], name: "idx_notifications_created_at")
+  @@map("notifications")
+}
+
+model NotificationSettings {
+  id                  String   @id @default(uuid())
+  userId              String   @unique @map("user_id")
+  lowBalanceThreshold Decimal  @default(10.00) @map("low_balance_threshold") @db.Decimal(10, 2)
+  notificationEmail   String?  @map("notification_email") @db.VarChar(255)
+  typePreferences     Json?    @map("type_preferences")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], name: "idx_notification_settings_user_id")
+  @@map("notification_settings")
+}
+
+model AutoTopupSettings {
+  id              String   @id @default(uuid())
+  userId          String   @unique @map("user_id")
+  enabled         Boolean  @default(false)
+  threshold       Decimal  @default(10.00) @db.Decimal(10, 2)
+  amount          Decimal  @default(25.00) @db.Decimal(10, 2)
+  paymentMethodId String?  @map("payment_method_id") @db.VarChar(255)
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], name: "idx_auto_topup_settings_user_id")
+  @@map("auto_topup_settings")
+}
+
+model Withdrawal {
+  id            String           @id @default(uuid())
+  userId        String           @map("user_id")
+  amount        Decimal          @db.Decimal(10, 2)
+  currency      String           @default("EUR") @db.VarChar(3)
+  method        WithdrawalMethod
+  status        WithdrawalStatus @default(pending)
+  bankDetails   Json?            @map("bank_details")
+  paypalEmail   String?          @map("paypal_email") @db.VarChar(255)
+  cryptoAddress String?          @map("crypto_address") @db.VarChar(255)
+  createdAt     DateTime         @default(now()) @map("created_at")
+  processedAt   DateTime?        @map("processed_at")
+  completedAt   DateTime?        @map("completed_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], name: "idx_withdrawals_user_id")
+  @@index([status], name: "idx_withdrawals_status")
+  @@index([createdAt], name: "idx_withdrawals_created_at")
+  @@map("withdrawals")
+}
+
+model LmsConnection {
+  id         String              @id @default(uuid())
+  userId     String              @map("user_id")
+  platform   LmsPlatform
+  url        String              @db.VarChar(500)
+  apiKey     String?             @map("api_key") @db.VarChar(255)
+  apiSecret  String?             @map("api_secret") @db.VarChar(255)
+  status     LmsConnectionStatus @default(active)
+  lastSyncAt DateTime?           @map("last_sync_at")
+  createdAt  DateTime            @default(now()) @map("created_at")
+  updatedAt  DateTime            @updatedAt @map("updated_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], name: "idx_lms_connections_user_id")
+  @@index([platform], name: "idx_lms_connections_platform")
+  @@map("lms_connections")
+}

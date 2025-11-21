@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { getBilling, getWalletConnect } from '@/lib/sdk';
-import { appConfig } from '@/lib/config';
+import LowBalanceBanner from './LowBalanceBanner';
+import { useLowBalanceWarning } from '@/hooks/useLowBalanceWarning';
 
 interface VideoPlayerProps {
   contentId: string;
@@ -19,6 +21,7 @@ export default function VideoPlayer({
   videoUrl,
   onStop,
 }: VideoPlayerProps) {
+  const router = useRouter();
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0); // in seconds
   const [totalCharge, setTotalCharge] = useState(0);
@@ -27,18 +30,34 @@ export default function VideoPlayer({
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const tickIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  const {
+    showBanner,
+    balance: lowBalance,
+    currency,
+    estimatedMinutesLeft,
+    status: warningStatus,
+    warningEnabled,
+    openModal,
+    dismissBanner,
+  } = useLowBalanceWarning();
+
   useEffect(() => {
     return () => {
-      // Cleanup on unmount
       if (intervalRef.current) clearInterval(intervalRef.current);
       if (tickIntervalRef.current) clearInterval(tickIntervalRef.current);
       if (sessionId) {
-        getBilling().then(b => b.stopSession(sessionId).catch(console.error));
+        getBilling().then((b) => b.stopSession(sessionId).catch(console.error));
       }
     };
   }, [sessionId]);
 
   async function handleStart() {
+    if (warningEnabled && warningStatus !== 'ok') {
+      openModal();
+      setError('Balance too low. Please top up or continue after acknowledging the warning.');
+      return;
+    }
+
     const wc = await getWalletConnect();
     if (!wc.isWalletConnected()) {
       setError('Please connect your wallet first');
@@ -49,44 +68,40 @@ export default function VideoPlayer({
     setIsPlaying(true);
 
     try {
-      // Start session
       const userAddress = wc.getConnectedAddress();
       if (!userAddress) {
         throw new Error('Wallet not connected');
       }
 
       const b = await getBilling();
-      const session = await b.startSession({
+      const session = (await b.startSession({
         contentId,
         userId: userAddress,
         ratePerMinute: pricePerMinute,
-      }) as any;
+      })) as any;
 
       setSessionId(session.sessionId);
 
-      // Start timer
       intervalRef.current = setInterval(() => {
         setDuration((prev) => prev + 1);
       }, 1000);
 
-      // Send tick every minute (60 seconds)
       tickIntervalRef.current = setInterval(async () => {
         try {
           const billingModule = await getBilling();
           const signer = wc.getWalletConnector();
-          
+
           await billingModule.sendTick(session.sessionId, {
             signer,
           });
 
-          // Update charge
           const minutes = Math.floor(duration / 60) + 1;
           setTotalCharge(minutes * pricePerMinute);
         } catch (err: any) {
           console.error('Tick error:', err);
           setError(err.message || 'Billing error');
         }
-      }, 60000); // Every minute
+      }, 60000);
     } catch (err: any) {
       setError(err.message || 'Failed to start session');
       setIsPlaying(false);
@@ -128,6 +143,16 @@ export default function VideoPlayer({
 
   return (
     <div className="flex flex-col gap-4 rounded-lg border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
+      {showBanner && (
+        <LowBalanceBanner
+          balance={lowBalance}
+          currency={currency}
+          estimatedMinutesLeft={estimatedMinutesLeft}
+          status={warningStatus}
+          onTopUp={() => router.push('/wallet')}
+          onDismiss={() => dismissBanner({ snoozeMs: 5 * 60 * 1000 })}
+        />
+      )}
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
           {contentTitle}

@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import OnboardingWrapper from "@/components/OnboardingWrapper";
 import LowBalanceWarning from "@/components/LowBalanceWarning";
+import { LowBalanceWarningProvider } from "@/hooks/useLowBalanceWarning";
+import { ToastProvider } from "@/components/ToastNotification";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,10 +31,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <OnboardingWrapper>
-          {children}
-          <LowBalanceWarning threshold={10} />
-        </OnboardingWrapper>
+        <LowBalanceWarningProvider>
+          <ToastProvider>
+            <OnboardingWrapper>
+              {children}
+              <LowBalanceWarning />
+            </OnboardingWrapper>
+          </ToastProvider>
+        </LowBalanceWarningProvider>
       </body>
     </html>
   );

@@ -3,8 +3,14 @@
 import { useState, useEffect } from 'react';
 import { getAnalytics, getWalletConnect } from '@/lib/sdk';
 import { appConfig } from '@/lib/config';
-import AnalyticsCharts from '@/components/AnalyticsCharts';
+import TimeWatchedChart from '@/components/TimeWatchedChart';
+import CostPerContentChart from '@/components/CostPerContentChart';
+import MonthlySpendChart from '@/components/MonthlySpendChart';
+import SpendingByPlatformChart from '@/components/SpendingByPlatformChart';
+import ContentTypeDistributionChart from '@/components/ContentTypeDistributionChart';
 import MediaHistory from '@/components/MediaHistory';
+import ExportButton from '@/components/ExportButton';
+import ExportHistory from '@/components/ExportHistory';
 
 interface MediaItem {
   id: string;
@@ -96,6 +102,11 @@ export default function AnalyticsPage() {
   const [dateRange, setDateRange] = useState('month');
   const [mediaHistory, setMediaHistory] = useState<MediaItem[]>([]);
   const [coupons, setCoupons] = useState<Coupon[]>([]);
+  const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
+  const [chartStartDate, setChartStartDate] = useState(
+    new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+  );
+  const [chartEndDate, setChartEndDate] = useState(new Date());
 
   const applyDemoData = () => {
     const hours = Math.floor(demoUserStats.totalTimeWatched / 3600);
@@ -166,20 +177,26 @@ export default function AnalyticsPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-zinc-900 dark:to-zinc-800">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">
             Analytics Dashboard
           </h1>
-          <select
-            value={dateRange}
-            onChange={(e) => setDateRange(e.target.value)}
-            className="rounded-lg border border-zinc-300 bg-white px-4 py-2 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
-          >
-            <option value="today">Today</option>
-            <option value="week">This Week</option>
-            <option value="month">This Month</option>
-            <option value="year">This Year</option>
-          </select>
+          <div className="flex flex-wrap items-center gap-3">
+            <select
+              value={dateRange}
+              onChange={(e) => setDateRange(e.target.value)}
+              className="rounded-lg border border-zinc-300 bg-white px-4 py-2 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
+            >
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+              <option value="year">This Year</option>
+            </select>
+            <ExportButton
+              defaultStartDate={chartStartDate.toISOString().split('T')[0]}
+              defaultEndDate={chartEndDate.toISOString().split('T')[0]}
+            />
+          </div>
         </div>
 
         {/* Summary Cards */}
@@ -228,16 +245,87 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Charts */}
-        <div className="mb-8 rounded-2xl border-2 border-zinc-200 bg-gradient-to-br from-white to-zinc-50/50 p-6 shadow-xl dark:border-zinc-800 dark:from-zinc-900 dark:to-zinc-800/50">
-          <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-            Analytics Charts
-          </h2>
-          <AnalyticsCharts />
+        <div className="space-y-8">
+          {/* Time Watched Chart */}
+          <div
+            id="time-watched-chart"
+            className="rounded-2xl border-2 border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
+          >
+            <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+              Time Watched Over Time
+            </h2>
+            <TimeWatchedChart
+              startDate={chartStartDate}
+              endDate={chartEndDate}
+              onDateRangeChange={(start, end) => {
+                setChartStartDate(start);
+                setChartEndDate(end);
+              }}
+            />
+          </div>
+
+          {/* Cost per Content Chart */}
+          <div
+            id="cost-chart"
+            className="rounded-2xl border-2 border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
+          >
+            <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+              Cost per Content
+            </h2>
+            <CostPerContentChart startDate={chartStartDate} endDate={chartEndDate} platform={selectedPlatform} />
+          </div>
+
+          {/* Monthly Spend Chart */}
+          <div
+            id="monthly-chart"
+            className="rounded-2xl border-2 border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
+          >
+            <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+              Monthly Spending
+            </h2>
+            <MonthlySpendChart />
+          </div>
+
+          {/* Spending by Platform and Content Type - Side by Side */}
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div
+              id="platform-chart"
+              className="rounded-2xl border-2 border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
+            >
+              <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+                Spending by Platform
+              </h2>
+              <SpendingByPlatformChart
+                startDate={chartStartDate}
+                endDate={chartEndDate}
+                onPlatformClick={setSelectedPlatform}
+                selectedPlatform={selectedPlatform}
+              />
+            </div>
+
+            <div
+              id="content-type-chart"
+              className="rounded-2xl border-2 border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
+            >
+              <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+                Content Type Distribution
+              </h2>
+              <ContentTypeDistributionChart />
+            </div>
+          </div>
         </div>
 
         {/* Media History - Using MediaHistory Component */}
         <div className="mb-8">
           <MediaHistory />
+        </div>
+
+        {/* Export History */}
+        <div className="mb-8 rounded-2xl border-2 border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
+          <h2 className="mb-6 text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+            Recent Exports
+          </h2>
+          <ExportHistory />
         </div>
 
         {/* Coupons & Gift Codes */}

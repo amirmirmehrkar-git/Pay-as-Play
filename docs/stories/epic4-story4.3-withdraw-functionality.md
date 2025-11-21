@@ -1,7 +1,7 @@
 # Story 4.3: Withdraw Functionality
 
 **Epic:** Epic 4 - User Experience Enhancements  
-**Status:** Draft  
+**Status:** Review  
 **Priority:** Medium  
 **Story Points:** 8  
 **Assignee:** TBD
@@ -243,7 +243,41 @@ components/
 ---
 
 ## Dev Agent Record
-_TBD_
+
+### Agent Model Used
+Auto (Cursor AI Agent)
+
+### Work Log
+- ✅ Approved story and started development
+- ✅ Created withdraw page (`/wallet/withdraw`) with balance display, amount input, presets, validation
+- ✅ Created withdrawal method selector component (Bank Transfer, PayPal, Crypto)
+- ✅ Created dynamic forms for each withdrawal method with validation
+- ✅ Created withdrawal summary component with fee calculation
+- ✅ Implemented confirmation modal with 2FA integration
+- ✅ Created withdrawal history page with filters
+- ✅ Created withdrawal details page
+- ✅ Created mock API routes (POST /withdraw, GET /history, GET /[withdrawalId])
+- ✅ Added unit tests for WithdrawalMethodSelector and WithdrawalSummary
+- ✅ Updated wallet page to link to withdraw page
+- ✅ Wrote Dev/QA documentation
+- ✅ Moved story status to Review
+
+### Files Being Touched
+- `app/wallet/withdraw/page.tsx` (NEW)
+- `app/wallet/withdraw/history/page.tsx` (NEW)
+- `app/wallet/withdraw/[withdrawalId]/page.tsx` (NEW)
+- `app/api/wallet/withdraw/route.ts` (NEW)
+- `app/api/wallet/withdraw/history/route.ts` (NEW)
+- `app/api/wallet/withdraw/[withdrawalId]/route.ts` (NEW)
+- `components/WithdrawalMethodSelector.tsx` (NEW)
+- `components/WithdrawalForms.tsx` (NEW)
+- `components/WithdrawalSummary.tsx` (NEW)
+- `components/WithdrawalHistory.tsx` (NEW)
+- `components/__tests__/WithdrawalMethodSelector.test.tsx` (NEW)
+- `components/__tests__/WithdrawalSummary.test.tsx` (NEW)
+- `app/wallet/page.tsx` (MODIFIED - added link, removed WithdrawButton import)
+- `docs/stories/STORY_4.3_DEVELOPMENT_COMPLETE.md` (NEW)
+- `docs/stories/STORY_4.3_QA_REVIEW.md` (NEW)
 
 ---
 

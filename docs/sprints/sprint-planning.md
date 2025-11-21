@@ -16,6 +16,7 @@
 6. [Sprint 4: User Experience Enhancements - Part 1](#sprint-4-user-experience-enhancements---part-1)
 7. [Sprint 5: User Experience Enhancements - Part 2](#sprint-5-user-experience-enhancements---part-2)
 8. [Sprint 6: Onboarding & Notifications](#sprint-6-onboarding--notifications)
+9. [Sprint 7: Quality & Integration](#sprint-7-quality--integration)
 
 ---
 
@@ -200,8 +201,8 @@
 **Target Personas:** All users
 
 ### Stories:
-1. 📝 **Story 5.1:** Onboarding Flow - **Draft**
-2. 📝 **Story 5.2:** Notifications System - **Draft**
+1. ✅ **Story 5.1:** Onboarding Flow - **Done**
+2. ✅ **Story 5.2:** Notifications System - **Done**
 
 ### Total Story Points: 16
 - Story 5.1: 8 points 📝
@@ -228,7 +229,9 @@
 | Sprint 4 | 2-3 weeks | 2 | 13 | High |
 | Sprint 5 | 2-3 weeks | 3 | 21 | Medium |
 | Sprint 6 | 2 weeks | 2 | 16 | Medium |
-| **Total** | **12-16 weeks** | **19** | **106** | |
+| Sprint 7 | 2-3 weeks | 5 | 31 | High |
+| Sprint 8 | 2-3 weeks | 3 | 21 | High |
+| **Total** | **16-22 weeks** | **28** | **158** | |
 
 ---
 
@@ -244,6 +247,10 @@
 5. Sprint 5: User Experience Enhancements - Part 2
 6. Sprint 6: Onboarding & Notifications
 
+### Phase 3 (Quality & Integration - Sprints 7-8):
+7. ✅ Sprint 7: Quality & Integration - **Complete**
+8. ✅ Sprint 8: Implementation & Integration - **Complete**
+
 ---
 
 ## 📝 Notes
@@ -252,6 +259,30 @@
 - **Context Management:** همیشه از Clean Context Windows استفاده کنید
 - **Status Tracking:** وضعیت Stories را به‌روز نگه دارید
 - **Dependencies:** وابستگی‌ها را در نظر بگیرید
+
+---
+
+## 🔧 Sprint 7: Quality & Integration
+
+**Duration:** 2-3 weeks  
+**Goal:** بهبود کیفیت، تست‌ها، و آماده‌سازی برای Backend Integration  
+**Target:** All Personas
+
+### Stories:
+1. ✅ **Story 7.1:** Unit Tests Coverage Enhancement - **Done**
+
+### Total Story Points: 5
+- Story 7.1: 5 points ✅
+
+### Status:
+- ✅ Story 7.1: Done (Priority 1 & 2 components tested, 66 new tests created)
+
+### Achievements:
+- ✅ 66 new tests created
+- ✅ Priority 1 components: 91%+ coverage
+- ✅ Priority 2 components: tested
+- ✅ Coverage improved across all metrics
+- ✅ All tests passing (103/103)
 
 ---
 

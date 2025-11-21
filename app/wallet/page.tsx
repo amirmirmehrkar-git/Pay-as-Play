@@ -4,13 +4,22 @@ import { useState, useEffect } from 'react';
 import { getWallet, getWalletConnect } from '@/lib/sdk';
 import { appConfig } from '@/lib/config';
 import Link from 'next/link';
-import WithdrawButton from '@/components/WithdrawButton';
+
+interface AutoTopupSettings {
+  enabled: boolean;
+  amount: number;
+  threshold: number;
+  lastTopupDate: string | null;
+}
 
 export default function WalletPage() {
   const [balance, setBalance] = useState<string>('0');
   const [address, setAddress] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [transactions, setTransactions] = useState<any[]>([]);
+  const [autoTopup, setAutoTopup] = useState<AutoTopupSettings | null>(null);
+  const [autoLoading, setAutoLoading] = useState(true);
+  const [autoMessage, setAutoMessage] = useState<string | null>(null);
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
@@ -38,10 +47,47 @@ export default function WalletPage() {
       // Load transaction history (placeholder)
       // TODO: Implement real transaction history
       setTransactions([]);
+      loadAutoTopupStatus();
     } catch (err) {
       console.error('Error loading wallet data:', err);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function loadAutoTopupStatus() {
+    setAutoLoading(true);
+    setAutoMessage(null);
+    try {
+      const res = await fetch('/api/wallet/auto-topup/settings');
+      if (!res.ok) throw new Error('Failed to load auto-top-up status');
+      const result = await res.json();
+      setAutoTopup(result.data);
+    } catch (err: any) {
+      setAutoMessage(err.message || 'Unable to load auto-top-up info');
+    } finally {
+      setAutoLoading(false);
+    }
+  }
+
+  async function toggleAutoTopup() {
+    if (!autoTopup) return;
+    const confirmed = window.confirm(
+      autoTopup.enabled ? 'Disable auto-top-up?' : 'Enable auto-top-up using your saved method?',
+    );
+    if (!confirmed) return;
+    try {
+      const res = await fetch('/api/wallet/auto-topup/settings', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...autoTopup, enabled: !autoTopup.enabled }),
+      });
+      if (!res.ok) throw new Error('Failed to update auto-top-up state');
+      const result = await res.json();
+      setAutoTopup(result.data);
+      setAutoMessage(autoTopup.enabled ? 'Auto-top-up disabled' : 'Auto-top-up enabled');
+    } catch (err: any) {
+      setAutoMessage(err.message || 'Unable to update auto-top-up');
     }
   }
 
@@ -82,18 +128,76 @@ export default function WalletPage() {
           )}
         </div>
 
-        {/* Action Buttons */}
-        <div className="mb-8 grid grid-cols-2 gap-4">
-          <button
-            onClick={() => {
-              // TODO: Implement top-up
-              alert('Top-up functionality coming soon!');
-            }}
-            className="rounded-lg bg-blue-500 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-600"
-          >
-            Add PLY
-          </button>
-          <WithdrawButton balance={parseFloat(balance)} address={address} />
+            {/* Action Buttons */}
+            <div className="mb-8 grid grid-cols-2 gap-4">
+              <button
+                onClick={() => {
+                  // TODO: Implement top-up
+                  alert('Top-up functionality coming soon!');
+                }}
+                className="rounded-lg bg-blue-500 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-600"
+              >
+                Add PLY
+              </button>
+              <Link
+                href="/wallet/withdraw"
+                className="rounded-lg border-2 border-zinc-300 bg-white px-6 py-3 text-center font-medium text-zinc-900 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700"
+              >
+                Withdraw Funds
+              </Link>
+            </div>
+
+        {/* Auto-top-up Status */}
+        <div className="mb-8 rounded-2xl border-2 border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">Auto-top-up</h2>
+              {autoMessage && <p className="text-xs text-zinc-500 dark:text-zinc-400">{autoMessage}</p>}
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={toggleAutoTopup}
+                disabled={autoLoading || !autoTopup}
+                className="rounded-xl border border-zinc-300 px-4 py-2 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100 disabled:opacity-50 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800"
+              >
+                {autoTopup?.enabled ? 'Disable' : 'Enable'}
+              </button>
+              <Link
+                href="/settings/wallet/auto-topup"
+                className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+              >
+                Manage
+              </Link>
+            </div>
+          </div>
+          {autoLoading ? (
+            <div className="mt-4 h-16 animate-pulse rounded-xl bg-zinc-100 dark:bg-zinc-800" />
+          ) : autoTopup ? (
+            <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
+              <div>
+                <p className="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">Status</p>
+                <p className={`text-lg font-semibold ${autoTopup.enabled ? 'text-green-600 dark:text-green-400' : 'text-zinc-700 dark:text-zinc-200'}`}>
+                  {autoTopup.enabled ? 'Enabled' : 'Disabled'}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">Top-up Amount</p>
+                <p className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">€{autoTopup.amount.toFixed(2)}</p>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400">Trigger at €{autoTopup.threshold.toFixed(2)}</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">Last run</p>
+                <p className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+                  {autoTopup.lastTopupDate ? new Date(autoTopup.lastTopupDate).toLocaleString() : '—'}
+                </p>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400">Auto-top-up keeps your balance safe</p>
+              </div>
+            </div>
+          ) : (
+            <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
+              Auto-top-up settings unavailable. Please try again later.
+            </p>
+          )}
         </div>
 
         {/* Transaction History */}

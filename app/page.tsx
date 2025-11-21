@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import WalletConnect from '@/components/WalletConnect';
 import NavigationTabs from '@/components/NavigationTabs';
 import CurrentlyWatching from '@/components/CurrentlyWatching';
@@ -8,6 +9,7 @@ import SearchBar from '@/components/SearchBar';
 import PlatformList from '@/components/PlatformList';
 import ConnectedWallets from '@/components/ConnectedWallets';
 import MediaHistory from '@/components/MediaHistory';
+import NotificationCenter from '@/components/NotificationCenter';
 import Link from 'next/link';
 import { initSDK } from '@/lib/sdk';
 import { appConfig } from '@/lib/config';
@@ -37,10 +39,11 @@ const sampleContent = [
   },
 ];
 
-export default function Home() {
+function HomeContent() {
   const [sdkInitialized, setSdkInitialized] = useState(false);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'watch' | 'listen' | 'learn' | 'entertainment' | 'wallet'>('watch');
+  const searchParams = useSearchParams();
+  const activeTab = (searchParams?.get('tab') || 'watch') as 'watch' | 'listen' | 'learn' | 'entertainment' | 'wallet';
 
   useEffect(() => {
     // Initialize SDK
@@ -56,26 +59,6 @@ export default function Home() {
     }).then(() => {
       setSdkInitialized(true);
     });
-
-    // Get active tab from URL
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const tab = params.get('tab') || 'watch';
-      setActiveTab(tab as any);
-    }
-  }, []);
-
-  // Update active tab when URL changes
-  useEffect(() => {
-    const handlePopState = () => {
-      if (typeof window !== 'undefined') {
-        const params = new URLSearchParams(window.location.search);
-        const tab = params.get('tab') || 'watch';
-        setActiveTab(tab as any);
-      }
-    };
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   return (
@@ -100,6 +83,7 @@ export default function Home() {
               </div>
             </div>
             <div className="flex items-center gap-3 sm:gap-4">
+              <NotificationCenter />
               <Link
                 href="/analytics"
                 className="px-4 py-2 rounded-xl text-sm font-semibold text-zinc-700 dark:text-zinc-300 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm border border-zinc-200 dark:border-zinc-700 hover:bg-white dark:hover:bg-zinc-800 transition-all hover:shadow-md"
@@ -139,10 +123,10 @@ export default function Home() {
 
         {/* Platform Lists based on active tab */}
         <div className="mb-8">
-          {activeTab === 'watch' && <PlatformList category="video" />}
-          {activeTab === 'listen' && <PlatformList category="audio" />}
-          {activeTab === 'learn' && <PlatformList category="learn" />}
-          {activeTab === 'entertainment' && <PlatformList category="entertainment" />}
+          {activeTab === 'watch' && <PlatformList key="video" category="video" />}
+          {activeTab === 'listen' && <PlatformList key="audio" category="audio" />}
+          {activeTab === 'learn' && <PlatformList key="learn" category="learn" />}
+          {activeTab === 'entertainment' && <PlatformList key="entertainment" category="entertainment" />}
           {activeTab === 'wallet' && (
             <div className="space-y-6">
               <div>
@@ -232,5 +216,17 @@ export default function Home() {
       {/* Currently Watching Widget */}
       <CurrentlyWatching />
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-purple-50 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 flex items-center justify-center">
+        <div className="text-zinc-600 dark:text-zinc-400">Loading...</div>
+      </div>
+    }>
+      <HomeContent />
+    </Suspense>
   );
 }

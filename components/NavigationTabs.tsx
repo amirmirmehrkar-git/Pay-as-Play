@@ -3,13 +3,20 @@
 import { usePathname, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import {
+  VideoCameraIcon,
+  MusicalNoteIcon,
+  BookOpenIcon,
+  PuzzlePieceIcon,
+  WalletIcon,
+} from '@heroicons/react/24/outline';
 
 const tabs = [
-  { id: 'watch', label: 'Watch', icon: 'ðŸ“º', href: '/?tab=watch' },
-  { id: 'listen', label: 'Listen', icon: 'ðŸŽµ', href: '/?tab=listen' },
-  { id: 'learn', label: 'Learn', icon: 'ðŸ“š', href: '/?tab=learn' },
-  { id: 'entertainment', label: 'Games', icon: 'ðŸŽ®', href: '/?tab=entertainment' },
-  { id: 'wallet', label: 'Wallet', icon: 'ðŸ’°', href: '/wallet' },
+  { id: 'watch', label: 'Watch', icon: VideoCameraIcon, href: '/?tab=watch' },
+  { id: 'listen', label: 'Listen', icon: MusicalNoteIcon, href: '/?tab=listen' },
+  { id: 'learn', label: 'Learn', icon: BookOpenIcon, href: '/?tab=learn' },
+  { id: 'entertainment', label: 'Games', icon: PuzzlePieceIcon, href: '/?tab=entertainment' },
+  { id: 'wallet', label: 'Wallet', icon: WalletIcon, href: '/wallet' },
 ];
 
 function NavigationTabsContent() {
@@ -39,7 +46,7 @@ function NavigationTabsContent() {
                 : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-t-lg'
             }`}
           >
-            <span className="text-lg">{tab.icon}</span>
+            <tab.icon className={`w-5 h-5 ${active ? 'text-blue-600 dark:text-blue-400' : 'text-zinc-600 dark:text-zinc-400'}`} />
             <span className="hidden sm:inline">{tab.label}</span>
           </Link>
         );
@@ -52,11 +59,15 @@ export default function NavigationTabs() {
   return (
     <Suspense fallback={
       <div className="flex items-center gap-1 border-b border-zinc-200 dark:border-zinc-800">
-        {tabs.map((tab) => (
-          <div key={tab.id} className="px-4 py-3 text-sm text-zinc-400">
-            {tab.icon} {tab.label}
-          </div>
-        ))}
+        {tabs.map((tab) => {
+          const Icon = tab.icon;
+          return (
+            <div key={tab.id} className="px-4 py-3 text-sm text-zinc-400 flex items-center gap-2">
+              <Icon className="w-5 h-5" />
+              <span>{tab.label}</span>
+            </div>
+          );
+        })}
       </div>
     }>
       <NavigationTabsContent />

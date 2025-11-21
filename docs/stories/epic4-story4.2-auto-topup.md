@@ -1,7 +1,7 @@
 # Story 4.2: Auto-top-up Feature
 
 **Epic:** Epic 4 - User Experience Enhancements  
-**Status:** Draft  
+**Status:** Done  
 **Priority:** High  
 **Story Points:** 8  
 **Assignee:** TBD
@@ -225,7 +225,29 @@ components/
 ---
 
 ## Dev Agent Record
-_TBD_
+
+### Agent Model Used
+Auto (Cursor AI Agent)
+
+### Work Log
+- ✅ Planned + implemented auto-top-up settings UI and mock APIs
+- ✅ Added payment method selector, history table, wallet status card, notification links
+- ✅ Added TwoFactorModal + mock `/process` endpoint
+- ✅ Added unit tests for history & payment components (Vitest)
+- ✅ Documentation & QA completed
+
+### Files Delivered
+- `app/api/wallet/auto-topup/settings/route.ts`
+- `app/api/wallet/auto-topup/history/route.ts`
+- `app/api/wallet/auto-topup/process/route.ts`
+- `app/settings/wallet/auto-topup/page.tsx`
+- `components/AutoTopupPaymentMethod.tsx`
+- `components/AutoTopupHistory.tsx`
+- `components/TwoFactorModal.tsx`
+- `components/__tests__/AutoTopupHistory.test.tsx`
+- `components/__tests__/AutoTopupPaymentMethod.test.tsx`
+- `app/wallet/page.tsx`
+- `app/settings/notifications/page.tsx`
 
 ---
 
