@@ -8,6 +8,7 @@ const __dirname = dirname(__filename);
 export default defineConfig({
   test: {
     environment: 'jsdom',
+    exclude: ['**/node_modules/**', '**/.next/**', '**/coverage/**', 'tests/integration/**', '**/e2e/**'],
     setupFiles: ['./vitest.setup.ts'],
     globals: true,
     css: false,
