@@ -15,7 +15,7 @@ vi.mock('jspdf', () => {
     save: vi.fn(),
   };
   return {
-    jsPDF: vi.fn(() => mockDoc),
+    jsPDF: vi.fn(function () { return mockDoc; }),
   };
 });
 
@@ -189,7 +189,7 @@ describe('exportAnalyticsPDF', () => {
       addImage: vi.fn(),
       save: vi.fn(),
     };
-    (jsPDF as any).mockReturnValue(mockDoc);
+    (jsPDF as any).mockImplementation(function () { return mockDoc; });
 
     (global.fetch as any).mockResolvedValueOnce({
       json: async () => ({
@@ -222,7 +222,7 @@ describe('exportAnalyticsPDF', () => {
       addImage: vi.fn(),
       save: vi.fn(),
     };
-    (jsPDF as any).mockReturnValue(mockDoc);
+    (jsPDF as any).mockImplementation(function () { return mockDoc; });
 
     (global.fetch as any).mockResolvedValueOnce({
       json: async () => mockApiResponse,
