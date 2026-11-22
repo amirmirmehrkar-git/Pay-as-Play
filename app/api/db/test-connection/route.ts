@@ -29,19 +29,19 @@ export async function GET() {
           message: result.message,
           error: {
             code: 'DB_CONNECTION_ERROR',
-            message: result.error?.message || 'Unknown error',
+            message: result.(error instanceof Error ? error.message : 'Internal server error') || 'Unknown error',
           },
         },
         { status: 500 },
       );
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'DB_ERROR',
-          message: error?.message || 'Failed to test database connection',
+          message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to test database connection',
         },
       },
       { status: 500 },
