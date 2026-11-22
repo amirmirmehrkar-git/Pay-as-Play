@@ -70,13 +70,13 @@ export async function proxyToBackend(
       success: true,
       data,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return Response.json(
       {
         success: false,
         error: {
           code: 'API_ERROR',
-          message: error?.message || 'Failed to call backend API',
+          message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to call backend API',
         },
       },
       { status: 500 },

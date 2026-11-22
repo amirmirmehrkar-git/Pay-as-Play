@@ -195,7 +195,7 @@ export default function CostPerContentChart({
               border: '1px solid #e4e4e7',
               borderRadius: '8px',
             }}
-            formatter={(value: number, name: string, props: any) => {
+            formatter={(value: number, name: string, props: { payload?: { percentage?: number } }) => {
               if (name === 'amount') {
                 return [
                   <>

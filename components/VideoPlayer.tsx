@@ -291,7 +291,7 @@ export default function VideoPlayer({
           contentId,
           userId: userAddress,
           ratePerMinute: pricePerMinute,
-        })) as any;
+        })) as { sessionId: string };
 
         setSessionId(session.sessionId);
 

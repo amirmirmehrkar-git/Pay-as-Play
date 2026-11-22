@@ -99,10 +99,10 @@ export default function ContentTypeDistributionChart() {
             border: '1px solid #e4e4e7',
             borderRadius: '8px',
           }}
-          formatter={(value: number, name: string, props: any) => [
+          formatter={(value: number, name: string, props: { payload?: { percentage?: number } }) => [
             <>
               <div>Amount: {formatCurrency(value)}</div>
-              <div>Percentage: {props.payload.percentage}%</div>
+              <div>Percentage: {props.payload?.percentage ?? 0}%</div>
             </>,
             props.payload.contentType,
           ]}

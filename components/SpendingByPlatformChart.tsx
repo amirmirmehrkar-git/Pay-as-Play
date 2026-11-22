@@ -63,7 +63,8 @@ export default function SpendingByPlatformChart({
     }).format(amount);
   };
 
-  const handleClick = (data: any) => {
+  const handleClick = (data: unknown) => {
+    if (typeof data !== 'object' || data === null || !('platform' in data) || typeof data.platform !== 'string') return;
     if (onPlatformClick) {
       const platform = selectedPlatform === data.platform ? null : data.platform;
       onPlatformClick(platform);
@@ -161,10 +162,10 @@ export default function SpendingByPlatformChart({
               border: '1px solid #e4e4e7',
               borderRadius: '8px',
             }}
-            formatter={(value: number, name: string, props: any) => [
+            formatter={(value: number, name: string, props: { payload?: { percentage?: number } }) => [
               <>
                 <div>Amount: {formatCurrency(value)}</div>
-                <div>Percentage: {props.payload.percentage}%</div>
+                <div>Percentage: {props.payload?.percentage ?? 0}%</div>
               </>,
               props.payload.platform,
             ]}
