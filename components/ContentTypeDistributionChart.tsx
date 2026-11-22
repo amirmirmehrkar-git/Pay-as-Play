@@ -83,7 +83,8 @@ export default function ContentTypeDistributionChart() {
           cx="50%"
           cy="50%"
           labelLine={false}
-          label={({ contentType, percentage }) => `${contentType}: ${percentage}%`}
+          nameKey="contentType"
+          label={({ name, percent }) => `${name ?? 'Content'}: ${Math.round((percent ?? 0) * 100)}%`}
           outerRadius={120}
           fill="#8884d8"
           dataKey="amount"
