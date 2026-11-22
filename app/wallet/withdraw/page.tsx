@@ -171,7 +171,7 @@ export default function WithdrawPage() {
         iban: bankTransferDetails.iban,
         bic: bankTransferDetails.bic,
         accountHolderName: bankTransferDetails.accountHolderName,
-        bankName: bankTransferDetails.bankName,
+        bankName: bankTransferDetails.bankName ?? '',
       };
       withdrawalData.saveMethod = bankTransferDetails.saveForFuture;
     } else if (selectedMethod === 'paypal') {
