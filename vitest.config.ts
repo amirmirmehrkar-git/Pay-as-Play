@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import { configDefaults, defineConfig } from 'vitest/config';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
@@ -9,7 +9,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     // Playwright browser specs use a different runner; do not collect them in Vitest.
-    exclude: ['tests/integration/**'],
+    exclude: [...configDefaults.exclude, 'tests/integration/**'],
     setupFiles: ['./vitest.setup.ts'],
     globals: true,
     css: false,
