@@ -5,8 +5,7 @@
 
 // Import SDK modules
 // Using dynamic import for ES modules compatibility
-type SDKModule = typeof import('../playandpay-sdk/src/index.js');
-let sdk: SDKModule | null = null;
+let sdk: any = null;
 
 async function loadSDK() {
   if (!sdk) {
@@ -32,7 +31,7 @@ export interface SDKConfig {
 export async function initSDK(config?: SDKConfig) {
   try {
     const sdkModule = await loadSDK();
-    const initConfig: SDKConfig = {
+    const initConfig: any = {
       network: config?.network || 'testnet',
     };
     
@@ -75,26 +74,42 @@ export async function getWalletConnect() {
   return sdkModule.walletConnect;
 }
 
-// Lazy proxies maintain the legacy SDK surface without bypassing type safety.
-function createModuleProxy<T extends object>(loader: () => Promise<T>): T {
-  return new Proxy({} as T, {
-    get: (_target, prop) => {
-      return async (...args: unknown[]) => {
-        const module = await loader();
-        const method = Reflect.get(module, prop);
-        if (typeof method !== 'function') {
-          throw new TypeError(`SDK member ${String(prop)} is not callable`);
-        }
-        return Reflect.apply(method, module, args);
-      };
-    },
-  });
-}
+// For backward compatibility, export as getters
+export const wallet = new Proxy({} as any, {
+  get: (target, prop) => {
+    return async (...args: any[]) => {
+      const w = await getWallet();
+      return (w as any)[prop](...args);
+    };
+  },
+});
 
-export const wallet = createModuleProxy(getWallet);
-export const billing = createModuleProxy(getBilling);
-export const analytics = createModuleProxy(getAnalytics);
-export const walletConnect = createModuleProxy(getWalletConnect);
+export const billing = new Proxy({} as any, {
+  get: (target, prop) => {
+    return async (...args: any[]) => {
+      const b = await getBilling();
+      return (b as any)[prop](...args);
+    };
+  },
+});
+
+export const analytics = new Proxy({} as any, {
+  get: (target, prop) => {
+    return async (...args: any[]) => {
+      const a = await getAnalytics();
+      return (a as any)[prop](...args);
+    };
+  },
+});
+
+export const walletConnect = new Proxy({} as any, {
+  get: (target, prop) => {
+    return async (...args: any[]) => {
+      const wc = await getWalletConnect();
+      return (wc as any)[prop](...args);
+    };
+  },
+});
 
 export default loadSDK;
 
