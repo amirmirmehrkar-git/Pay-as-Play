@@ -69,7 +69,7 @@ export async function GET(
         { status: 404 }
       );
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching withdrawal details:', error);
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_SERVER_ERROR', message: 'Internal server error' } },
