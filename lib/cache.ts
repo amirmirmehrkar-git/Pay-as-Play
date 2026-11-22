@@ -10,7 +10,7 @@ interface CacheEntry<T> {
 }
 
 class Cache {
-  private cache: Map<string, CacheEntry<any>> = new Map();
+  private cache: Map<string, CacheEntry<unknown>> = new Map();
   private defaultTTL: number = 60 * 1000; // 1 minute
 
   /**
@@ -75,7 +75,7 @@ export const cache = new Cache();
 /**
  * Cache key generator
  */
-export function getCacheKey(prefix: string, params?: Record<string, any>): string {
+export function getCacheKey(prefix: string, params?: Record<string, unknown>): string {
   if (!params || Object.keys(params).length === 0) {
     return prefix;
   }

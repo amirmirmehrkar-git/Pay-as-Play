@@ -82,7 +82,8 @@ export default function ConnectedWallets() {
 
       const connected: ConnectedWallet[] = [];
       for (const [platformId, data] of Object.entries(platforms)) {
-        if ((data as any).connected) {
+        const connection = data as { connected?: boolean; connectedAt?: string; apiKey?: string };
+        if (connection.connected) {
           const platform = allPlatforms.find((p) => p.id === platformId);
           if (platform) {
             connected.push({
@@ -90,8 +91,8 @@ export default function ConnectedWallets() {
               platformName: platform.name,
               platformIcon: platform.icon,
               category: platform.category,
-              connectedAt: (data as any).connectedAt || new Date().toISOString(),
-              apiKey: (data as any).apiKey,
+              connectedAt: connection.connectedAt || new Date().toISOString(),
+              apiKey: connection.apiKey,
             });
           }
         }

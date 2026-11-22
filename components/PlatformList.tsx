@@ -803,7 +803,7 @@ function RequestPlatformModal({
             <select
               value={formData.requestType}
               onChange={(e) =>
-                setFormData({ ...formData, requestType: e.target.value as any })
+                setFormData({ ...formData, requestType: e.target.value as typeof formData.requestType })
               }
               className="w-full rounded-lg border border-zinc-300 bg-white px-4 py-2 text-zinc-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
             >
@@ -847,7 +847,7 @@ function RequestPlatformModal({
             </label>
             <select
               value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value as typeof formData.category })}
               className="w-full rounded-lg border border-zinc-300 bg-white px-4 py-2 text-zinc-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
             >
               <option value="video">Video</option>

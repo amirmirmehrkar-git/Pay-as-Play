@@ -86,7 +86,7 @@ export function sanitizeNumber(input: unknown): number | null {
 /**
  * Sanitize object (recursive)
  */
-export function sanitizeObject<T extends Record<string, any>>(obj: T): T {
+export function sanitizeObject<T extends Record<string, unknown>>(obj: T): T {
   const sanitized = {} as T;
 
   for (const [key, value] of Object.entries(obj)) {

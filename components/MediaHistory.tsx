@@ -195,7 +195,7 @@ export default function MediaHistory() {
           <label className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Category:</label>
           <select
             value={filter}
-            onChange={(e) => setFilter(e.target.value as any)}
+            onChange={(e) => setFilter(e.target.value as typeof filter)}
             className="rounded-lg border-2 border-zinc-200 bg-white px-3 py-1.5 text-sm font-medium transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
           >
             <option value="all">All</option>
@@ -209,7 +209,7 @@ export default function MediaHistory() {
           <label className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Date:</label>
           <select
             value={dateRange}
-            onChange={(e) => setDateRange(e.target.value as any)}
+            onChange={(e) => setDateRange(e.target.value as typeof dateRange)}
             className="rounded-lg border-2 border-zinc-200 bg-white px-3 py-1.5 text-sm font-medium transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
           >
             <option value="all">All Time</option>
@@ -222,7 +222,7 @@ export default function MediaHistory() {
           <label className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">Sort:</label>
           <select
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as any)}
+            onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
             className="rounded-lg border-2 border-zinc-200 bg-white px-3 py-1.5 text-sm font-medium transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
           >
             <option value="date">Date</option>
