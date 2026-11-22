@@ -37,9 +37,9 @@ export async function GET(request: NextRequest) {
         expiresIn: 86400, // 24 hours
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, error: { message: error.message || 'Google sign in failed' } },
+      { success: false, error: { message: (error instanceof Error ? error.message : 'Internal server error') || 'Google sign in failed' } },
       { status: 500 }
     );
   }
