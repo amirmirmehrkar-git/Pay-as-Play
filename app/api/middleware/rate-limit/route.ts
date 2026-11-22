@@ -6,7 +6,11 @@ import { apiRateLimiter } from '@/lib/security/rate-limit-enhanced';
  * Can be used to check rate limit status
  */
 export async function GET(request: NextRequest) {
-  const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
+  // Next.js 16 removed NextRequest.ip. Read the address populated by the trusted
+  // reverse proxy, taking only the first comma-delimited client entry.
+  // Do not expose this endpoint directly behind an untrusted forwarding proxy.
+  const forwarded = request.headers.get('x-forwarded-for');
+  const ip = forwarded?.split(',')[0]?.trim() || request.headers.get('x-real-ip') || 'unknown';
   const result = await apiRateLimiter.check(ip);
 
   if (!result.success) {
