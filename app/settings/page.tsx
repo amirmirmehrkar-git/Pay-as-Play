@@ -17,10 +17,6 @@ export default function SettingsPage() {
   const [transactionAlerts, setTransactionAlerts] = useState(true);
   const [address, setAddress] = useState<string | null>(null);
 
-  useEffect(() => {
-    loadSettings();
-  }, []);
-
   async function loadSettings() {
     try {
       const wc = await getWalletConnect();
@@ -45,6 +41,10 @@ export default function SettingsPage() {
       console.error('Error loading settings:', err);
     }
   }
+
+  useEffect(() => {
+    loadSettings();
+  }, []);
 
   function handleSave() {
     localStorage.setItem('language', language);

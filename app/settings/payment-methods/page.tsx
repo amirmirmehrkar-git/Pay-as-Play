@@ -23,10 +23,6 @@ export default function PaymentMethodsPage() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState<string | null>(null);
 
-  useEffect(() => {
-    load();
-  }, []);
-
   async function load() {
     setLoading(true);
     const res = await fetch('/api/payment-methods');
@@ -34,6 +30,10 @@ export default function PaymentMethodsPage() {
     setMethods(json.data);
     setLoading(false);
   }
+
+  useEffect(() => {
+    load();
+  }, []);
 
   function handlePrimary(id: string) {
     setMethods((prev) =>

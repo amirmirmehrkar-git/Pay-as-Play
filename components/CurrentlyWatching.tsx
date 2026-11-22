@@ -12,12 +12,6 @@ export default function CurrentlyWatching() {
   const router = useRouter();
 
   useEffect(() => {
-    checkActiveSession();
-    const interval = setInterval(checkActiveSession, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
     if (activeSession) {
       const interval = setInterval(() => {
         setDuration((prev) => prev + 1);
@@ -49,6 +43,12 @@ export default function CurrentlyWatching() {
       console.error('Error checking active session:', err);
     }
   }
+
+  useEffect(() => {
+    checkActiveSession();
+    const interval = setInterval(checkActiveSession, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   if (!activeSession) return null;
 

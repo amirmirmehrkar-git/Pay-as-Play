@@ -23,19 +23,6 @@ export default function UsageSummary({
   const [loading, setLoading] = useState(false);
   const [sessionDetails, setSessionDetails] = useState<{ startTime: string; endTime?: string | null; tickCount?: number } | null>(null);
 
-  useEffect(() => {
-    console.log('UsageSummary - Received props:', { 
-      sessionId, 
-      totalCharge, 
-      duration, 
-      contentTitle,
-      totalChargeType: typeof totalCharge,
-      durationType: typeof duration
-    });
-    loadSessionDetails();
-    updateBalance();
-    loadWalletBalance();
-  }, [sessionId, totalCharge, duration]);
 
   async function loadSessionDetails() {
     try {
@@ -74,6 +61,20 @@ export default function UsageSummary({
       console.error('Error loading wallet balance:', err);
     }
   }
+
+  useEffect(() => {
+    console.log('UsageSummary - Received props:', { 
+      sessionId, 
+      totalCharge, 
+      duration, 
+      contentTitle,
+      totalChargeType: typeof totalCharge,
+      durationType: typeof duration
+    });
+    loadSessionDetails();
+    updateBalance();
+    loadWalletBalance();
+  }, [sessionId, totalCharge, duration]);
 
   function formatTime(seconds: number): string {
     const mins = Math.floor(seconds / 60);

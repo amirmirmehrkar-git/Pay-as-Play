@@ -97,7 +97,7 @@ export default function SettlementList({
     }
   };
 
-  const SortIcon = ({ field }: { field: SortField }) => {
+  const renderSortIcon = (field: { field: SortField  => {
     if (sortBy !== field) return <span className="text-zinc-400">↕️</span>;
     return sortDirection === 'asc' ? <span>↑</span> : <span>↓</span>;
   };
@@ -139,7 +139,7 @@ export default function SettlementList({
               >
                 <div className="flex items-center gap-2">
                   Date
-                  <SortIcon field="date" />
+                  {renderSortIcon('date')}
                 </div>
               </th>
               <th className="px-4 py-3 text-left text-xs font-semibold text-zinc-600 dark:text-zinc-400">
@@ -151,7 +151,7 @@ export default function SettlementList({
               >
                 <div className="flex items-center gap-2">
                   Amount
-                  <SortIcon field="amount" />
+                  {renderSortIcon('amount')}
                 </div>
               </th>
               <th
@@ -160,7 +160,7 @@ export default function SettlementList({
               >
                 <div className="flex items-center gap-2">
                   Status
-                  <SortIcon field="status" />
+                  {renderSortIcon('status')}
                 </div>
               </th>
               <th className="px-4 py-3 text-left text-xs font-semibold text-zinc-600 dark:text-zinc-400">Period</th>

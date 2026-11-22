@@ -78,10 +78,6 @@ export default function MediaHistory() {
   const [sortBy, setSortBy] = useState<'date' | 'duration' | 'cost' | 'platform'>('date');
   const [dateRange, setDateRange] = useState<'today' | 'week' | 'month' | 'all'>('all');
 
-  useEffect(() => {
-    loadMediaHistory();
-  }, [filter, dateRange]);
-
   function loadMediaHistory() {
     try {
       const stored = localStorage.getItem('media_history');
@@ -139,6 +135,10 @@ export default function MediaHistory() {
       setMediaHistory([]);
     }
   }
+
+  useEffect(() => {
+    loadMediaHistory();
+  }, [filter, dateRange]);
 
   function formatDuration(seconds: number): string {
     const hours = Math.floor(seconds / 3600);
