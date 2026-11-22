@@ -14,7 +14,7 @@ const generateMockHistory = () => {
     const method = methods[Math.floor(Math.random() * methods.length)];
     const status = statuses[Math.floor(Math.random() * statuses.length)];
 
-    let details: any = {};
+    let details: Record<string, string> = {};
     if (method === 'bank_transfer') {
       details = {
         iban: `DE89****${Math.floor(Math.random() * 10000)}`,

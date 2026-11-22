@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Mock withdrawal details (in a real app, this would come from a database)
-const mockWithdrawals: Record<string, any> = {
+const mockWithdrawals: Record<string, Record<string, unknown>> = {
   'wd_123': {
     withdrawalId: 'wd_123',
     amount: 100,

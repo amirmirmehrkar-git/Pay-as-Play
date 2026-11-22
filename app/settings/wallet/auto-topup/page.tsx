@@ -336,7 +336,7 @@ export default function AutoTopupSettingsPage() {
                 <label key={item.key} className="flex items-center gap-3 rounded-2xl border border-zinc-200 p-3 dark:border-zinc-700">
                   <input
                     type="checkbox"
-                    checked={(settings as any)[item.key]}
+                    checked={Boolean(settings[item.key as keyof AutoTopupSettings])}
                     onChange={(e) => setSettings({ ...settings, [item.key]: e.target.checked } as AutoTopupSettings)}
                   />
                   <span className="text-sm text-zinc-700 dark:text-zinc-200">{item.label}</span>

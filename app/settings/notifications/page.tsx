@@ -320,7 +320,7 @@ export default function NotificationSettingsPage() {
                       <label key={key} className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm">
                         <input
                           type="checkbox"
-                          checked={(settings as any)[key]}
+                          checked={Boolean(settings[key as keyof NotificationSettings])}
                           onChange={(e) => setSettings({ ...settings, [key]: e.target.checked } as NotificationSettings)}
                         />
                         {label}

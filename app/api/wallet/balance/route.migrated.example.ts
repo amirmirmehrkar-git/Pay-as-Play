@@ -24,13 +24,13 @@ export async function GET(request: NextRequest) {
   // Use real backend API
   try {
     return await proxyToBackend('/wallet/balance', request);
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'BALANCE_ERROR',
-          message: error?.message || 'Failed to fetch wallet balance',
+          message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to fetch wallet balance',
         },
       },
       { status: 500 },
