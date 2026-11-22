@@ -1,0 +1,42 @@
+name: Remediate lockfile safely
+
+on:
+  push:
+    branches: [fix/security-dependencies-2026-11-22]
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout without persisted credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Node 22
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: '22'
+      - name: Apply compatible lockfile-only audit fixes without install scripts
+        run: |
+          npm audit fix --package-lock-only --ignore-scripts --no-fund || true
+          git diff --stat -- package-lock.json
+          npm audit --package-lock-only --json > audit-after.json || true
+          node -e "const a=require('./audit-after.json'); console.log('REMAINING',JSON.stringify(a.metadata?.vulnerabilities))"
+      - name: Commit lockfile to isolated branch if changed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet -- package-lock.json; then
+            echo 'No compatible lockfile updates available'
+            exit 0
+          fi
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add package-lock.json
+          git commit -m 'fix(deps): apply compatible audited lockfile updates'
+          auth="$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          git -c http.https://github.com/.extraheader="AUTHORIZATION: basic $auth" push origin HEAD:fix/security-dependencies-2026-11-22
