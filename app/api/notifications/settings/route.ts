@@ -96,14 +96,14 @@ export async function PUT(request: NextRequest) {
       },
       { status: 200 },
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error updating notification settings:', error);
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'SETTINGS_ERROR',
-          message: error?.message || 'Failed to update notification settings',
+          message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to update notification settings',
         },
       },
       { status: 500 },
