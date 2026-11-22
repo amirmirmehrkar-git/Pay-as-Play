@@ -39,9 +39,9 @@ export async function POST(request: NextRequest) {
         expiresIn: 86400, // 24 hours
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, error: { message: error.message || 'Sign up failed' } },
+      { success: false, error: { message: (error instanceof Error ? error.message : 'Internal server error') || 'Sign up failed' } },
       { status: 500 }
     );
   }
