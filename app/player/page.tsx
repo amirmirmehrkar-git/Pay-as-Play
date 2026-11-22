@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, useMemo, Suspense } from 'react';
 import VideoPlayer from '@/components/VideoPlayer';
 import WalletConnect from '@/components/WalletConnect';
 import { getWalletConnect } from '@/lib/sdk';
@@ -11,75 +11,34 @@ function PlayerContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [isWalletConnected, setIsWalletConnected] = useState(false);
-  const [demoContent, setDemoContent] = useState<{
-    id: string;
-    title: string;
-    pricePerMinute: number;
-    mediaUrl?: string;
-    type?: 'video' | 'audio' | 'course' | 'game';
-  } | null>(null);
-
   // Get platform or content parameters
   const platformId = searchParams.get('platform');
   const contentId = searchParams.get('contentId');
   const contentTitle = searchParams.get('title');
   const pricePerMinute = searchParams.get('price');
 
-  // Load demo content based on platform or use provided content
-  useEffect(() => {
-    console.log('Player page - platformId:', platformId);
+  const demoContent = useMemo<{
+    id: string;
+    title: string;
+    pricePerMinute: number;
+    mediaUrl?: string;
+    type?: 'video' | 'audio' | 'course' | 'game';
+  } | null>(() => {
     if (platformId) {
       const demo = getDemoContent(platformId);
-      console.log('Player page - demo content:', demo);
-      if (demo) {
-        setDemoContent({
-          id: demo.id,
-          title: demo.title,
-          pricePerMinute: demo.pricePerMinute,
-          mediaUrl: demo.mediaUrl,
-          type: demo.type,
-        });
-      } else {
-        // If platform not found, use default for category
-        const category = platformId.includes('netflix') || platformId.includes('youtube') || platformId.includes('disney') || platformId.includes('amazon-prime')
-          ? 'video'
-          : platformId.includes('spotify') || platformId.includes('audible') || platformId.includes('apple-music') || platformId.includes('soundcloud')
-          ? 'audio'
-          : platformId.includes('coursera') || platformId.includes('udemy') || platformId.includes('khan-academy') || platformId.includes('skillshare')
-          ? 'learn'
-          : 'entertainment';
-        const defaultDemo = getDefaultDemoContent(category as Parameters<typeof getDefaultDemoContent>[0]);
-        if (defaultDemo) {
-          setDemoContent({
-            id: defaultDemo.id,
-            title: defaultDemo.title,
-            pricePerMinute: defaultDemo.pricePerMinute,
-            mediaUrl: defaultDemo.mediaUrl,
-            type: defaultDemo.type,
-          });
-        }
-      }
-    } else if (contentId && contentTitle && pricePerMinute) {
-      // Use provided content parameters
-      setDemoContent({
-        id: contentId,
-        title: contentTitle,
-        pricePerMinute: parseFloat(pricePerMinute),
-        type: 'video', // Default to video
-      });
-    } else {
-      // Default demo content
-      const defaultDemo = getDefaultDemoContent('video');
-      if (defaultDemo) {
-        setDemoContent({
-          id: defaultDemo.id,
-          title: defaultDemo.title,
-          pricePerMinute: defaultDemo.pricePerMinute,
-          mediaUrl: defaultDemo.mediaUrl,
-          type: defaultDemo.type,
-        });
-      }
+      if (demo) return { id: demo.id, title: demo.title, pricePerMinute: demo.pricePerMinute, mediaUrl: demo.mediaUrl, type: demo.type };
+      const category = platformId.includes('netflix') || platformId.includes('youtube') || platformId.includes('disney') || platformId.includes('amazon-prime')
+        ? 'video' : platformId.includes('spotify') || platformId.includes('audible') || platformId.includes('apple-music') || platformId.includes('soundcloud')
+        ? 'audio' : platformId.includes('coursera') || platformId.includes('udemy') || platformId.includes('khan-academy') || platformId.includes('skillshare')
+        ? 'learn' : 'entertainment';
+      const fallback = getDefaultDemoContent(category as Parameters<typeof getDefaultDemoContent>[0]);
+      return fallback ? { id: fallback.id, title: fallback.title, pricePerMinute: fallback.pricePerMinute, mediaUrl: fallback.mediaUrl, type: fallback.type } : null;
     }
+    if (contentId && contentTitle && pricePerMinute) {
+      return { id: contentId, title: contentTitle, pricePerMinute: Number(pricePerMinute), type: 'video' as const };
+    }
+    const fallback = getDefaultDemoContent('video');
+    return fallback ? { id: fallback.id, title: fallback.title, pricePerMinute: fallback.pricePerMinute, mediaUrl: fallback.mediaUrl, type: fallback.type } : null;
   }, [platformId, contentId, contentTitle, pricePerMinute]);
 
   useEffect(() => {

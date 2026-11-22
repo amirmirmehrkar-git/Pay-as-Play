@@ -17,9 +17,15 @@ export default function ExportHistory() {
 
   useEffect(() => {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      setHistory(JSON.parse(raw));
+    if (!raw) return;
+    let cancelled = false;
+    try {
+      const entries: ExportHistoryEntry[] = JSON.parse(raw);
+      queueMicrotask(() => { if (!cancelled) setHistory(entries); });
+    } catch {
+      // Corrupt local history is not used.
     }
+    return () => { cancelled = true; };
   }, []);
 
   if (history.length === 0) {

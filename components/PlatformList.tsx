@@ -416,8 +416,8 @@ export default function PlatformList({ category }: PlatformListProps) {
   });
 
   useEffect(() => {
-    // Mark as mounted
-    setMounted(true);
+    let cancelled = false;
+    // Mark as mounted after client-side initialization.
     
     // Client-side: update with localStorage data after mount
     console.log('PlatformList - category:', category);
@@ -436,7 +436,13 @@ export default function PlatformList({ category }: PlatformListProps) {
         apiKey: connectedPlatforms[p.id]?.apiKey,
       }));
     console.log('PlatformList - filtered platforms for category', category, ':', categoryPlatforms.map(p => `${p.id} (${p.category})`));
-    setPlatforms(categoryPlatforms);
+    queueMicrotask(() => {
+      if (!cancelled) {
+        setMounted(true);
+        setPlatforms(categoryPlatforms);
+      }
+    });
+    return () => { cancelled = true; };
   }, [category]);
   const [showConnectModal, setShowConnectModal] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(null);
