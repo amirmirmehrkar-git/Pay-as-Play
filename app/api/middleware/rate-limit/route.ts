@@ -6,7 +6,7 @@ import { apiRateLimiter } from '@/lib/security/rate-limit-enhanced';
  * Can be used to check rate limit status
  */
 export async function GET(request: NextRequest) {
-  const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
   const result = await apiRateLimiter.check(ip);
 
   if (!result.success) {
