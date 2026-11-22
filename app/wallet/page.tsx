@@ -16,7 +16,7 @@ export default function WalletPage() {
   const [balance, setBalance] = useState<string>('0');
   const [address, setAddress] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [transactions, setTransactions] = useState<Array<{ type: string }>>([]);
+  const [transactions, setTransactions] = useState<Array<{ type: string; date: string; amount: number; status: string }>>([]);
   const [autoTopup, setAutoTopup] = useState<AutoTopupSettings | null>(null);
   const [autoLoading, setAutoLoading] = useState(true);
   const [autoMessage, setAutoMessage] = useState<string | null>(null);
