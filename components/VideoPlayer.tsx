@@ -75,7 +75,7 @@ export default function VideoPlayer({
             const address = wc.getConnectedAddress();
             if (address) {
               const balance = await wallet.getBalance(address);
-              setCryptoBalance(balance || 0);
+              setCryptoBalance(typeof balance === 'number' && Number.isFinite(balance) ? balance : 0);
             }
           } catch (err) {
             console.error('Error loading crypto balance:', err);
