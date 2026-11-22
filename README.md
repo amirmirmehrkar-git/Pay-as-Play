@@ -1,8 +1,8 @@
 # Pay as Play - Pay-as-you-Use Micro-Payment Platform
 
-**Version:** 1.0.0  
-**Status:** ✅ Production Ready  
-**Last Updated:** 2025-01-XX
+**Version:** 0.1.0
+**Status:** Development prototype — not approved for production
+**Last Updated:** 2026-11-22
 
 ---
 
@@ -252,13 +252,37 @@ See [Developer Guide](docs/developer/DEVELOPER_GUIDE.md) for contribution guidel
 
 **Status:** ✅ **PRODUCTION READY**
 
-All sprints completed ✅  
-All stories done ✅  
-All infrastructure ready ✅  
+All sprints completed ✅
+All stories done ✅
+All infrastructure ready ✅
 All documentation complete ✅
 
 **Ready for Production Deployment** ✅
 
 ---
 
-**Pay as Play** - Production Ready ✅
+**Pay as Play** - Development prototype
+
+## Authentication safety
+
+The signin, signup and Google routes are mock implementations. They return HTTP 503
+by default and in every production environment. For a local demo only, run with
+`NODE_ENV=development` and `ENABLE_DEMO_AUTH=true`. This flag is server-only.
+These routes do not verify passwords, persist accounts or provide Google OAuth.
+Real authentication, authorization and payment security must be completed and reviewed
+before production use. Do not send real passwords to the demo routes.
+
+Use Node.js 22 and `npm ci` with the committed `package-lock.json`.
+Lint errors now fail CI rather than being ignored.
+
+### Validation after repository hardening (2026-11-22)
+
+- Next.js / eslint-config-next: 16.4.6; React / React DOM: 19.3.1.
+- Prisma CLI, client and PostgreSQL adapter: 7.10.1; Effect is overridden to patched 3.22.5.
+- jsPDF 4.2.1, Vitest / coverage 5.1.1 and sharp 0.35.5 replace vulnerable versions.
+- Unit tests: 106 passed. Playwright integration specs are excluded from Vitest and must run with Playwright separately.
+- Production build passed using generated Prisma types and a synthetic local DATABASE_URL. No real database was contacted or migration run.
+- npm audit reported zero known advisories after the lockfile update; this does not certify the application security.
+- Legacy lint violations remain and must be fixed before merge; CI no longer ignores them.
+- Mock authentication is intentionally unavailable in production. Real identity, authorization, payments and rate limiting require separate validation.
+- Tracked coverage artifacts remain in history/current tree; ignores prevent new untracked output but do not remove tracked files.
