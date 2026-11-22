@@ -29,13 +29,13 @@ export async function GET() {
         { status: 500 },
       );
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'CRUD_TEST_ERROR',
-          message: error?.message || 'Failed to test CRUD operations',
+          message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to test CRUD operations',
         },
       },
       { status: 500 },
