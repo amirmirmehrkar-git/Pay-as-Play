@@ -63,14 +63,14 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 },
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error deducting from wallet:', error);
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'DEDUCT_ERROR',
-          message: error?.message || 'Failed to deduct from wallet',
+          message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to deduct from wallet',
         },
       },
       { status: 500 },
