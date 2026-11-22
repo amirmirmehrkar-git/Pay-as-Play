@@ -70,8 +70,8 @@ export default function NotificationsPage() {
       } else {
         setError(result.error?.message || 'Failed to load notifications');
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to load notifications');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to load notifications');
     } finally {
       setLoading(false);
     }

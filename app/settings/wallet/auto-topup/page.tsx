@@ -67,8 +67,8 @@ export default function AutoTopupSettingsPage() {
       const historyJson = await historyRes.json();
       setSettings(settingsJson.data);
       setHistory(historyJson.data);
-    } catch (err: any) {
-      setError(err.message || 'Failed to load auto-top-up data');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to load auto-top-up data');
     } finally {
       setLoading(false);
     }
@@ -92,8 +92,8 @@ export default function AutoTopupSettingsPage() {
       if (!res.ok) throw new Error('Failed to save auto-top-up settings');
       await res.json();
       setMessage('Auto-top-up settings updated');
-    } catch (err: any) {
-      setError(err.message || 'Failed to save settings');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to save settings');
     } finally {
       setSaving(false);
     }
@@ -111,8 +111,8 @@ export default function AutoTopupSettingsPage() {
       const result = await res.json();
       setSettings(result.data);
       setMessage(enabled ? 'Auto-top-up enabled' : 'Auto-top-up disabled');
-    } catch (err: any) {
-      setError(err.message || 'Unable to update auto-top-up state');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Unable to update auto-top-up state');
     }
   };
 
@@ -147,8 +147,8 @@ export default function AutoTopupSettingsPage() {
       await res.json();
       await loadData();
       setMessage('Auto-top-up triggered successfully');
-    } catch (err: any) {
-      setError(err.message || 'Simulation failed');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Simulation failed');
     } finally {
       setAutoProcessing(false);
     }

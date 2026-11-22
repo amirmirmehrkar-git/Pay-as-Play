@@ -122,8 +122,8 @@ export default function NotificationSettingsPage() {
       if (!res.ok) throw new Error('Failed to load settings');
       const result = await res.json();
       setSettings(normalizeSettings(result.data));
-    } catch (err: any) {
-      setError(err.message || 'Failed to load settings');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to load settings');
     } finally {
       setLoading(false);
     }
@@ -147,8 +147,8 @@ export default function NotificationSettingsPage() {
       window.dispatchEvent(new Event('notifications:settings-updated'));
       window.dispatchEvent(new Event('lowBalance:settings-updated'));
       refreshSettings();
-    } catch (err: any) {
-      setError(err.message || 'Failed to save settings');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to save settings');
     } finally {
       setSaving(false);
     }

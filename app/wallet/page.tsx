@@ -63,8 +63,8 @@ export default function WalletPage() {
       if (!res.ok) throw new Error('Failed to load auto-top-up status');
       const result = await res.json();
       setAutoTopup(result.data);
-    } catch (err: any) {
-      setAutoMessage(err.message || 'Unable to load auto-top-up info');
+    } catch (err: unknown) {
+      setAutoMessage((err instanceof Error ? err.message : 'Unexpected error') || 'Unable to load auto-top-up info');
     } finally {
       setAutoLoading(false);
     }
@@ -86,8 +86,8 @@ export default function WalletPage() {
       const result = await res.json();
       setAutoTopup(result.data);
       setAutoMessage(autoTopup.enabled ? 'Auto-top-up disabled' : 'Auto-top-up enabled');
-    } catch (err: any) {
-      setAutoMessage(err.message || 'Unable to update auto-top-up');
+    } catch (err: unknown) {
+      setAutoMessage((err instanceof Error ? err.message : 'Unexpected error') || 'Unable to update auto-top-up');
     }
   }
 

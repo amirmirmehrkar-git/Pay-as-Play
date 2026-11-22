@@ -49,8 +49,8 @@ export default function SpendingByPlatformChart({
       } else {
         throw new Error(result.error?.message || 'Failed to load spending by platform data');
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to load data');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to load data');
     } finally {
       setLoading(false);
     }

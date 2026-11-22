@@ -233,8 +233,8 @@ export default function WithdrawPage() {
       setTimeout(() => {
         router.push('/wallet/withdraw/history');
       }, 2000);
-    } catch (err: any) {
-      setError(err.message || 'Failed to process withdrawal');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to process withdrawal');
     } finally {
       setSubmitting(false);
     }
