@@ -5,6 +5,13 @@ on:
     branches: [main, develop, fix/audit-ci-2026-11-22]
   pull_request:
     branches: [main, develop]
+  workflow_dispatch:
+    inputs:
+      approve_production:
+        description: 'Release only after real auth, payment ledger and security review'
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -85,7 +92,7 @@ jobs:
     name: Deploy production only from tested main
     runs-on: ubuntu-24.04
     needs: [lint, test, build]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && inputs.approve_production == true
     environment: production
     permissions:
       contents: read
