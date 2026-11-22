@@ -33,10 +33,10 @@ export default function MonthlySpendChart({ months: initialMonths = 6 }: Monthly
       if (result.success) {
         setData(result.data);
       } else {
-        throw new Error(result.error?.message || 'Failed to load monthly spend data');
+        throw new Error(result.(error instanceof Error ? error.message : 'Unexpected error') || 'Failed to load monthly spend data');
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to load data');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to load data');
     } finally {
       setLoading(false);
     }

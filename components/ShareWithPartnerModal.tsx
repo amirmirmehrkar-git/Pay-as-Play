@@ -63,12 +63,12 @@ export default function ShareWithPartnerModal({
       });
       const result = await response.json();
       if (!result.success) {
-        throw new Error(result.error?.message || 'Failed to share data');
+        throw new Error(result.(error instanceof Error ? error.message : 'Unexpected error') || 'Failed to share data');
       }
       onShared?.();
       onClose();
-    } catch (err: any) {
-      setError(err.message || 'Failed to share data');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to share data');
     } finally {
       setLoading(false);
     }

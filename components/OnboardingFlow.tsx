@@ -126,15 +126,15 @@ export default function OnboardingFlow() {
       });
       const result = await response.json();
       if (!result.success) {
-        throw new Error(result.error?.message || 'Sign in failed');
+        throw new Error(result.(error instanceof Error ? error.message : 'Unexpected error') || 'Sign in failed');
       }
       // Store token (in production, use secure storage)
       if (result.data.token) {
         localStorage.setItem('auth_token', result.data.token);
       }
       completeOnboarding();
-    } catch (err: any) {
-      setError(err.message || 'Sign in failed');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Sign in failed');
       throw err;
     } finally {
       setLoading(false);
@@ -149,12 +149,12 @@ export default function OnboardingFlow() {
       const response = await fetch('/api/auth/google');
       const result = await response.json();
       if (!result.success) {
-        throw new Error(result.error?.message || 'Google sign in failed');
+        throw new Error(result.(error instanceof Error ? error.message : 'Unexpected error') || 'Google sign in failed');
       }
       // Mock: For now, just complete onboarding
       completeOnboarding();
-    } catch (err: any) {
-      setError(err.message || 'Google sign in failed');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Google sign in failed');
     } finally {
       setLoading(false);
     }

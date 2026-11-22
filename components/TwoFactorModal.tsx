@@ -37,8 +37,8 @@ export default function TwoFactorModal({
       await Promise.resolve(onVerify(code));
       setVerifying(false);
       setCode('');
-    } catch (err: any) {
-      setError(err.message || 'Verification failed');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Verification failed');
       setVerifying(false);
     }
   }

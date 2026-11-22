@@ -51,8 +51,8 @@ export default function EmailSignIn({
     setIsSubmitting(true);
     try {
       await onSignIn(email, password);
-    } catch (err: any) {
-      setError(err.message || 'Sign in failed. Please try again.');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Sign in failed. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
