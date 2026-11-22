@@ -2,87 +2,84 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop, fix/audit-ci-2026-11-22]
   pull_request:
     branches: [main, develop]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-    
+    name: Lint and unit tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          node-version: '20'
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: '22'
           cache: 'npm'
-      
-      - name: Install dependencies
+      - name: Install exact dependencies
         run: npm ci
-      
-      - name: Run linter
-        run: npm run lint || true
-      
+      - name: Lint (fail on errors)
+        run: npm run lint
       - name: Run unit tests
         run: npm test -- --run
-      
-      - name: Generate coverage report
-        run: npm test -- --run --coverage
-      
-      - name: Upload coverage
-        uses: codecov/codecov-action@v3
-        with:
-          files: ./coverage/coverage-final.json
-          fail_ci_if_error: false
 
   build:
-    name: Build Application
-    runs-on: ubuntu-latest
+    name: Build application with non-production settings
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
     needs: test
-    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          node-version: '20'
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: '22'
           cache: 'npm'
-      
-      - name: Install dependencies
+      - name: Install exact dependencies
         run: npm ci
-      
-      - name: Generate Prisma Client
+      - name: Generate Prisma client without production credentials
         run: npm run db:generate
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      
-      - name: Build application
+          DATABASE_URL: postgresql://ci:ci@127.0.0.1:5432/ci
+      - name: Compile Next.js app without production credentials
         run: npm run build
         env:
-          NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
-          NEXT_PUBLIC_USE_MOCK_API: 'false'
+          DATABASE_URL: postgresql://ci:ci@127.0.0.1:5432/ci
+          NEXT_PUBLIC_API_BASE_URL: https://example.invalid
+          NEXT_PUBLIC_USE_MOCK_API: 'true'
 
   deploy:
-    name: Deploy to Production
-    runs-on: ubuntu-latest
-    needs: build
+    name: Deploy production only from tested main
+    runs-on: ubuntu-24.04
+    needs: [test, build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    
+    environment: production
+    permissions:
+      contents: read
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Deploy to Vercel (pinned legacy integration)
+        uses: amondnet/vercel-action@16e87c0a08142b0d0d33b76aeaf20823c381b9b9 # v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prod'
-
