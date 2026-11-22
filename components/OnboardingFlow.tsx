@@ -126,7 +126,7 @@ export default function OnboardingFlow() {
       });
       const result = await response.json();
       if (!result.success) {
-        throw new Error(result.(error instanceof Error ? error.message : 'Unexpected error') || 'Sign in failed');
+        throw new Error(result.error?.message || 'Sign in failed');
       }
       // Store token (in production, use secure storage)
       if (result.data.token) {
@@ -149,7 +149,7 @@ export default function OnboardingFlow() {
       const response = await fetch('/api/auth/google');
       const result = await response.json();
       if (!result.success) {
-        throw new Error(result.(error instanceof Error ? error.message : 'Unexpected error') || 'Google sign in failed');
+        throw new Error(result.error?.message || 'Google sign in failed');
       }
       // Mock: For now, just complete onboarding
       completeOnboarding();

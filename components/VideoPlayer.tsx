@@ -244,7 +244,7 @@ export default function VideoPlayer({
               // The totalCharge state is already showing the correct estimated value.
               console.log(`Deducted €${chargeAmount.toFixed(2)} from wallet. Current estimated charge: €${(totalChargeRef.current || 0).toFixed(2)}`);
             } else {
-              setError(data.(error instanceof Error ? error.message : 'Unexpected error') || 'Payment failed');
+              setError(data.error?.message || 'Payment failed');
               setIsPlaying(false);
               if (walletTickIntervalRef.current) {
                 clearInterval(walletTickIntervalRef.current);

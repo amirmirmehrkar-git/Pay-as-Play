@@ -37,7 +37,7 @@ export async function GET() {
           message: result.message,
           error: {
             code: 'DB_CONNECTION_ERROR',
-            message: result.(error instanceof Error ? error.message : 'Internal server error') || 'Unknown error',
+            message: result.error?.message || 'Unknown error',
           },
         },
         { status: 500 },
