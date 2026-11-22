@@ -238,7 +238,7 @@ async function makeRequest<T>(
     }
 
     // Retry logic for certain errors
-    if (attempt < retries && error instanceof Error && !error.code?.startsWith('AUTH_')) {
+    if (attempt < retries && error instanceof Error && !('code' in error && typeof error.code === 'string' && error.code.startsWith('AUTH_'))) {
       // Wait before retry (exponential backoff)
       await new Promise((resolve) => setTimeout(resolve, Math.pow(2, attempt) * 1000));
       return makeRequest<T>(url, config, attempt + 1);
