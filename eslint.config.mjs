@@ -9,6 +9,8 @@ const eslintConfig = defineConfig([
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
+    // Archived BMAD knowledge scripts are documentation, not application source.
+    ".bmad-core/knowledge/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
