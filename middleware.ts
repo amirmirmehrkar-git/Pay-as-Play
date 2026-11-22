@@ -33,16 +33,8 @@ export function middleware(request: NextRequest) {
   // ].join('; ');
   // response.headers.set('Content-Security-Policy', csp);
 
-  // API Rate Limiting (basic)
-  if (request.nextUrl.pathname.startsWith('/api/')) {
-    // Rate limiting would be implemented here
-    // For production, use a proper rate limiting service
-    const rateLimitKey = request.ip || 'unknown';
-    // Check rate limit (would use Redis or similar in production)
-    // For now, just add header
-    response.headers.set('X-RateLimit-Limit', '100');
-    response.headers.set('X-RateLimit-Remaining', '99');
-  }
+  // Never advertise fictitious rate-limit protection.
+  // API rate limiting must be enforced by a shared store or trusted gateway.
 
   return response;
 }
