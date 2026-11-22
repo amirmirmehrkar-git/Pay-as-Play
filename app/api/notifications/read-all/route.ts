@@ -10,9 +10,9 @@ export async function PUT(request: NextRequest) {
         readAt: new Date().toISOString(),
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, error: { message: error.message || 'Failed to mark all notifications as read' } },
+      { success: false, error: { message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to mark all notifications as read' } },
       { status: 500 }
     );
   }
