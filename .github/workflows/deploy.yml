@@ -2,51 +2,29 @@ name: Deploy Documentation
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [main, master]
   workflow_dispatch:
 
-# Allow workflow to write to repository
 permissions:
   contents: write
-  pages: write
-  id-token: write
+
+concurrency:
+  group: docs-publish
+  cancel-in-progress: false
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          fetch-depth: 0  # Fetch all history for git
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-        if: hashFiles('package.json') != ''
-          
-      - name: Install dependencies
-        run: |
-          if [ -f "package.json" ]; then
-            npm ci || echo "npm ci failed, continuing..."
-          else
-            echo "No package.json found, skipping npm install"
-          fi
-        continue-on-error: true
-        
-      - name: Build documentation
-        run: |
-          echo "Documentation build step (if needed)"
-          # Add build commands here if needed
-        continue-on-error: true
-          
-      - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-        uses: peaceiris/actions-gh-pages@v3
+          persist-credentials: false
+      - name: Verify documentation directory exists
+        run: test -d .bmad-core/knowledge
+      - name: Publish static documentation
+        uses: peaceiris/actions-gh-pages@373f7f263a76c20808c831209c920827a82a2847 # v3.9.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./.bmad-core/knowledge
