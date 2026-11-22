@@ -244,15 +244,15 @@ export default function VideoPlayer({
               // The totalCharge state is already showing the correct estimated value.
               console.log(`Deducted €${chargeAmount.toFixed(2)} from wallet. Current estimated charge: €${(totalChargeRef.current || 0).toFixed(2)}`);
             } else {
-              setError(data.error?.message || 'Payment failed');
+              setError(data.(error instanceof Error ? error.message : 'Unexpected error') || 'Payment failed');
               setIsPlaying(false);
               if (walletTickIntervalRef.current) {
                 clearInterval(walletTickIntervalRef.current);
               }
             }
-          } catch (err: any) {
+          } catch (err: unknown) {
             console.error('Wallet tick error:', err);
-            setError(err.message || 'Billing error');
+            setError((err instanceof Error ? err.message : 'Unexpected error') || 'Billing error');
             setIsPlaying(false);
             if (walletTickIntervalRef.current) {
               clearInterval(walletTickIntervalRef.current);
@@ -306,14 +306,14 @@ export default function VideoPlayer({
 
             const minutes = Math.floor(duration / 60) + 1;
             setTotalCharge(minutes * pricePerMinute);
-          } catch (err: any) {
+          } catch (err: unknown) {
             console.error('Tick error:', err);
-            setError(err.message || 'Billing error');
+            setError((err instanceof Error ? err.message : 'Unexpected error') || 'Billing error');
           }
         }, 60000);
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to start session');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to start session');
       setIsPlaying(false);
     }
   }
@@ -371,7 +371,7 @@ export default function VideoPlayer({
         
         // Pass final values to summary
         onStop?.(sessionId, finalCharge, finalDuration);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('Error in handleStop:', err);
         // Still show summary even if there's an error
         onStop?.(sessionId || 'no-session', finalCharge, finalDuration);

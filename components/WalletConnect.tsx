@@ -77,8 +77,8 @@ export default function WalletConnect({ onConnect, onDisconnect }: WalletConnect
         await updateBalance();
         onConnect?.(addr);
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to connect wallet');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to connect wallet');
       console.error('Wallet connection error:', err);
     } finally {
       setLoading(false);
@@ -96,8 +96,8 @@ export default function WalletConnect({ onConnect, onDisconnect }: WalletConnect
       setAddress(null);
       setBalance('0');
       onDisconnect?.();
-    } catch (err: any) {
-      setError(err.message || 'Failed to disconnect wallet');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to disconnect wallet');
       console.error('Wallet disconnection error:', err);
     } finally {
       setLoading(false);

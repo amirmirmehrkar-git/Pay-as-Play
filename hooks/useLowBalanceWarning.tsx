@@ -99,9 +99,9 @@ function useProvideLowBalanceWarning(): LowBalanceContextValue {
       }
       const result = await res.json();
       setPreferences(result.data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[LowBalance] settings error', err);
-      setError(err.message || 'Failed to load notification settings');
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to load notification settings');
     }
   };
 
@@ -114,9 +114,9 @@ function useProvideLowBalanceWarning(): LowBalanceContextValue {
       }
       const result = await res.json();
       setBalanceData(result.data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[LowBalance] balance error', err);
-      setError(err.message || 'Failed to fetch wallet balance');
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to fetch wallet balance');
     } finally {
       setLoading(false);
     }

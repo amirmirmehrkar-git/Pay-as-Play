@@ -73,8 +73,8 @@ export default function WithdrawModal({ balance, address, onClose }: WithdrawMod
       setAmount('');
       setDestination('');
       onClose?.();
-    } catch (err: any) {
-      setError(err.message || 'Withdrawal failed. Please try again.');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Withdrawal failed. Please try again.');
     } finally {
       setLoading(false);
     }
