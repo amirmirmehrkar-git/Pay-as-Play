@@ -147,6 +147,13 @@ export default function NotificationSettingsPage() {
       window.dispatchEvent(new Event('notifications:settings-updated'));
       window.dispatchEvent(new Event('lowBalance:settings-updated'));
       refreshSettings();
+    } catch (err: any) {
+      setError(err.message || 'Failed to save settings');
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const updateTypePreference = (
     key: NotificationTypeKey,
     updater: (prev: NotificationTypePreferences) => NotificationTypePreferences
@@ -183,12 +190,6 @@ export default function NotificationSettingsPage() {
         [channel]: value,
       },
     }));
-  };
-    } catch (err: any) {
-      setError(err.message || 'Failed to save settings');
-    } finally {
-      setSaving(false);
-    }
   };
 
   if (loading) {
