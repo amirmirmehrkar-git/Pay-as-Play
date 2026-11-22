@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 interface ContentTypeDistributionDataPoint {
+  [key: string]: string | number;
   contentType: string;
   amount: number;
   percentage: number;
