@@ -13,9 +13,9 @@ export async function GET(request: NextRequest) {
         completedAt: completed ? new Date().toISOString() : null,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, error: { message: error.message || 'Failed to check onboarding status' } },
+      { success: false, error: { message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to check onboarding status' } },
       { status: 500 }
     );
   }
@@ -35,9 +35,9 @@ export async function POST(request: NextRequest) {
         completedAt: completed ? new Date().toISOString() : null,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, error: { message: error.message || 'Failed to update onboarding status' } },
+      { success: false, error: { message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to update onboarding status' } },
       { status: 500 }
     );
   }
