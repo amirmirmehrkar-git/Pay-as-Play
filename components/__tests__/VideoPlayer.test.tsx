@@ -45,7 +45,7 @@ vi.mock('@/hooks/useLowBalanceWarning', () => ({
 
 // Mock LowBalanceBanner
 vi.mock('../LowBalanceBanner', () => ({
-  default: ({ onDismiss }: any) => (
+  default: ({ onDismiss }: { onDismiss: () => void }) => (
     <div data-testid="low-balance-banner">
       <button onClick={onDismiss}>Dismiss</button>
     </div>

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach, type Mock } from 'vitest';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import NotificationCenter from '../NotificationCenter';
 import { ToastProvider } from '../ToastNotification';
@@ -58,7 +58,7 @@ describe('NotificationCenter', () => {
   };
 
   it('renders notification bell icon', async () => {
-    (global.fetch as any)
+    (global.fetch as Mock)
       .mockResolvedValueOnce({
         json: async () => mockNotifications,
       })
@@ -78,7 +78,7 @@ describe('NotificationCenter', () => {
   });
 
   it('displays unread count badge', async () => {
-    (global.fetch as any)
+    (global.fetch as Mock)
       .mockResolvedValueOnce({
         json: async () => mockNotifications,
       })
@@ -99,7 +99,7 @@ describe('NotificationCenter', () => {
   });
 
   it('displays 9+ when unread count is greater than 9', async () => {
-    (global.fetch as any)
+    (global.fetch as Mock)
       .mockResolvedValueOnce({
         json: async () => ({
           ...mockNotifications,
@@ -123,7 +123,7 @@ describe('NotificationCenter', () => {
   });
 
   it('opens dropdown when bell is clicked', async () => {
-    (global.fetch as any)
+    (global.fetch as Mock)
       .mockResolvedValueOnce({
         json: async () => mockNotifications,
       })
@@ -152,12 +152,12 @@ describe('NotificationCenter', () => {
   });
 
   it('displays loading state initially', async () => {
-    let resolvePromise: (value: any) => void;
+    let resolvePromise: (value: unknown) => void;
     const pendingPromise = new Promise((resolve) => {
       resolvePromise = resolve;
     });
 
-    (global.fetch as any).mockImplementation(() => pendingPromise);
+    (global.fetch as Mock).mockImplementation(() => pendingPromise);
 
     render(
       <ToastProvider>
@@ -179,7 +179,7 @@ describe('NotificationCenter', () => {
   });
 
   it('displays empty state when no notifications', async () => {
-    (global.fetch as any)
+    (global.fetch as Mock)
       .mockResolvedValueOnce({
         json: async () => ({
           success: true,
@@ -215,7 +215,7 @@ describe('NotificationCenter', () => {
       json: async () => ({ success: true }),
     });
 
-    (global.fetch as any)
+    (global.fetch as Mock)
       .mockResolvedValueOnce({
         json: async () => mockNotifications,
       })
@@ -255,7 +255,7 @@ describe('NotificationCenter', () => {
       json: async () => ({ success: true }),
     });
 
-    (global.fetch as any)
+    (global.fetch as Mock)
       .mockResolvedValueOnce({
         json: async () => mockNotifications,
       })
@@ -293,7 +293,7 @@ describe('NotificationCenter', () => {
   });
 
   it('closes dropdown when clicking outside', async () => {
-    (global.fetch as any)
+    (global.fetch as Mock)
       .mockResolvedValueOnce({
         json: async () => mockNotifications,
       })
@@ -331,7 +331,7 @@ describe('NotificationCenter', () => {
   });
 
   it('loads delivery preferences', async () => {
-    (global.fetch as any)
+    (global.fetch as Mock)
       .mockResolvedValueOnce({
         json: async () => mockNotifications,
       })
