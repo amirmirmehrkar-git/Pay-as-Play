@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { demoAuthenticationUnavailable } from '@/lib/security/demo-auth';
 
-// Mock withdrawal details (in a real app, this would come from a database)
+// Synthetic demo records only. Never commit banking/contact/wallet details here.
 const mockWithdrawals: Record<string, any> = {
   'wd_123': {
     withdrawalId: 'wd_123',
@@ -9,10 +10,10 @@ const mockWithdrawals: Record<string, any> = {
     netAmount: 98,
     method: 'bank_transfer',
     details: {
-      iban: 'DE89370400440532013000',
-      bic: 'COBADEFFXXX',
-      accountHolderName: 'John Doe',
-      bankName: 'Commerzbank',
+      iban: '',
+      bic: '',
+      accountHolderName: '',
+      bankName: '',
     },
     status: 'completed',
     createdAt: '2025-01-15T10:00:00Z',
@@ -27,7 +28,7 @@ const mockWithdrawals: Record<string, any> = {
     netAmount: 49,
     method: 'paypal',
     details: {
-      paypalEmail: 'user@example.com',
+      paypalEmail: '',
     },
     status: 'processing',
     createdAt: '2025-01-20T09:00:00Z',
@@ -40,7 +41,7 @@ const mockWithdrawals: Record<string, any> = {
     netAmount: 196,
     method: 'crypto',
     details: {
-      walletAddress: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ23456789ABCDEFGHJKLMNPQRSTUVWXY',
+      walletAddress: '',
     },
     status: 'failed',
     createdAt: '2025-01-10T12:00:00Z',
@@ -51,10 +52,12 @@ const mockWithdrawals: Record<string, any> = {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { withdrawalId: string } }
+  { params }: { params: Promise<{ withdrawalId: string }> }
 ) {
+  const unavailable = demoAuthenticationUnavailable();
+  if (unavailable) return unavailable;
   try {
-    const { withdrawalId } = params;
+    const { withdrawalId } = await params;
 
     // Simulate delay
     await new Promise((resolve) => setTimeout(resolve, 500));
