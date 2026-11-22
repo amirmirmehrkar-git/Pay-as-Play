@@ -25,11 +25,11 @@ export interface SDKConfig {
   appId?: number;
 }
 
-function moduleExport(target: unknown, name: string): unknown {
+function moduleExport(target: unknown, name: string) {
   if (target === null || (typeof target !== 'object' && typeof target !== 'function')) {
     throw new TypeError('SDK module is unavailable');
   }
-  const value: unknown = Reflect.get(target, name);
+  const value = Reflect.get(target, name);
   if (value === undefined || value === null) {
     throw new TypeError(`SDK export ${name} is unavailable`);
   }
