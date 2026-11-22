@@ -71,9 +71,15 @@ export default function UsageSummary({
       totalChargeType: typeof totalCharge,
       durationType: typeof duration
     });
-    loadSessionDetails();
-    updateBalance();
-    loadWalletBalance();
+    let cancelled = false;
+    queueMicrotask(() => {
+      if (!cancelled) {
+        void loadSessionDetails();
+        void updateBalance();
+        void loadWalletBalance();
+      }
+    });
+    return () => { cancelled = true; };
   }, [sessionId, totalCharge, duration]);
 
   function formatTime(seconds: number): string {

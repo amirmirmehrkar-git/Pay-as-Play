@@ -137,7 +137,9 @@ export default function MediaHistory() {
   }
 
   useEffect(() => {
-    loadMediaHistory();
+    let cancelled = false;
+    queueMicrotask(() => { if (!cancelled) loadMediaHistory(); });
+    return () => { cancelled = true; };
   }, [filter, dateRange]);
 
   function formatDuration(seconds: number): string {

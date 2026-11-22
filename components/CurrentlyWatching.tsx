@@ -45,8 +45,8 @@ export default function CurrentlyWatching() {
   }
 
   useEffect(() => {
-    checkActiveSession();
-    const interval = setInterval(checkActiveSession, 5000);
+    const initialCheck = queueMicrotask(() => { void checkActiveSession(); });
+    const interval = setInterval(() => { void checkActiveSession(); }, 5000);
     return () => clearInterval(interval);
   }, []);
 

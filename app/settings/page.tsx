@@ -43,7 +43,9 @@ export default function SettingsPage() {
   }
 
   useEffect(() => {
-    loadSettings();
+    let cancelled = false;
+    queueMicrotask(() => { if (!cancelled) void loadSettings(); });
+    return () => { cancelled = true; };
   }, []);
 
   function handleSave() {
