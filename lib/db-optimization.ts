@@ -32,18 +32,8 @@ export async function getTransactionsPaginated(
       skip,
       take: limit,
       orderBy: { createdAt: 'desc' },
-      include: {
-        session: {
-          select: {
-            id: true,
-            platform: {
-              select: {
-                name: true,
-              },
-            },
-          },
-        },
-      },
+      // Transactions are related to wallets, not sessions, in schema.prisma.
+      // Do not request nonexistent relations from Prisma.
     }),
     prisma.transaction.count({
       where: { userId },
