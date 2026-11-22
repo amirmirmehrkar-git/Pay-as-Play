@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 interface SpendingByPlatformDataPoint {
+  [key: string]: string | number;
   platform: string;
   amount: number;
   percentage: number;
@@ -137,7 +138,8 @@ export default function SpendingByPlatformChart({
             cx="50%"
             cy="50%"
             labelLine={false}
-            label={({ platform, percentage }) => `${platform}: ${percentage}%`}
+            nameKey="platform"
+            label={({ name, percent }) => `${name ?? 'Platform'}: ${Math.round((percent ?? 0) * 100)}%`}
             outerRadius={chartType === 'donut' ? 100 : 120}
             innerRadius={chartType === 'donut' ? 60 : 0}
             fill="#8884d8"
