@@ -38,8 +38,8 @@ function moduleExport(target: unknown, name: string) {
 
 export async function initSDK(config?: SDKConfig): Promise<boolean> {
   try {
-    const module = await loadSDK();
-    const init: unknown = moduleExport(module, 'init');
+    const sdkModule = await loadSDK();
+    const init: unknown = moduleExport(sdkModule, 'init');
     if (typeof init !== 'function') throw new TypeError('SDK init is not a function');
 
     const initConfig: SDKConfig = {
@@ -52,7 +52,7 @@ export async function initSDK(config?: SDKConfig): Promise<boolean> {
     if (config?.platformFeePct !== undefined) initConfig.platformFeePct = config.platformFeePct;
     if (config?.asaId !== undefined) initConfig.asaId = config.asaId;
     if (config?.appId !== undefined) initConfig.appId = config.appId;
-    await Reflect.apply(init, module, [initConfig]);
+    await Reflect.apply(init, sdkModule, [initConfig]);
     return true;
   } catch (error) {
     console.error('SDK initialization error:', error);
@@ -76,17 +76,17 @@ export async function getWalletConnect() {
 }
 
 function lazyProxy(loader: () => Promise<unknown>) {
-  return new Proxy({}, {
+  return new Proxy({} as Record<string, (...args: unknown[]) => Promise<unknown>>, {
     get: (_target, prop) => async (...args: unknown[]) => {
-      const module = await loader();
-      if (module === null || (typeof module !== 'object' && typeof module !== 'function')) {
+      const sdkService = await loader();
+      if (sdkService === null || (typeof sdkService !== 'object' && typeof sdkService !== 'function')) {
         throw new TypeError('SDK service is unavailable');
       }
-      const method: unknown = Reflect.get(module, prop);
+      const method: unknown = Reflect.get(sdkService, prop);
       if (typeof method !== 'function') {
         throw new TypeError(`SDK method ${String(prop)} is unavailable`);
       }
-      return Reflect.apply(method, module, args);
+      return Reflect.apply(method, sdkService, args);
     },
   });
 }
