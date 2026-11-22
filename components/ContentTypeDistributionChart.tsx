@@ -78,11 +78,11 @@ export default function ContentTypeDistributionChart() {
     <ResponsiveContainer width="100%" height={400}>
       <PieChart>
         <Pie
-          data={data}
+          data={data.map((entry) => ({ ...entry }))}
           cx="50%"
           cy="50%"
           labelLine={false}
-          label={({ contentType, percentage }) => `${contentType}: ${percentage}%`}
+          label={({ index }) => { const point = data[index ?? -1]; return point ? `${point.contentType}: ${point.percentage}%` : ""; }}
           outerRadius={120}
           fill="#8884d8"
           dataKey="amount"
