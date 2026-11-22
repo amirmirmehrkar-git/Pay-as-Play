@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
-    "@perawallet/connect": "^1.4.2",
+    "@perawallet/connect": "^1.10.1",
     "@playandpay/sdk": "file:playandpay-sdk",
     "@prisma/adapter-pg": "^7.0.0",
     "@prisma/client": "^7.0.0",
