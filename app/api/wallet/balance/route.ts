@@ -44,14 +44,14 @@ export async function GET() {
       { success: true, data: mockBalance },
       { status: 200 },
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching wallet balance:', error);
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'BALANCE_ERROR',
-          message: error?.message || 'Failed to fetch wallet balance',
+          message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to fetch wallet balance',
         },
       },
       { status: 500 },
