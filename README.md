@@ -280,9 +280,13 @@ Lint errors now fail CI rather than being ignored.
 - Next.js / eslint-config-next: 16.4.6; React / React DOM: 19.3.1.
 - Prisma CLI, client and PostgreSQL adapter: 7.10.1; Effect is overridden to patched 3.22.5.
 - jsPDF 4.2.1, Vitest / coverage 5.1.1 and sharp 0.35.5 replace vulnerable versions.
-- Unit tests: 106 passed. Playwright integration specs are excluded from Vitest and must run with Playwright separately.
+- Unit tests: 107 passed. Playwright integration specs are excluded from Vitest and must run with Playwright separately.
 - Production build passed using generated Prisma types and a synthetic local DATABASE_URL. No real database was contacted or migration run.
 - npm audit reported zero known advisories after the lockfile update; this does not certify the application security.
 - Legacy lint violations remain and must be fixed before merge; CI no longer ignores them.
 - Mock authentication is intentionally unavailable in production. Real identity, authorization, payments and rate limiting require separate validation.
 - Tracked coverage artifacts remain in history/current tree; ignores prevent new untracked output but do not remove tracked files.
+
+Demo withdrawal records contain empty payout details and are blocked in production. Previously committed financial-looking fixture values were removed from the proposed code; historical copies were not rewritten.
+
+Application CI performs validation only; it does not deploy to production. The obsolete documentation publisher was removed; it did not build documentation and published raw knowledge files. A production release needs its own reviewed deployment action.
