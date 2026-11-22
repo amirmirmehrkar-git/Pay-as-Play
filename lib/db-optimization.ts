@@ -32,18 +32,8 @@ export async function getTransactionsPaginated(
       skip,
       take: limit,
       orderBy: { createdAt: 'desc' },
-      include: {
-        session: {
-          select: {
-            id: true,
-            platform: {
-              select: {
-                name: true,
-              },
-            },
-          },
-        },
-      },
+      // Transaction has no session relation in the current Prisma schema.
+
     }),
     prisma.transaction.count({
       where: { userId },
