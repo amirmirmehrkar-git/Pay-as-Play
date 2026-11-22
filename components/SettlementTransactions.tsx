@@ -95,7 +95,7 @@ export default function SettlementTransactions({
     }
   };
 
-  const renderSortIcon = (field: { field: 'date' | 'amount' | 'duration'  => {
+  const renderSortIcon = (field: 'date' | 'amount' | 'duration') => {
     if (sortBy !== field) return <span className="text-zinc-400">↕️</span>;
     return sortDirection === 'asc' ? <span>↑</span> : <span>↓</span>;
   };
