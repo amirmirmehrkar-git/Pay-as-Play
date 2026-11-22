@@ -31,7 +31,7 @@ export function generateAccessToken(payload: TokenPayload): string {
   }
 
   return jwt.sign(payload, JWT_SECRET, {
-    expiresIn: JWT_EXPIRES_IN,
+    expiresIn: parseExpirationTime(JWT_EXPIRES_IN),
     issuer: 'pay-as-play',
     audience: 'pay-as-play-client',
   });
@@ -46,7 +46,7 @@ export function generateRefreshToken(payload: TokenPayload): string {
   }
 
   return jwt.sign(payload, JWT_REFRESH_SECRET, {
-    expiresIn: JWT_REFRESH_EXPIRES_IN,
+    expiresIn: parseExpirationTime(JWT_REFRESH_EXPIRES_IN),
     issuer: 'pay-as-play',
     audience: 'pay-as-play-client',
   });
