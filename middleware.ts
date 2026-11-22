@@ -37,7 +37,6 @@ export function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/api/')) {
     // Rate limiting would be implemented here
     // For production, use a proper rate limiting service
-    const rateLimitKey = request.ip || 'unknown';
     // Check rate limit (would use Redis or similar in production)
     // For now, just add header
     response.headers.set('X-RateLimit-Limit', '100');
