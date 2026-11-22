@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { demoAuthenticationUnavailable } from '@/lib/security/demo-auth';
 
 export async function GET(request: NextRequest) {
+  const unavailable = demoAuthenticationUnavailable();
+  if (unavailable) return unavailable;
   try {
     // Mock Google OAuth flow
     // In production, this would redirect to Google OAuth
