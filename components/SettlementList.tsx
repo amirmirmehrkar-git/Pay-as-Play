@@ -97,7 +97,7 @@ export default function SettlementList({
     }
   };
 
-  const renderSortIcon = (field: { field: SortField  => {
+  const renderSortIcon = (field: SortField) => {
     if (sortBy !== field) return <span className="text-zinc-400">↕️</span>;
     return sortDirection === 'asc' ? <span>↑</span> : <span>↓</span>;
   };
