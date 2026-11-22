@@ -28,7 +28,6 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-package-lock.json
 yarn.lock
 
 # IDE
@@ -60,3 +59,8 @@ out/
 .cache/
 
 /lib/generated/prisma
+
+# Generated test reports
+coverage/
+playwright-report/
+test-results/
