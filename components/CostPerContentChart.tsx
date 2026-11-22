@@ -195,13 +195,13 @@ export default function CostPerContentChart({
               border: '1px solid #e4e4e7',
               borderRadius: '8px',
             }}
-            formatter={(value: number, name: string, props: { payload?: { percentage?: number } }) => {
+            formatter={(value: number, name: string, props: { payload?: { percentage?: number; timeWatched?: number; costPerMinute?: number } }) => {
               if (name === 'amount') {
                 return [
                   <>
                     <div>Amount: {formatCurrency(value)}</div>
-                    <div>Time Watched: {formatMinutes(props.payload.timeWatched)}</div>
-                    <div>Cost per Minute: {formatCurrency(props.payload.costPerMinute)}</div>
+                    <div>Time Watched: {formatMinutes(props.payload?.timeWatched ?? 0)}</div>
+                    <div>Cost per Minute: {formatCurrency(props.payload?.costPerMinute ?? 0)}</div>
                   </>,
                   'Details',
                 ];
