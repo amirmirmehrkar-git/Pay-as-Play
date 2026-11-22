@@ -131,13 +131,13 @@ export default function MonthlySpendChart({ months: initialMonths = 6 }: Monthly
               border: '1px solid #e4e4e7',
               borderRadius: '8px',
             }}
-            formatter={(value: number, name: string, props: { payload?: { percentage?: number } }) => {
+            formatter={(value: number, name: string, props: { payload?: { percentage?: number; sessionCount?: number; averageCostPerSession?: number } }) => {
               if (name === 'spend') {
                 return [
                   <>
                     <div>Total Amount: {formatCurrency(value)}</div>
-                    <div>Sessions: {props.payload.sessionCount}</div>
-                    <div>Avg per Session: {formatCurrency(props.payload.averageCostPerSession)}</div>
+                    <div>Sessions: {props.payload?.sessionCount ?? 0}</div>
+                    <div>Avg per Session: {formatCurrency(props.payload?.averageCostPerSession ?? 0)}</div>
                   </>,
                   'Details',
                 ];
