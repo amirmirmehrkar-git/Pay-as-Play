@@ -7,6 +7,14 @@ import { NextResponse } from 'next/server';
 import { testDatabaseConnection } from '@/lib/db-connection';
 
 export async function GET() {
+  // This endpoint is a demonstration implementation, not a production service.
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json(
+      { success: false, error: { code: 'DEMO_DISABLED', message: 'Demo endpoint is unavailable in production' } },
+      { status: 503, headers: { 'Cache-Control': 'no-store' } },
+    );
+  }
+
   try {
     const result = await testDatabaseConnection();
 

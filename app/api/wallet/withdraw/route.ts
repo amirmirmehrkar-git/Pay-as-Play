@@ -19,9 +19,28 @@ interface WithdrawalRequest {
 
 // Mock in-memory store for withdrawals
 let withdrawalCounter = 1;
-const mockWithdrawals: any[] = [];
+type MockWithdrawal = {
+  withdrawalId: string;
+  amount: number;
+  fee: number;
+  netAmount: number;
+  method: WithdrawalRequest['method'];
+  details: WithdrawalRequest['details'];
+  status: 'pending';
+  createdAt: string;
+  estimatedProcessingTime: string;
+};
+const mockWithdrawals: MockWithdrawal[] = [];
 
 export async function POST(request: NextRequest) {
+  // This endpoint is a demonstration implementation, not a production service.
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json(
+      { success: false, error: { code: 'DEMO_DISABLED', message: 'Demo endpoint is unavailable in production' } },
+      { status: 503, headers: { 'Cache-Control': 'no-store' } },
+    );
+  }
+
   try {
     const body: WithdrawalRequest = await request.json();
 
