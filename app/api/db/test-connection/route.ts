@@ -7,6 +7,14 @@ import { NextResponse } from 'next/server';
 import { testDatabaseConnection } from '@/lib/db-connection';
 
 export async function GET() {
+  // This endpoint is a demonstration implementation, not a production service.
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json(
+      { success: false, error: { code: 'DEMO_DISABLED', message: 'Demo endpoint is unavailable in production' } },
+      { status: 503, headers: { 'Cache-Control': 'no-store' } },
+    );
+  }
+
   try {
     const result = await testDatabaseConnection();
 
@@ -35,13 +43,13 @@ export async function GET() {
         { status: 500 },
       );
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'DB_ERROR',
-          message: error?.message || 'Failed to test database connection',
+          message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to test database connection',
         },
       },
       { status: 500 },

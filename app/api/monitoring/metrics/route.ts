@@ -23,13 +23,13 @@ export async function GET() {
         },
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'METRICS_ERROR',
-          message: error?.message || 'Failed to fetch metrics',
+          message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to fetch metrics',
         },
       },
       { status: 500 },

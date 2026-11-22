@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
+  // This endpoint is a demonstration implementation, not a production service.
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json(
+      { success: false, error: { code: 'DEMO_DISABLED', message: 'Demo endpoint is unavailable in production' } },
+      { status: 503, headers: { 'Cache-Control': 'no-store' } },
+    );
+  }
+
   try {
     // Mock Google OAuth flow
     // In production, this would redirect to Google OAuth
@@ -37,9 +45,9 @@ export async function GET(request: NextRequest) {
         expiresIn: 86400, // 24 hours
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, error: { message: error.message || 'Google sign in failed' } },
+      { success: false, error: { message: (error instanceof Error ? error.message : 'Internal server error') || 'Google sign in failed' } },
       { status: 500 }
     );
   }

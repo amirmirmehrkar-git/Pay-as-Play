@@ -27,41 +27,6 @@ export default function AnalyticsCharts({
   const barChartRef = useRef<HTMLCanvasElement>(null);
   const areaChartRef = useRef<HTMLCanvasElement>(null);
 
-  useEffect(() => {
-    // Generate sample data if not provided
-    const generateSampleData = () => {
-      const days = [];
-      const timeData = [];
-      const costData = [];
-      for (let i = 6; i >= 0; i--) {
-        const date = new Date();
-        date.setDate(date.getDate() - i);
-        days.push(date.toLocaleDateString('en-US', { weekday: 'short' }));
-        timeData.push(Math.floor(Math.random() * 120) + 30); // 30-150 minutes
-        costData.push(Math.random() * 5 + 1); // €1-6
-      }
-      return { days, timeData, costData };
-    };
-
-    const { days, timeData, costData: costValues } = generateSampleData();
-
-    // Draw Line Chart (Time Watched Over Time)
-    if (lineChartRef.current) {
-      drawLineChart(lineChartRef.current, days, timeData, 'Time Watched (minutes)');
-    }
-
-    // Draw Bar Chart (Cost per Content)
-    if (barChartRef.current) {
-      drawBarChart(barChartRef.current, days, costValues, 'Cost (€)');
-    }
-
-    // Draw Area Chart (Monthly Spend)
-    if (areaChartRef.current) {
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-      const monthlyData = months.map(() => Math.random() * 50 + 20); // €20-70
-      drawAreaChart(areaChartRef.current, months, monthlyData, 'Monthly Spend (€)');
-    }
-  }, [timeWatchedData, costData, monthlySpend]);
 
   function drawLineChart(
     canvas: HTMLCanvasElement,
@@ -253,6 +218,43 @@ export default function AnalyticsCharts({
       ctx.fillText(label, x, height - padding + 20);
     });
   }
+
+  useEffect(() => {
+    // Generate sample data if not provided
+    const generateSampleData = () => {
+      const days = [];
+      const timeData = [];
+      const costData = [];
+      for (let i = 6; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        days.push(date.toLocaleDateString('en-US', { weekday: 'short' }));
+        timeData.push(Math.floor(Math.random() * 120) + 30); // 30-150 minutes
+        costData.push(Math.random() * 5 + 1); // €1-6
+      }
+      return { days, timeData, costData };
+    };
+
+    const { days, timeData, costData: costValues } = generateSampleData();
+
+    // Draw Line Chart (Time Watched Over Time)
+    if (lineChartRef.current) {
+      drawLineChart(lineChartRef.current, days, timeData, 'Time Watched (minutes)');
+    }
+
+    // Draw Bar Chart (Cost per Content)
+    if (barChartRef.current) {
+      drawBarChart(barChartRef.current, days, costValues, 'Cost (€)');
+    }
+
+    // Draw Area Chart (Monthly Spend)
+    if (areaChartRef.current) {
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+      const monthlyData = months.map(() => Math.random() * 50 + 20); // €20-70
+      drawAreaChart(areaChartRef.current, months, monthlyData, 'Monthly Spend (€)');
+    }
+  }, [timeWatchedData, costData, monthlySpend]);
+
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

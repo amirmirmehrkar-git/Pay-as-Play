@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach, type Mock } from 'vitest';
 import { exportAnalyticsPDF } from '../exportPDF';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -45,7 +45,7 @@ const localStorageMock = {
   setItem: vi.fn(),
   clear: vi.fn(),
 };
-global.localStorage = localStorageMock as any;
+global.localStorage = localStorageMock as unknown as Storage;
 
 describe('exportAnalyticsPDF', () => {
   beforeEach(() => {
@@ -77,7 +77,7 @@ describe('exportAnalyticsPDF', () => {
   };
 
   it('exports PDF with summary', async () => {
-    (global.fetch as any).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       json: async () => mockApiResponse,
     });
 
@@ -94,7 +94,7 @@ describe('exportAnalyticsPDF', () => {
   });
 
   it('includes charts when chartSelectors provided', async () => {
-    (global.fetch as any).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       json: async () => mockApiResponse,
     });
 
@@ -103,7 +103,7 @@ describe('exportAnalyticsPDF', () => {
       offsetHeight: 600,
     } as HTMLElement;
 
-    (global.document.querySelector as any).mockReturnValue(mockElement);
+    (global.document.querySelector as Mock).mockReturnValue(mockElement);
 
     await exportAnalyticsPDF({
       startDate: '2025-01-01',
@@ -116,7 +116,7 @@ describe('exportAnalyticsPDF', () => {
   });
 
   it('includes transactions when includeTransactions is true', async () => {
-    (global.fetch as any).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       json: async () => mockApiResponse,
     });
 
@@ -126,12 +126,12 @@ describe('exportAnalyticsPDF', () => {
       includeTransactions: true,
     });
 
-    const pdfInstance = (jsPDF as any).mock.results[0].value;
+    const pdfInstance = (jsPDF as unknown as Mock).mock.results[0].value;
     expect(pdfInstance.text).toHaveBeenCalled();
   });
 
   it('throws error when API call fails', async () => {
-    (global.fetch as any).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       json: async () => ({
         success: false,
         error: { message: 'Export failed' },
@@ -147,7 +147,7 @@ describe('exportAnalyticsPDF', () => {
   });
 
   it('saves export history to localStorage', async () => {
-    (global.fetch as any).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       json: async () => mockApiResponse,
     });
 
@@ -163,11 +163,11 @@ describe('exportAnalyticsPDF', () => {
   });
 
   it('handles missing chart elements gracefully', async () => {
-    (global.fetch as any).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       json: async () => mockApiResponse,
     });
 
-    (global.document.querySelector as any).mockReturnValue(null);
+    (global.document.querySelector as Mock).mockReturnValue(null);
 
     await expect(
       exportAnalyticsPDF({
@@ -189,9 +189,9 @@ describe('exportAnalyticsPDF', () => {
       addImage: vi.fn(),
       save: vi.fn(),
     };
-    (jsPDF as any).mockReturnValue(mockDoc);
+    (jsPDF as unknown as Mock).mockReturnValue(mockDoc);
 
-    (global.fetch as any).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       json: async () => ({
         ...mockApiResponse,
         data: {
@@ -222,9 +222,9 @@ describe('exportAnalyticsPDF', () => {
       addImage: vi.fn(),
       save: vi.fn(),
     };
-    (jsPDF as any).mockReturnValue(mockDoc);
+    (jsPDF as unknown as Mock).mockReturnValue(mockDoc);
 
-    (global.fetch as any).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       json: async () => mockApiResponse,
     });
 

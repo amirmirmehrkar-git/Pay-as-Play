@@ -3,12 +3,19 @@
  * Secure JWT token generation, validation, and management
  */
 
-import jwt from 'jsonwebtoken';
+import jwt, { type SignOptions } from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key-change-in-production';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '15m'; // 15 minutes
 const JWT_REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || '7d'; // 7 days
+
+function validatedExpiration(value: string): SignOptions['expiresIn'] {
+  if (!/^\\d+[smhd]$/.test(value)) {
+    throw new Error('JWT expiration must be a positive integer followed by s, m, h, or d');
+  }
+  return value as SignOptions['expiresIn'];
+}
 
 export interface TokenPayload {
   userId: string;
@@ -31,7 +38,7 @@ export function generateAccessToken(payload: TokenPayload): string {
   }
 
   return jwt.sign(payload, JWT_SECRET, {
-    expiresIn: JWT_EXPIRES_IN,
+    expiresIn: validatedExpiration(JWT_EXPIRES_IN),
     issuer: 'pay-as-play',
     audience: 'pay-as-play-client',
   });
@@ -46,7 +53,7 @@ export function generateRefreshToken(payload: TokenPayload): string {
   }
 
   return jwt.sign(payload, JWT_REFRESH_SECRET, {
-    expiresIn: JWT_REFRESH_EXPIRES_IN,
+    expiresIn: validatedExpiration(JWT_REFRESH_EXPIRES_IN),
     issuer: 'pay-as-play',
     audience: 'pay-as-play-client',
   });

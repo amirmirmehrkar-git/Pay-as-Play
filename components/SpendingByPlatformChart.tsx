@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 interface SpendingByPlatformDataPoint {
+  [key: string]: string | number;
   platform: string;
   amount: number;
   percentage: number;
@@ -48,8 +49,8 @@ export default function SpendingByPlatformChart({
       } else {
         throw new Error(result.error?.message || 'Failed to load spending by platform data');
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to load data');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to load data');
     } finally {
       setLoading(false);
     }
@@ -62,7 +63,8 @@ export default function SpendingByPlatformChart({
     }).format(amount);
   };
 
-  const handleClick = (data: any) => {
+  const handleClick = (data: unknown) => {
+    if (typeof data !== 'object' || data === null || !('platform' in data) || typeof data.platform !== 'string') return;
     if (onPlatformClick) {
       const platform = selectedPlatform === data.platform ? null : data.platform;
       onPlatformClick(platform);
@@ -137,7 +139,8 @@ export default function SpendingByPlatformChart({
             cx="50%"
             cy="50%"
             labelLine={false}
-            label={({ platform, percentage }) => `${platform}: ${percentage}%`}
+            nameKey="platform"
+            label={({ name, percent }) => `${name ?? 'Platform'}: ${Math.round((percent ?? 0) * 100)}%`}
             outerRadius={chartType === 'donut' ? 100 : 120}
             innerRadius={chartType === 'donut' ? 60 : 0}
             fill="#8884d8"
@@ -159,12 +162,12 @@ export default function SpendingByPlatformChart({
               border: '1px solid #e4e4e7',
               borderRadius: '8px',
             }}
-            formatter={(value: number, name: string, props: any) => [
+            formatter={(value: number, name: string, props: { payload?: { percentage?: number; platform?: string } }) => [
               <>
                 <div>Amount: {formatCurrency(value)}</div>
-                <div>Percentage: {props.payload.percentage}%</div>
+                <div>Percentage: {props.payload?.percentage ?? 0}%</div>
               </>,
-              props.payload.platform,
+              props.payload?.platform ?? '',
             ]}
           />
           <Legend />

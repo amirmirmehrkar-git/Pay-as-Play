@@ -14,7 +14,7 @@ export default function WelcomeScreen({ onGetStarted }: WelcomeScreenProps) {
             Welcome to Pay as Play!
           </h1>
           <p className="text-lg text-zinc-600 dark:text-zinc-400">
-            You're all set to start watching and paying only for what you consume.
+            You&apos;re all set to start watching and paying only for what you consume.
           </p>
         </div>
 

@@ -15,7 +15,7 @@ interface WithdrawalDetails {
   completedAt?: string | null;
   estimatedProcessingTime: string;
   errorMessage?: string | null;
-  details: any;
+  details: { iban?: string; bic?: string; accountHolderName?: string; bankName?: string; paypalEmail?: string; walletAddress?: string };
   transactionId?: string;
 }
 
@@ -44,8 +44,8 @@ export default function WithdrawalDetailsPage() {
       } else {
         throw new Error(result.error?.message || 'Withdrawal not found');
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to load withdrawal details');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to load withdrawal details');
     } finally {
       setLoading(false);
     }

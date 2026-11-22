@@ -1,14 +1,14 @@
 /**
- * Play and Pay SDK Integration
- * Frontend wrapper for the SDK
+ * Lazy Play-and-Pay SDK adapter.
+ *
+ * The installed JavaScript SDK does not yet expose a coherent public TypeScript
+ * contract. Validate exports and methods at runtime instead of relying on
+ * unchecked assertions. A typed SDK migration remains a separate release task.
  */
+let sdk: unknown = null;
 
-// Import SDK modules
-// Using dynamic import for ES modules compatibility
-let sdk: any = null;
-
-async function loadSDK() {
-  if (!sdk) {
+async function loadSDK(): Promise<unknown> {
+  if (sdk === null) {
     sdk = await import('../playandpay-sdk/src/index.js');
   }
   return sdk;
@@ -25,25 +25,34 @@ export interface SDKConfig {
   appId?: number;
 }
 
-/**
- * Initialize SDK
- */
-export async function initSDK(config?: SDKConfig) {
+function moduleExport(target: unknown, name: string) {
+  if (target === null || (typeof target !== 'object' && typeof target !== 'function')) {
+    throw new TypeError('SDK module is unavailable');
+  }
+  const value = Reflect.get(target, name);
+  if (value === undefined || value === null) {
+    throw new TypeError(`SDK export ${name} is unavailable`);
+  }
+  return value;
+}
+
+export async function initSDK(config?: SDKConfig): Promise<boolean> {
   try {
     const sdkModule = await loadSDK();
-    const initConfig: any = {
-      network: config?.network || 'testnet',
+    const init: unknown = moduleExport(sdkModule, 'init');
+    if (typeof init !== 'function') throw new TypeError('SDK init is not a function');
+
+    const initConfig: SDKConfig = {
+      network: config?.network ?? 'testnet',
     };
-    
     if (config?.apiUrl) initConfig.apiUrl = config.apiUrl;
     if (config?.apiKey) initConfig.apiKey = config.apiKey;
     if (config?.providerAddr) initConfig.providerAddr = config.providerAddr;
     if (config?.platformAddr) initConfig.platformAddr = config.platformAddr;
-    if (config?.platformFeePct) initConfig.platformFeePct = config.platformFeePct;
-    if (config?.asaId) initConfig.asaId = config.asaId;
-    if (config?.appId) initConfig.appId = config.appId;
-    
-    await sdkModule.init(initConfig);
+    if (config?.platformFeePct !== undefined) initConfig.platformFeePct = config.platformFeePct;
+    if (config?.asaId !== undefined) initConfig.asaId = config.asaId;
+    if (config?.appId !== undefined) initConfig.appId = config.appId;
+    await Reflect.apply(init, sdkModule, [initConfig]);
     return true;
   } catch (error) {
     console.error('SDK initialization error:', error);
@@ -51,65 +60,40 @@ export async function initSDK(config?: SDKConfig) {
   }
 }
 
-/**
- * Get SDK modules (lazy loaded)
- */
+// Reflect.get retains the legacy JavaScript module's dynamic callable surface.
+// Runtime validation occurs in the lazy proxy immediately before each call.
 export async function getWallet() {
-  const sdkModule = await loadSDK();
-  return sdkModule.wallet;
+  return moduleExport(await loadSDK(), 'wallet');
 }
-
 export async function getBilling() {
-  const sdkModule = await loadSDK();
-  return sdkModule.billing;
+  return moduleExport(await loadSDK(), 'billing');
 }
-
 export async function getAnalytics() {
-  const sdkModule = await loadSDK();
-  return sdkModule.analytics;
+  return moduleExport(await loadSDK(), 'analytics');
 }
-
 export async function getWalletConnect() {
-  const sdkModule = await loadSDK();
-  return sdkModule.walletConnect;
+  return moduleExport(await loadSDK(), 'walletConnect');
 }
 
-// For backward compatibility, export as getters
-export const wallet = new Proxy({} as any, {
-  get: (target, prop) => {
-    return async (...args: any[]) => {
-      const w = await getWallet();
-      return (w as any)[prop](...args);
-    };
-  },
-});
+function lazyProxy(loader: () => Promise<unknown>) {
+  return new Proxy({} as Record<string, (...args: unknown[]) => Promise<unknown>>, {
+    get: (_target, prop) => async (...args: unknown[]) => {
+      const sdkService = await loader();
+      if (sdkService === null || (typeof sdkService !== 'object' && typeof sdkService !== 'function')) {
+        throw new TypeError('SDK service is unavailable');
+      }
+      const method: unknown = Reflect.get(sdkService, prop);
+      if (typeof method !== 'function') {
+        throw new TypeError(`SDK method ${String(prop)} is unavailable`);
+      }
+      return Reflect.apply(method, sdkService, args);
+    },
+  });
+}
 
-export const billing = new Proxy({} as any, {
-  get: (target, prop) => {
-    return async (...args: any[]) => {
-      const b = await getBilling();
-      return (b as any)[prop](...args);
-    };
-  },
-});
-
-export const analytics = new Proxy({} as any, {
-  get: (target, prop) => {
-    return async (...args: any[]) => {
-      const a = await getAnalytics();
-      return (a as any)[prop](...args);
-    };
-  },
-});
-
-export const walletConnect = new Proxy({} as any, {
-  get: (target, prop) => {
-    return async (...args: any[]) => {
-      const wc = await getWalletConnect();
-      return (wc as any)[prop](...args);
-    };
-  },
-});
+export const wallet = lazyProxy(getWallet);
+export const billing = lazyProxy(getBilling);
+export const analytics = lazyProxy(getAnalytics);
+export const walletConnect = lazyProxy(getWalletConnect);
 
 export default loadSDK;
-

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Mock withdrawal details (in a real app, this would come from a database)
-const mockWithdrawals: Record<string, any> = {
+const mockWithdrawals: Record<string, Record<string, unknown>> = {
   'wd_123': {
     withdrawalId: 'wd_123',
     amount: 100,
@@ -51,10 +51,10 @@ const mockWithdrawals: Record<string, any> = {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { withdrawalId: string } }
+  { params }: { params: Promise<{ withdrawalId: string }> }
 ) {
   try {
-    const { withdrawalId } = params;
+    const { withdrawalId } = await params;
 
     // Simulate delay
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -69,10 +69,10 @@ export async function GET(
         { status: 404 }
       );
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching withdrawal details:', error);
     return NextResponse.json(
-      { success: false, error: { code: 'INTERNAL_SERVER_ERROR', message: error.message || 'Internal server error' } },
+      { success: false, error: { code: 'INTERNAL_SERVER_ERROR', message: 'Internal server error' } },
       { status: 500 }
     );
   }

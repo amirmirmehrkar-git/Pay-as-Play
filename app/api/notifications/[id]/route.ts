@@ -16,9 +16,9 @@ export async function DELETE(
         deleted: true,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, error: { message: error.message || 'Failed to delete notification' } },
+      { success: false, error: { message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to delete notification' } },
       { status: 500 }
     );
   }

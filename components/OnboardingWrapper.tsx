@@ -9,6 +9,7 @@ export default function OnboardingWrapper({ children }: { children: React.ReactN
   const pathname = usePathname();
 
   useEffect(() => {
+    let cancelled = false;
     // Don't show onboarding on certain pages
     const skipPages = ['/player', '/summary', '/test'];
     if (skipPages.some((page) => pathname.startsWith(page))) {
@@ -19,12 +20,13 @@ export default function OnboardingWrapper({ children }: { children: React.ReactN
     try {
       const hasCompleted = localStorage.getItem('onboarding_completed');
       if (!hasCompleted) {
-        setShowOnboarding(true);
+        queueMicrotask(() => { if (!cancelled) setShowOnboarding(true); });
       }
     } catch (err) {
       // localStorage may not be available (e.g., private mode)
       console.error('localStorage access error:', err);
     }
+    return () => { cancelled = true; };
   }, [pathname]);
 
   if (showOnboarding) {

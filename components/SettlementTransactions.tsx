@@ -95,7 +95,7 @@ export default function SettlementTransactions({
     }
   };
 
-  const SortIcon = ({ field }: { field: 'date' | 'amount' | 'duration' }) => {
+  const renderSortIcon = (field: 'date' | 'amount' | 'duration') => {
     if (sortBy !== field) return <span className="text-zinc-400">↕️</span>;
     return sortDirection === 'asc' ? <span>↑</span> : <span>↓</span>;
   };
@@ -143,7 +143,7 @@ export default function SettlementTransactions({
                 >
                   <div className="flex items-center gap-2">
                     Date & Time
-                    <SortIcon field="date" />
+                    {renderSortIcon('date')}
                   </div>
                 </th>
                 <th className="px-4 py-3 text-left text-xs font-semibold text-zinc-600 dark:text-zinc-400">
@@ -157,7 +157,7 @@ export default function SettlementTransactions({
                 >
                   <div className="flex items-center gap-2">
                     Duration
-                    <SortIcon field="duration" />
+                    {renderSortIcon('duration')}
                   </div>
                 </th>
                 <th
@@ -166,7 +166,7 @@ export default function SettlementTransactions({
                 >
                   <div className="flex items-center justify-end gap-2">
                     Amount
-                    <SortIcon field="amount" />
+                    {renderSortIcon('amount')}
                   </div>
                 </th>
                 <th className="px-4 py-3 text-right text-xs font-semibold text-zinc-600 dark:text-zinc-400">Fee</th>

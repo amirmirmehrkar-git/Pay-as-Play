@@ -16,7 +16,7 @@ export interface WithdrawalHistoryItem {
   completedAt?: string | null;
   estimatedProcessingTime: string;
   errorMessage?: string | null;
-  details?: any;
+  details?: Record<string, unknown>;
 }
 
 interface WithdrawalHistoryProps {

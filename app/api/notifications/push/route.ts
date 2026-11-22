@@ -44,14 +44,14 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 },
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error sending push notification:', error);
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'PUSH_ERROR',
-          message: error?.message || 'Failed to send push notification',
+          message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to send push notification',
         },
       },
       { status: 500 },

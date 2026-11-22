@@ -7,15 +7,13 @@ export default function PartnerDashboardPage() {
   const [activeUsers, setActiveUsers] = useState(1248);
   const [totalRevenue, setTotalRevenue] = useState(2340);
   const [avgSessionTime, setAvgSessionTime] = useState(11.3);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Mock data - در production از API می‌آید
   useEffect(() => {
     // Simulate loading data
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    const timeout = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
@@ -27,7 +25,7 @@ export default function PartnerDashboardPage() {
             Partner Dashboard
           </h1>
           <p className="text-zinc-600 dark:text-zinc-400">
-            Welcome, Laura's Streaming Platform
+            Welcome, Laura&apos;s Streaming Platform
           </p>
           <Link
             href="/"

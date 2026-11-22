@@ -203,7 +203,11 @@ async function makeRequest<T>(
     if (response.status === 401 && attempt === 0) {
       const newToken = await refreshAuthToken();
       if (newToken) {
-        // Retry with new token
+        // Never replay a mutation (payment, withdrawal, top-up) automatically.
+        // The caller must explicitly initiate a fresh, idempotency-protected request.
+        if (method !== 'GET') {
+          throw createApiError('Authentication refreshed; retry this action manually', 'AUTH_RETRY_REQUIRED', 401);
+        }
         return makeRequest<T>(url, config, attempt + 1);
       } else {
         // Refresh failed - clear tokens and redirect to login
@@ -228,20 +232,23 @@ async function makeRequest<T>(
   } catch (error) {
     clearTimeout(timeoutId);
 
-    // Handle network errors
+    // Retries are restricted to idempotent GET requests and transient failures.
+    // Financial mutations must never be replayed without server-side idempotency.
+    const status = error instanceof Error && 'status' in error && typeof error.status === 'number'
+      ? error.status
+      : undefined;
+    const transient = error instanceof TypeError
+      || (error instanceof Error && error.name === 'AbortError')
+      || status === 408 || status === 429 || (typeof status === 'number' && status >= 500);
+    if (method === 'GET' && attempt < retries && transient) {
+      await new Promise((resolve) => setTimeout(resolve, 1000 * (2 ** attempt)));
+      return makeRequest<T>(url, config, attempt + 1);
+    }
     if (error instanceof Error && error.name === 'AbortError') {
       throw createApiError('Request timeout', 'TIMEOUT_ERROR', 408);
     }
-
-    if (error instanceof Error && error.message.includes('fetch')) {
+    if (error instanceof TypeError) {
       throw createApiError('Network error', 'NETWORK_ERROR', 0, error.message);
-    }
-
-    // Retry logic for certain errors
-    if (attempt < retries && error instanceof Error && !error.code?.startsWith('AUTH_')) {
-      // Wait before retry (exponential backoff)
-      await new Promise((resolve) => setTimeout(resolve, Math.pow(2, attempt) * 1000));
-      return makeRequest<T>(url, config, attempt + 1);
     }
 
     // Re-throw if it's already an ApiError

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 interface ContentTypeDistributionDataPoint {
+  [key: string]: string | number;
   contentType: string;
   amount: number;
   percentage: number;
@@ -31,8 +32,8 @@ export default function ContentTypeDistributionChart() {
       } else {
         throw new Error(result.error?.message || 'Failed to load content type distribution data');
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to load data');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to load data');
     } finally {
       setLoading(false);
     }
@@ -82,7 +83,8 @@ export default function ContentTypeDistributionChart() {
           cx="50%"
           cy="50%"
           labelLine={false}
-          label={({ contentType, percentage }) => `${contentType}: ${percentage}%`}
+          nameKey="contentType"
+          label={({ name, percent }) => `${name ?? 'Content'}: ${Math.round((percent ?? 0) * 100)}%`}
           outerRadius={120}
           fill="#8884d8"
           dataKey="amount"
@@ -97,12 +99,12 @@ export default function ContentTypeDistributionChart() {
             border: '1px solid #e4e4e7',
             borderRadius: '8px',
           }}
-          formatter={(value: number, name: string, props: any) => [
+          formatter={(value: number, name: string, props: { payload?: { percentage?: number; contentType?: string } }) => [
             <>
               <div>Amount: {formatCurrency(value)}</div>
-              <div>Percentage: {props.payload.percentage}%</div>
+              <div>Percentage: {props.payload?.percentage ?? 0}%</div>
             </>,
-            props.payload.contentType,
+            props.payload?.contentType ?? '',
           ]}
         />
         <Legend />

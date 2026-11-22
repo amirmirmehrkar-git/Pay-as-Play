@@ -26,8 +26,9 @@ class Logger {
   private isDevelopment: boolean;
 
   constructor() {
-    this.minLevel =
-      (process.env.LOG_LEVEL as LogLevel) || LogLevel.INFO;
+    const requestedLevel = (process.env.LOG_LEVEL || 'INFO').toUpperCase();
+    const parsedLevel = LogLevel[requestedLevel as keyof typeof LogLevel];
+    this.minLevel = typeof parsedLevel === 'number' ? parsedLevel : LogLevel.INFO;
     this.isDevelopment = process.env.NODE_ENV === 'development';
   }
 

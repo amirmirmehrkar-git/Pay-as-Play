@@ -122,8 +122,8 @@ export default function NotificationSettingsPage() {
       if (!res.ok) throw new Error('Failed to load settings');
       const result = await res.json();
       setSettings(normalizeSettings(result.data));
-    } catch (err: any) {
-      setError(err.message || 'Failed to load settings');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to load settings');
     } finally {
       setLoading(false);
     }
@@ -147,6 +147,13 @@ export default function NotificationSettingsPage() {
       window.dispatchEvent(new Event('notifications:settings-updated'));
       window.dispatchEvent(new Event('lowBalance:settings-updated'));
       refreshSettings();
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to save settings');
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const updateTypePreference = (
     key: NotificationTypeKey,
     updater: (prev: NotificationTypePreferences) => NotificationTypePreferences
@@ -183,12 +190,6 @@ export default function NotificationSettingsPage() {
         [channel]: value,
       },
     }));
-  };
-    } catch (err: any) {
-      setError(err.message || 'Failed to save settings');
-    } finally {
-      setSaving(false);
-    }
   };
 
   if (loading) {
@@ -319,7 +320,7 @@ export default function NotificationSettingsPage() {
                       <label key={key} className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm">
                         <input
                           type="checkbox"
-                          checked={(settings as any)[key]}
+                          checked={Boolean(settings[key as keyof NotificationSettings])}
                           onChange={(e) => setSettings({ ...settings, [key]: e.target.checked } as NotificationSettings)}
                         />
                         {label}

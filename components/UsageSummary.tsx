@@ -21,21 +21,8 @@ export default function UsageSummary({
   const [balance, setBalance] = useState<string>('0');
   const [walletBalance, setWalletBalance] = useState<number>(0);
   const [loading, setLoading] = useState(false);
-  const [sessionDetails, setSessionDetails] = useState<any>(null);
+  const [sessionDetails, setSessionDetails] = useState<{ startTime: string; endTime?: string | null; tickCount?: number } | null>(null);
 
-  useEffect(() => {
-    console.log('UsageSummary - Received props:', { 
-      sessionId, 
-      totalCharge, 
-      duration, 
-      contentTitle,
-      totalChargeType: typeof totalCharge,
-      durationType: typeof duration
-    });
-    loadSessionDetails();
-    updateBalance();
-    loadWalletBalance();
-  }, [sessionId, totalCharge, duration]);
 
   async function loadSessionDetails() {
     try {
@@ -74,6 +61,26 @@ export default function UsageSummary({
       console.error('Error loading wallet balance:', err);
     }
   }
+
+  useEffect(() => {
+    console.log('UsageSummary - Received props:', { 
+      sessionId, 
+      totalCharge, 
+      duration, 
+      contentTitle,
+      totalChargeType: typeof totalCharge,
+      durationType: typeof duration
+    });
+    let cancelled = false;
+    queueMicrotask(() => {
+      if (!cancelled) {
+        void loadSessionDetails();
+        void updateBalance();
+        void loadWalletBalance();
+      }
+    });
+    return () => { cancelled = true; };
+  }, [sessionId, totalCharge, duration]);
 
   function formatTime(seconds: number): string {
     const mins = Math.floor(seconds / 60);

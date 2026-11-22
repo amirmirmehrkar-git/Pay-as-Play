@@ -94,7 +94,7 @@ export async function exportAnalyticsPDF(options: PDFExportOptions) {
     doc.text('Cost', 166, cursorY);
     cursorY += 6;
 
-    result.data.transactions.slice(0, 20).forEach((tx: any) => {
+    result.data.transactions.slice(0, 20).forEach((tx: { date: string; platform: string; title: string; category: string; cost: number }) => {
       if (cursorY > 280) {
         doc.addPage();
         cursorY = 20;

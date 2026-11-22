@@ -17,7 +17,7 @@ const localStorageMock = {
   removeItem: vi.fn(),
   clear: vi.fn(),
 };
-global.localStorage = localStorageMock as any;
+global.localStorage = localStorageMock as unknown as Storage;
 
 // Mock child components
 vi.mock('../SplashScreen', () => ({
@@ -29,7 +29,7 @@ vi.mock('../SplashScreen', () => ({
 }));
 
 vi.mock('../EmailSignIn', () => ({
-  default: ({ onSignIn, onSwitchToSignUp, onForgotPassword }: any) => (
+  default: ({ onSignIn, onSwitchToSignUp, onForgotPassword }: { onSignIn: (input: { email: string; password: string }) => void; onSwitchToSignUp: () => void; onForgotPassword: () => void }) => (
     <div data-testid="email-signin">
       <button onClick={() => onSignIn({ email: 'test@example.com', password: 'password' })}>Sign In</button>
       <button onClick={onSwitchToSignUp}>Switch to Sign Up</button>
@@ -39,7 +39,7 @@ vi.mock('../EmailSignIn', () => ({
 }));
 
 vi.mock('../WalletConnect', () => ({
-  default: ({ onConnect, onDisconnect }: any) => (
+  default: ({ onConnect, onDisconnect }: { onConnect: (address: string) => void; onDisconnect: () => void }) => (
     <div data-testid="wallet-connect">
       <button onClick={() => onConnect('ALGO123...')}>Connect Wallet</button>
       <button onClick={onDisconnect}>Disconnect</button>

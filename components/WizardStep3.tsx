@@ -204,7 +204,7 @@ export default function WizardStep3() {
               htmlFor="saved-confirmation"
               className="text-sm font-medium text-zinc-700 dark:text-zinc-300"
             >
-              I've saved my API key securely
+              I&apos;ve saved my API key securely
             </label>
           </div>
 

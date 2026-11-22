@@ -31,8 +31,8 @@ export default function IntegrationTest() {
         try {
           const wc = await getWalletConnect();
           return { pass: true, message: 'SDK initialized successfully' };
-        } catch (err: any) {
-          return { pass: false, message: err.message };
+        } catch (err: unknown) {
+          return { pass: false, message: (err instanceof Error ? err.message : 'Unexpected error') };
         }
       },
     },
@@ -46,8 +46,8 @@ export default function IntegrationTest() {
             pass: true,
             message: connected ? 'Wallet connected' : 'Wallet not connected (expected)',
           };
-        } catch (err: any) {
-          return { pass: false, message: err.message };
+        } catch (err: unknown) {
+          return { pass: false, message: (err instanceof Error ? err.message : 'Unexpected error') };
         }
       },
     },
@@ -63,8 +63,8 @@ export default function IntegrationTest() {
           const wallet = await getWallet();
           const balance = await wallet.getBalance(address, appConfig.asaId);
           return { pass: true, message: `Balance retrieved: ${JSON.stringify(balance)}` };
-        } catch (err: any) {
-          return { pass: false, message: err.message };
+        } catch (err: unknown) {
+          return { pass: false, message: (err instanceof Error ? err.message : 'Unexpected error') };
         }
       },
     },
@@ -74,8 +74,8 @@ export default function IntegrationTest() {
         try {
           const billing = await getBilling();
           return { pass: true, message: 'Billing module accessible' };
-        } catch (err: any) {
-          return { pass: false, message: err.message };
+        } catch (err: unknown) {
+          return { pass: false, message: (err instanceof Error ? err.message : 'Unexpected error') };
         }
       },
     },
@@ -85,8 +85,8 @@ export default function IntegrationTest() {
         try {
           const analytics = await getAnalytics();
           return { pass: true, message: 'Analytics module accessible' };
-        } catch (err: any) {
-          return { pass: false, message: err.message };
+        } catch (err: unknown) {
+          return { pass: false, message: (err instanceof Error ? err.message : 'Unexpected error') };
         }
       },
     },
@@ -101,8 +101,8 @@ export default function IntegrationTest() {
             pass: value === 'test_value',
             message: value === 'test_value' ? 'LocalStorage accessible' : 'LocalStorage failed',
           };
-        } catch (err: any) {
-          return { pass: false, message: err.message };
+        } catch (err: unknown) {
+          return { pass: false, message: (err instanceof Error ? err.message : 'Unexpected error') };
         }
       },
     },
@@ -115,8 +115,8 @@ export default function IntegrationTest() {
             pass: hasConfig,
             message: hasConfig ? 'Config accessible' : 'Config missing',
           };
-        } catch (err: any) {
-          return { pass: false, message: err.message };
+        } catch (err: unknown) {
+          return { pass: false, message: (err instanceof Error ? err.message : 'Unexpected error') };
         }
       },
     },
@@ -164,7 +164,7 @@ export default function IntegrationTest() {
       <div className="space-y-2">
         {tests.length === 0 ? (
           <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            Click "Run Tests" to start integration testing
+            Click &quot;Run Tests&quot; to start integration testing
           </p>
         ) : (
           tests.map((test, index) => (

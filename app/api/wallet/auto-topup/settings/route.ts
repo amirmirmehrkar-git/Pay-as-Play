@@ -61,14 +61,14 @@ export async function PUT(request: NextRequest) {
       },
       { status: 200 },
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error updating auto-top-up settings:', error);
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'AUTO_TOPUP_SETTINGS_ERROR',
-          message: error?.message || 'Failed to update settings',
+          message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to update settings',
         },
       },
       { status: 500 },

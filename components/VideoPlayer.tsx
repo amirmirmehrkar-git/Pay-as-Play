@@ -75,7 +75,7 @@ export default function VideoPlayer({
             const address = wc.getConnectedAddress();
             if (address) {
               const balance = await wallet.getBalance(address);
-              setCryptoBalance(balance || 0);
+              setCryptoBalance(typeof balance === 'number' && Number.isFinite(balance) ? balance : 0);
             }
           } catch (err) {
             console.error('Error loading crypto balance:', err);
@@ -250,9 +250,9 @@ export default function VideoPlayer({
                 clearInterval(walletTickIntervalRef.current);
               }
             }
-          } catch (err: any) {
+          } catch (err: unknown) {
             console.error('Wallet tick error:', err);
-            setError(err.message || 'Billing error');
+            setError((err instanceof Error ? err.message : 'Unexpected error') || 'Billing error');
             setIsPlaying(false);
             if (walletTickIntervalRef.current) {
               clearInterval(walletTickIntervalRef.current);
@@ -291,7 +291,7 @@ export default function VideoPlayer({
           contentId,
           userId: userAddress,
           ratePerMinute: pricePerMinute,
-        })) as any;
+        })) as { sessionId: string };
 
         setSessionId(session.sessionId);
 
@@ -306,14 +306,14 @@ export default function VideoPlayer({
 
             const minutes = Math.floor(duration / 60) + 1;
             setTotalCharge(minutes * pricePerMinute);
-          } catch (err: any) {
+          } catch (err: unknown) {
             console.error('Tick error:', err);
-            setError(err.message || 'Billing error');
+            setError((err instanceof Error ? err.message : 'Unexpected error') || 'Billing error');
           }
         }, 60000);
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to start session');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to start session');
       setIsPlaying(false);
     }
   }
@@ -371,7 +371,7 @@ export default function VideoPlayer({
         
         // Pass final values to summary
         onStop?.(sessionId, finalCharge, finalDuration);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('Error in handleStop:', err);
         // Still show summary even if there's an error
         onStop?.(sessionId || 'no-session', finalCharge, finalDuration);

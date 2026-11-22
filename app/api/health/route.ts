@@ -16,11 +16,11 @@ export async function GET() {
     };
 
     return NextResponse.json(health, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         status: 'unhealthy',
-        error: error?.message || 'Health check failed',
+        error: (error instanceof Error ? error.message : 'Internal server error') || 'Health check failed',
         timestamp: new Date().toISOString(),
       },
       { status: 500 },

@@ -44,8 +44,8 @@ export default function ExportButton({ defaultStartDate, defaultEndDate }: Expor
         });
         setStatusMessage('PDF exported successfully.');
       }
-    } catch (err: any) {
-      setError(err.message || 'Export failed.');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Export failed.');
     } finally {
       setIsExporting(false);
     }

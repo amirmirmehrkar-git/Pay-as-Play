@@ -104,9 +104,9 @@ export async function GET(request: NextRequest) {
         total: filteredNotifications.length,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { success: false, error: { message: error.message || 'Failed to fetch notifications' } },
+      { success: false, error: { message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to fetch notifications' } },
       { status: 500 }
     );
   }

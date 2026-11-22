@@ -30,9 +30,8 @@ export async function callBackendAPI<T>(
   }
 
   // Call real backend
-  const response = await apiClient.request<T>({
+  const response = await apiClient.request<T>(getApiUrl(endpoint), {
     method: options.method || 'GET',
-    url: getApiUrl(endpoint),
     body: options.body,
     params: options.params,
   });
@@ -71,13 +70,13 @@ export async function proxyToBackend(
       success: true,
       data,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return Response.json(
       {
         success: false,
         error: {
           code: 'API_ERROR',
-          message: error?.message || 'Failed to call backend API',
+          message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to call backend API',
         },
       },
       { status: 500 },

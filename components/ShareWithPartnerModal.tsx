@@ -67,8 +67,8 @@ export default function ShareWithPartnerModal({
       }
       onShared?.();
       onClose();
-    } catch (err: any) {
-      setError(err.message || 'Failed to share data');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to share data');
     } finally {
       setLoading(false);
     }

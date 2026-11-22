@@ -32,18 +32,8 @@ export async function getTransactionsPaginated(
       skip,
       take: limit,
       orderBy: { createdAt: 'desc' },
-      include: {
-        session: {
-          select: {
-            id: true,
-            platform: {
-              select: {
-                name: true,
-              },
-            },
-          },
-        },
-      },
+      // Transactions are related to wallets, not sessions, in schema.prisma.
+      // Do not request nonexistent relations from Prisma.
     }),
     prisma.transaction.count({
       where: { userId },
@@ -97,12 +87,12 @@ export async function getNotificationsPaginated(
 /**
  * Batch operations helper
  */
-export async function batchOperation<T>(
+export async function batchOperation<T, R>(
   items: T[],
-  operation: (item: T) => Promise<any>,
+  operation: (item: T) => Promise<R>,
   batchSize: number = 10,
-): Promise<any[]> {
-  const results: any[] = [];
+): Promise<R[]> {
+  const results: R[] = [];
   
   for (let i = 0; i < items.length; i += batchSize) {
     const batch = items.slice(i, i + batchSize);

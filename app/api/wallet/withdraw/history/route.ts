@@ -14,7 +14,7 @@ const generateMockHistory = () => {
     const method = methods[Math.floor(Math.random() * methods.length)];
     const status = statuses[Math.floor(Math.random() * statuses.length)];
 
-    let details: any = {};
+    let details: Record<string, string> = {};
     if (method === 'bank_transfer') {
       details = {
         iban: `DE89****${Math.floor(Math.random() * 10000)}`,
@@ -77,10 +77,10 @@ export async function GET(request: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error fetching withdrawal history:', error);
     return NextResponse.json(
-      { success: false, error: { code: 'INTERNAL_SERVER_ERROR', message: error.message || 'Internal server error' } },
+      { success: false, error: { code: 'INTERNAL_SERVER_ERROR', message: (error instanceof Error ? error.message : 'Internal server error') || 'Internal server error' } },
       { status: 500 }
     );
   }

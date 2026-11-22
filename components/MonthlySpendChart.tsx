@@ -35,8 +35,8 @@ export default function MonthlySpendChart({ months: initialMonths = 6 }: Monthly
       } else {
         throw new Error(result.error?.message || 'Failed to load monthly spend data');
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to load data');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to load data');
     } finally {
       setLoading(false);
     }
@@ -131,13 +131,13 @@ export default function MonthlySpendChart({ months: initialMonths = 6 }: Monthly
               border: '1px solid #e4e4e7',
               borderRadius: '8px',
             }}
-            formatter={(value: number, name: string, props: any) => {
+            formatter={(value: number, name: string, props: { payload?: { percentage?: number; sessionCount?: number; averageCostPerSession?: number } }) => {
               if (name === 'spend') {
                 return [
                   <>
                     <div>Total Amount: {formatCurrency(value)}</div>
-                    <div>Sessions: {props.payload.sessionCount}</div>
-                    <div>Avg per Session: {formatCurrency(props.payload.averageCostPerSession)}</div>
+                    <div>Sessions: {props.payload?.sessionCount ?? 0}</div>
+                    <div>Avg per Session: {formatCurrency(props.payload?.averageCostPerSession ?? 0)}</div>
                   </>,
                   'Details',
                 ];

@@ -71,14 +71,14 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 },
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error sending low balance email:', error);
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'EMAIL_ERROR',
-          message: error?.message || 'Failed to send email notification',
+          message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to send email notification',
         },
       },
       { status: 500 },

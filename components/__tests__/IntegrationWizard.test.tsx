@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import IntegrationWizard from '../IntegrationWizard';
 
@@ -31,7 +31,7 @@ vi.mock('@/stores/wizardStore', () => ({
 
 // Mock child components
 vi.mock('../WizardProgressIndicator', () => ({
-  default: ({ currentStep, totalSteps }: any) => (
+  default: ({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) => (
     <div data-testid="progress-indicator">
       Step {currentStep} of {totalSteps}
     </div>
@@ -39,7 +39,7 @@ vi.mock('../WizardProgressIndicator', () => ({
 }));
 
 vi.mock('../WizardStep1', () => ({
-  default: ({ onNext }: any) => (
+  default: ({ onNext }: { onNext: () => void }) => (
     <div data-testid="wizard-step-1">
       <button onClick={onNext}>Next</button>
     </div>
@@ -47,7 +47,7 @@ vi.mock('../WizardStep1', () => ({
 }));
 
 vi.mock('../WizardStep2', () => ({
-  default: ({ onNext, onBack }: any) => (
+  default: ({ onNext, onBack }: { onNext: () => void; onBack: () => void }) => (
     <div data-testid="wizard-step-2">
       <button onClick={onNext}>Next</button>
       <button onClick={onBack}>Back</button>
@@ -56,7 +56,7 @@ vi.mock('../WizardStep2', () => ({
 }));
 
 vi.mock('../WizardStep3', () => ({
-  default: ({ onNext, onBack }: any) => (
+  default: ({ onNext, onBack }: { onNext: () => void; onBack: () => void }) => (
     <div data-testid="wizard-step-3">
       <button onClick={onNext}>Next</button>
       <button onClick={onBack}>Back</button>
@@ -65,7 +65,7 @@ vi.mock('../WizardStep3', () => ({
 }));
 
 vi.mock('../WizardStep4', () => ({
-  default: ({ onBack }: any) => (
+  default: ({ onBack }: { onBack: () => void }) => (
     <div data-testid="wizard-step-4">
       <button onClick={onBack}>Back</button>
     </div>
@@ -95,7 +95,7 @@ describe('IntegrationWizard', () => {
   });
 
   it('attempts to create platform when moving from step 1', () => {
-    (global.fetch as any).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => ({
         success: true,

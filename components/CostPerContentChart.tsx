@@ -47,7 +47,7 @@ export default function CostPerContentChart({
       const response = await fetch(`/api/analytics/cost-per-content?${params}`);
       const result = await response.json();
       if (result.success) {
-        let sortedData = [...result.data];
+        const sortedData = [...result.data];
         if (sortBy === 'amount') {
           sortedData.sort((a, b) => b.totalAmount - a.totalAmount);
         } else {
@@ -57,8 +57,8 @@ export default function CostPerContentChart({
       } else {
         throw new Error(result.error?.message || 'Failed to load cost per content data');
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to load data');
+    } catch (err: unknown) {
+      setError((err instanceof Error ? err.message : 'Unexpected error') || 'Failed to load data');
     } finally {
       setLoading(false);
     }
@@ -66,7 +66,7 @@ export default function CostPerContentChart({
 
   useEffect(() => {
     if (data.length > 0) {
-      let sortedData = [...data];
+      const sortedData = [...data];
       if (sortBy === 'amount') {
         sortedData.sort((a, b) => b.totalAmount - a.totalAmount);
       } else {
@@ -195,13 +195,13 @@ export default function CostPerContentChart({
               border: '1px solid #e4e4e7',
               borderRadius: '8px',
             }}
-            formatter={(value: number, name: string, props: any) => {
+            formatter={(value: number, name: string, props: { payload?: { percentage?: number; timeWatched?: number; costPerMinute?: number } }) => {
               if (name === 'amount') {
                 return [
                   <>
                     <div>Amount: {formatCurrency(value)}</div>
-                    <div>Time Watched: {formatMinutes(props.payload.timeWatched)}</div>
-                    <div>Cost per Minute: {formatCurrency(props.payload.costPerMinute)}</div>
+                    <div>Time Watched: {formatMinutes(props.payload?.timeWatched ?? 0)}</div>
+                    <div>Cost per Minute: {formatCurrency(props.payload?.costPerMinute ?? 0)}</div>
                   </>,
                   'Details',
                 ];

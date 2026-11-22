@@ -10,6 +10,14 @@ interface DeductRequest {
 let mockBalance = 8.75; // EUR
 
 export async function POST(request: NextRequest) {
+  // This endpoint is a demonstration implementation, not a production service.
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json(
+      { success: false, error: { code: 'DEMO_DISABLED', message: 'Demo endpoint is unavailable in production' } },
+      { status: 503, headers: { 'Cache-Control': 'no-store' } },
+    );
+  }
+
   try {
     const body: DeductRequest = await request.json();
     const { amount, currency = 'EUR', sessionId, description } = body;
@@ -63,14 +71,14 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 },
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error deducting from wallet:', error);
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'DEDUCT_ERROR',
-          message: error?.message || 'Failed to deduct from wallet',
+          message: (error instanceof Error ? error.message : 'Internal server error') || 'Failed to deduct from wallet',
         },
       },
       { status: 500 },
@@ -80,6 +88,14 @@ export async function POST(request: NextRequest) {
 
 // GET endpoint to check current balance
 export async function GET() {
+  // This endpoint is a demonstration implementation, not a production service.
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json(
+      { success: false, error: { code: 'DEMO_DISABLED', message: 'Demo endpoint is unavailable in production' } },
+      { status: 503, headers: { 'Cache-Control': 'no-store' } },
+    );
+  }
+
   return NextResponse.json(
     {
       success: true,
