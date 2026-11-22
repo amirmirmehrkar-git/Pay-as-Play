@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getBilling, getWalletConnect } from '@/lib/sdk';
 
+type ActiveSession = { status: string; startTime: string; contentTitle?: string; contentId: string };
+
 export default function CurrentlyWatching() {
-  const [activeSession, setActiveSession] = useState<any>(null);
+  const [activeSession, setActiveSession] = useState<ActiveSession | null>(null);
   const [duration, setDuration] = useState(0);
   const router = useRouter();
 
@@ -31,8 +33,8 @@ export default function CurrentlyWatching() {
       if (!address) return;
 
       const billing = await getBilling();
-      const sessions = await billing.getSessionHistory({ userId: address });
-      const active = sessions.find((s: any) => s.status === 'active');
+      const sessions = await billing.getSessionHistory({ userId: address }) as ActiveSession[];
+      const active = sessions.find((s) => s.status === 'active');
 
       if (active) {
         setActiveSession(active);

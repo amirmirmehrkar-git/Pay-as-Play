@@ -21,7 +21,7 @@ export default function UsageSummary({
   const [balance, setBalance] = useState<string>('0');
   const [walletBalance, setWalletBalance] = useState<number>(0);
   const [loading, setLoading] = useState(false);
-  const [sessionDetails, setSessionDetails] = useState<any>(null);
+  const [sessionDetails, setSessionDetails] = useState<{ startTime: string; endTime?: string | null; tickCount?: number } | null>(null);
 
   useEffect(() => {
     console.log('UsageSummary - Received props:', { 
