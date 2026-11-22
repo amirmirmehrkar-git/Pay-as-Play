@@ -30,9 +30,8 @@ export async function callBackendAPI<T>(
   }
 
   // Call real backend
-  const response = await apiClient.request<T>({
+  const response = await apiClient.request<T>(getApiUrl(endpoint), {
     method: options.method || 'GET',
-    url: getApiUrl(endpoint),
     body: options.body,
     params: options.params,
   });
