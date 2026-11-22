@@ -15,7 +15,7 @@ interface WithdrawalDetails {
   completedAt?: string | null;
   estimatedProcessingTime: string;
   errorMessage?: string | null;
-  details: any;
+  details: { iban?: string; bic?: string; accountHolderName?: string; bankName?: string; paypalEmail?: string; walletAddress?: string };
   transactionId?: string;
 }
 

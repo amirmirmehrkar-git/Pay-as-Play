@@ -28,6 +28,8 @@ interface CryptoDetails {
   saveForFuture: boolean;
 }
 
+type PendingWithdrawal = { amount: number; method: WithdrawalMethod | null; details: Record<string, string>; saveMethod: boolean; fee: number; netAmount: number };
+
 const MIN_WITHDRAWAL = 10;
 const WITHDRAWAL_FEE_PERCENT = 0.02;
 const MIN_FEE = 1;
@@ -58,7 +60,7 @@ export default function WithdrawPage() {
   const [success, setSuccess] = useState<string | null>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [show2FA, setShow2FA] = useState(false);
-  const [pendingWithdrawal, setPendingWithdrawal] = useState<any>(null);
+  const [pendingWithdrawal, setPendingWithdrawal] = useState<PendingWithdrawal | null>(null);
 
   useEffect(() => {
     loadBalance();
@@ -157,7 +159,7 @@ export default function WithdrawPage() {
     const netAmount = withdrawAmount - fee;
 
     // Prepare withdrawal data
-    const withdrawalData: any = {
+    const withdrawalData: Omit<PendingWithdrawal, 'fee' | 'netAmount'> = {
       amount: withdrawAmount,
       method: selectedMethod,
       details: {},

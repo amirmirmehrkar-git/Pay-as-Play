@@ -48,7 +48,7 @@ function PlayerContent() {
           : platformId.includes('coursera') || platformId.includes('udemy') || platformId.includes('khan-academy') || platformId.includes('skillshare')
           ? 'learn'
           : 'entertainment';
-        const defaultDemo = getDefaultDemoContent(category as any);
+        const defaultDemo = getDefaultDemoContent(category as Parameters<typeof getDefaultDemoContent>[0]);
         if (defaultDemo) {
           setDemoContent({
             id: defaultDemo.id,
