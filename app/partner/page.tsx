@@ -27,7 +27,7 @@ export default function PartnerDashboardPage() {
             Partner Dashboard
           </h1>
           <p className="text-zinc-600 dark:text-zinc-400">
-            Welcome, Laura's Streaming Platform
+            Welcome, Laura&apos;s Streaming Platform
           </p>
           <Link
             href="/"

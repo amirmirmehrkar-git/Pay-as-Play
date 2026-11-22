@@ -47,7 +47,7 @@ export default function CostPerContentChart({
       const response = await fetch(`/api/analytics/cost-per-content?${params}`);
       const result = await response.json();
       if (result.success) {
-        let sortedData = [...result.data];
+        const sortedData = [...result.data];
         if (sortBy === 'amount') {
           sortedData.sort((a, b) => b.totalAmount - a.totalAmount);
         } else {
@@ -66,7 +66,7 @@ export default function CostPerContentChart({
 
   useEffect(() => {
     if (data.length > 0) {
-      let sortedData = [...data];
+      const sortedData = [...data];
       if (sortBy === 'amount') {
         sortedData.sort((a, b) => b.totalAmount - a.totalAmount);
       } else {

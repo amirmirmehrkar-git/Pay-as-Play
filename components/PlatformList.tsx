@@ -724,7 +724,7 @@ function ConnectPlatformModal({
             className="w-full rounded-lg border border-zinc-300 bg-white px-4 py-2 text-zinc-900 placeholder-zinc-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100"
           />
           <p className="mt-1 text-xs text-zinc-600 dark:text-zinc-400">
-            If you have an API key, enter it. Otherwise, we'll generate one for you.
+            If you have an API key, enter it. Otherwise, we&apos;ll generate one for you.
           </p>
         </div>
 

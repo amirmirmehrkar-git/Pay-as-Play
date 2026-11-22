@@ -164,7 +164,7 @@ export default function IntegrationTest() {
       <div className="space-y-2">
         {tests.length === 0 ? (
           <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            Click "Run Tests" to start integration testing
+            Click &quot;Run Tests&quot; to start integration testing
           </p>
         ) : (
           tests.map((test, index) => (
