@@ -116,10 +116,10 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error processing withdrawal:', error);
     return NextResponse.json(
-      { success: false, error: { code: 'INTERNAL_SERVER_ERROR', message: error.message || 'Internal server error' } },
+      { success: false, error: { code: 'INTERNAL_SERVER_ERROR', message: (error instanceof Error ? error.message : 'Internal server error') || 'Internal server error' } },
       { status: 500 }
     );
   }
