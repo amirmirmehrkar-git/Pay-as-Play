@@ -162,12 +162,12 @@ export default function SpendingByPlatformChart({
               border: '1px solid #e4e4e7',
               borderRadius: '8px',
             }}
-            formatter={(value: number, name: string, props: { payload?: { percentage?: number } }) => [
+            formatter={(value: number, name: string, props: { payload?: { percentage?: number; platform?: string } }) => [
               <>
                 <div>Amount: {formatCurrency(value)}</div>
                 <div>Percentage: {props.payload?.percentage ?? 0}%</div>
               </>,
-              props.payload.platform,
+              props.payload?.platform ?? '',
             ]}
           />
           <Legend />
