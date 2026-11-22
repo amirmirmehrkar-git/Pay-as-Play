@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { demoAuthenticationUnavailable } from '@/lib/security/demo-auth';
 
 export async function POST(request: NextRequest) {
+  const unavailable = demoAuthenticationUnavailable();
+  if (unavailable) return unavailable;
   try {
     const body = await request.json();
     const { email, password, name } = body;
